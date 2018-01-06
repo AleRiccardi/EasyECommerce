@@ -34,7 +34,7 @@ $baseController = new \Inc\Base\BaseController();
 <header>
     <nav class="navbar">
         <div class="container ">
-            <img id="logo1" src="<?php echo $baseController->website_url ?>/assets/img/Logo.png" alt="logo" width="70px"
+            <img id="logo1" src="<?php echo $baseController->website_url ?>/assets/img/logo.png" alt="logo" width="70px"
                  height="70px">
 
             <div class="cont-menu">
