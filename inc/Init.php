@@ -10,6 +10,7 @@
 
 namespace Inc;
 
+
 /**
  * This is the initial class that is called from WordPress.
  * Here will start all the initial class that we want to execute.
@@ -30,6 +31,7 @@ final class Init {
     public static function getServices() {
         return array(
             Base\BaseController::class,
+            Classes\Login::class
         );
     }
 

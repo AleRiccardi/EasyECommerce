@@ -1,11 +1,12 @@
 <?php
 
+namespace Inc\Classes;
+
 /**
  * Class registration
  * handles the user registration
  */
-class Registration
-{
+class Registration {
     /**
      * @var object $db_connection The database connection
      */
@@ -23,8 +24,7 @@ class Registration
      * the function "__construct()" automatically starts whenever an object of this class is created,
      * you know, when you do "$registration = new Registration();"
      */
-    public function __construct()
-    {
+    public function __construct() {
         if (isset($_POST["register"])) {
             $this->registerNewUser();
         }
@@ -34,8 +34,7 @@ class Registration
      * handles the entire registration process. checks all error possibilities
      * and creates a new user in the database if everything is fine
      */
-    private function registerNewUser()
-    {
+    private function registerNewUser() {
         if (empty($_POST['user_name'])) {
             $this->errors[] = "Empty Username";
         } elseif (empty($_POST['user_password_new']) || empty($_POST['user_password_repeat'])) {
