@@ -2,10 +2,8 @@
 
 namespace Inc\Classes;
 
-define("DB_HOST", "localhost");
-define("DB_NAME", "login");
-define("DB_USER", "root");
-define("DB_PASS", "root");
+use Inc\Config\Db;
+
 
 /**
  * Class login
@@ -31,7 +29,12 @@ class Login {
      * you know, when you do "$login = new Login();"
      */
     public function __construct() {
+
+    }
+
+    public function register() {
         // create/read session, absolutely necessary
+
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
@@ -44,6 +47,7 @@ class Login {
         elseif (isset($_POST["login"])) {
             $this->dologinWithPostData();
         }
+        $this->showError();
     }
 
     /**
@@ -58,7 +62,7 @@ class Login {
         } elseif (!empty($_POST['user_name']) && !empty($_POST['user_password'])) {
 
             // create a database connection, using the constants from config/db.php (which we loaded in index.php)
-            $this->db_connection = new \mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            $this->db_connection = new \mysqli(Db::HOST, Db::USER, Db::PASS, Db::NAME);
 
             // change character set to utf8 and check it
             if (!$this->db_connection->set_charset("utf8")) {
@@ -105,6 +109,7 @@ class Login {
         }
     }
 
+
     /**
      * perform the logout
      */
@@ -129,4 +134,37 @@ class Login {
         // default return
         return false;
     }
+
+    /**
+     * simply return the current state of the user's login
+     *
+     * @return boolean user's login status
+     */
+    public function showError() {
+        if ($this->errors) { ?>
+            <div class="message alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php
+                foreach ($this->errors as $error) {
+                    echo $error;
+                }
+                ?>
+            </div>
+            <?php
+        }
+        if ($this->messages) { ?>
+            <div class="message alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?php
+            foreach ($this->messages as $message) {
+                echo $message;
+            }
+            ?>
+            </div>
+            <?php
+        }
+
+    }
+
+
 }

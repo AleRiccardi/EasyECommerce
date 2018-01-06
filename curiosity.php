@@ -3,6 +3,7 @@
  * Curiosita page.
  */
 
+require_once(dirname(__FILE__) . "/engine.php");
 require_once (dirname(__FILE__) . "/template/header.php");
 ?>
 

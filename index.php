@@ -3,7 +3,9 @@
  * Single page.
  */
 
+require_once(dirname(__FILE__) . "/engine.php");
 require_once(dirname(__FILE__) . "/template/header.php");
+
 ?>
 
     <section class="flex-container-center home-section"
@@ -20,13 +22,12 @@ require_once(dirname(__FILE__) . "/template/header.php");
 
     <section class="hs-second">
         <div class="container">
+            <h1 class="title-center">Our qualities</h1>
             <div class="row">
                 <div class="col-4 flex-container-center">
                     <div class="flex-item-center">
                         <p>
-                            Sushi Lounge è il Concept Store dove
-                            la tradizione della cucina asiatica
-                            si unisce all'eccelenza mediterranea.
+                            Sushi Lounge is the Concept Store where the tradition of Asian cuisine combines with Mediterranean excellence.
                         </p>
                     </div>
                 </div>
@@ -39,8 +40,7 @@ require_once(dirname(__FILE__) . "/template/header.php");
                 <div class="col-4 flex-container-center">
                     <div class="flex-item-center">
                         <p>
-                            Sushi&amp;Go è la linea di ricette
-                            pensate per il Take Away.
+                            Sushi & Go is the line of recipes designed for Take Away.
                         </p>
                     </div>
                 </div>
@@ -51,7 +51,7 @@ require_once(dirname(__FILE__) . "/template/header.php");
     <section class="flex-container-center home-section hs-third"
              style="background: url('<?php echo $baseController->website_url ?>/assets/img/japan-street.jpg');">
         <div class="flex-item-center">
-            <p class="lead-home">The best restaurant that connect the Japan kitchen with a simple scooter.
+            <p class="lead-home">The best restaurant that connects the Japanese kitchen with a simple Vespa.
             </p>
             <span class="cit-right">Rolling Stone</span>
         </div>
