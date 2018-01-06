@@ -1,53 +1,139 @@
 /* ====================
-    Header
+    GENERAL
    ==================== */
 
 body {
     font-family: 'Nunito', sans-serif;
 }
 
+
+.title-center {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 50px;
+    font-weight: 300;
+    letter-spacing: 1.6px;
+}
+
+.message {
+    margin: 0 !important;
+}
+
+/* ====================
+    Header
+   ==================== */
+
 header {
     background-color: #f5f5f5;
     border-bottom: 5px #adb0b6;
-    font-family: 'Nunito', sans-serif;
 }
 
-#logo1 {
-    padding-top: 0.3%;
+
+.wrap-menus {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
 }
 
+/* main menu */
 .cont-menu {
+    display: inline-block;
+    margin-right: 20px;
 
 }
 
-ul.menu {
+ul.nav-menu {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.menu li {
+.nav-menu .nav-item {
     display: inline;
     width: 14%;
     padding: 1px;
 }
 
-.menu li a {
+.nav-menu .nav-item.active .nav-link{
+    color: rgba(0,0,0,.9);
+}
+
+.nav-menu .nav-item .nav-link {
+    display: inline-block;
     color: #575756;
+    font-weight: 300;
+    font-size: 17px;
     text-align: center;
     text-decoration: none;
-    padding: 14px 16px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #f5f5f5;
-    transition: 0.5s ease-in-out;
+    padding: 12px 15px;
 }
 
-.menu li a:hover {
-    background-color: rgba(255, 193, 143, 0.80);
-    text-decoration: none;
-
+.nav-menu .nav-item .nav-link:hover {
+    color: black;
 }
+
+
+/* user menu */
+.cont-menu-user {
+    display: inline-block;
+    float: right;
+}
+
+.mu-info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 10px;
+}
+
+.mu-img {
+    display: inline-block;
+}
+
+.mu-img .profile-image {
+    background-image: url(https://images-na.ssl-images-amazon.com/images/S/amazon-avatars/default._SX65_.png);
+    border-radius: 65px;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center 0;
+}
+
+.cont-menu-user .mu-dd-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: inherit;
+    padding: 10px 5px;
+    display: inline-block;
+}
+
+.mu-dd-content {
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+.mu-dd-content a {
+}
+
+.mu-dd-content a:hover {
+}
+
+
+
+/* ====================
+    INDEX
+   ==================== */
 
 .flex-container-center {
     display: -webkit-flex;
@@ -98,7 +184,7 @@ ul.menu {
     letter-spacing: 1.6px;
 }
 
-.hs-third .flex-item-center{
+.hs-third .flex-item-center {
     background: black;
     position: relative;
     padding: 20px 15px 20px 15px;
@@ -127,6 +213,23 @@ p.lead-home {
     margin-right: 18px;
 }
 
+
+/* ====================
+    SIGN-IN
+   ==================== */
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+    background: #e2e2e2;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+/* ====================
+    FOOTER
+   ==================== */
 
 .footer {
     width: 100%;

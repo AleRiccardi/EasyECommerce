@@ -1,23 +1,7 @@
 <?php
 
-// Define CONSTANTS
-define('PLUGIN_PATH', dirname(__FILE__, 2));
-
-// Require once the Composer Autoload
-if (file_exists(PLUGIN_PATH . '/vendor/autoload.php')) {
-    require_once PLUGIN_PATH . '/vendor/autoload.php';
-}
-
-/**
- * Initialize all the core classes of the plugin
- *
- * @since 1.0.0
- */
-if (class_exists(Inc\Init::class)) {
-    Inc\Init::registerServices();
-}
-
 $baseController = new \Inc\Base\BaseController();
+$login = new \Inc\Classes\Login();
 
 ?>
 
@@ -31,17 +15,43 @@ $baseController = new \Inc\Base\BaseController();
 <body>
 <header>
     <nav class="navbar">
-        <div class="container ">
-            <img id="logo1" src="<?php echo $baseController->website_url ?>/assets/img/logo.png" alt="logo" width="70px"
-                 height="70px">
+        <div class="container">
+            <div class="cont-logo">
+                <img id="logo" src="<?php echo $baseController->website_url ?>/assets/img/logo.png" alt="logo"
+                     width="70px"
+                     height="70px">
+            </div>
 
-            <div class="cont-menu">
-                <ul class="menu">
-                    <li><a href="./"> Home</a></li>
-                    <li><a href="./curiosita.php">Curiosità</a></li>
-                    <li><a href="./login.php">Login</a></li>
-                    <li><a href="./registration.php">Registration</a></li>
-                </ul>
+            <div class="wrap-menus">
+                <div class="cont-menu">
+                    <ul class="nav-menu">
+                        <li class="nav-item active"><a class="nav-link" href="./"> Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./curiosity.php">Curiosity</a></li>
+                        <?php if (!$login->isUserLoggedIn()) { ?>
+                            <li class="nav-item"><a class="nav-link" href="./login.php">Login</a></li>
+                            <li class="nav-item"><a class="nav-link"href="./registration.php">Registration</a></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+
+                <?php if ($login->isUserLoggedIn()) { ?>
+                    <div class="cont-menu-user">
+                        <div class="nav-item dropdown">
+                            <!--<a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Dropdown</a>-->
+                            <div class="mu-info " href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <div class="mu-img">
+                                    <div class="profile-image"></div>
+                                </div>
+                                <span class="mu-dd-button"><?php echo $_SESSION['user_name']; ?></span>
+                            </div>
+                            <div class="dropdown-menu mu-dd-content " aria-labelledby="dropdown01">
+                                <a class="dropdown-item" href="#">User</a>
+                                <a class="dropdown-item" href="#">Cart</a>
+                                <a class="dropdown-item" href="<?php echo $baseController->website_url ?>/login.php?logout">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
         </div>
         </div>
