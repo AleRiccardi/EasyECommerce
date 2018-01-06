@@ -3,10 +3,8 @@
 // Define CONSTANTS
 define('PLUGIN_PATH', dirname(__FILE__, 2));
 
-
 // Require once the Composer Autoload
 if (file_exists(PLUGIN_PATH . '/vendor/autoload.php')) {
-
     require_once PLUGIN_PATH . '/vendor/autoload.php';
 }
 
@@ -40,11 +38,9 @@ $baseController = new \Inc\Base\BaseController();
             <div class="cont-menu">
                 <ul class="menu">
                     <li><a href="./"> Home</a></li>
-                    <li><a href="#link">I Nostri Plus</a></li>
                     <li><a href="./curiosita.php">Curiosità</a></li>
-                    <li><a href="#link">Sushi P&amp;E</a></li>
-                    <li><a href="#link">Store Locator</a></li>
-                    <li><a href="#link">Ordina Online</a></li>
+                    <li><a href="./login.php">Login</a></li>
+                    <li><a href="./registration.php">Registration</a></li>
                 </ul>
             </div>
         </div>

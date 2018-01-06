@@ -4,8 +4,7 @@
  * Class login
  * handles the user's login and logout process
  */
-class Login
-{
+class Login {
     /**
      * @var object The database connection
      */
@@ -23,27 +22,28 @@ class Login
      * the function "__construct()" automatically starts whenever an object of this class is created,
      * you know, when you do "$login = new Login();"
      */
-    public function __construct()
-    {
-        // create/read session, absolutely necessary
-        session_start();
-
+    public function __construct() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         // check the possible login actions:
         // if user tried to log out (happen when user clicks logout button)
         if (isset($_GET["logout"])) {
             $this->doLogout();
-        }
-        // login via post data (if user just submitted a login form)
+        } // login via post data (if user just submitted a login form)
         elseif (isset($_POST["login"])) {
             $this->dologinWithPostData();
         }
     }
 
+    public function register() {
+
+    }
+
     /**
      * log in with post data
      */
-    private function dologinWithPostData()
-    {
+    private function dologinWithPostData() {
         // check login form contents
         if (empty($_POST['user_name'])) {
             $this->errors[] = "Username field was empty.";
@@ -102,8 +102,7 @@ class Login
     /**
      * perform the logout
      */
-    public function doLogout()
-    {
+    public function doLogout() {
         // delete the session of the user
         $_SESSION = array();
         session_destroy();
@@ -114,10 +113,10 @@ class Login
 
     /**
      * simply return the current state of the user's login
+     *
      * @return boolean user's login status
      */
-    public function isUserLoggedIn()
-    {
+    public function isUserLoggedIn() {
         if (isset($_SESSION['user_login_status']) AND $_SESSION['user_login_status'] == 1) {
             return true;
         }
