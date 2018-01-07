@@ -8,14 +8,14 @@ require_once(dirname(__FILE__) . "/template/_header.php");
 
 ?>
 
-    <section class="flex-container-center home-section"
+    <section class="flex-container-center fit-height-section"
              style="background: url('<?php echo $baseController->website_url ?>/assets/img/sushi-table.jpg');">
         <div class="flex-item-center">
             <div class="logo-container">
                 <img src="<?php echo $baseController->website_url ?>/assets/img/logo.png" alt="logo">
             </div>
             <div>
-                <h1>Experience <br> the taste of Japan</h1>
+                <h1 class="home-title ">Experience <br> the taste of Japan</h1>
             </div>
         </div>
     </section>
@@ -48,7 +48,7 @@ require_once(dirname(__FILE__) . "/template/_header.php");
         </div>
     </section>
 
-    <section class="flex-container-center home-section hs-third"
+    <section class="flex-container-center fit-height-section hs-third"
              style="background: url('<?php echo $baseController->website_url ?>/assets/img/japan-street.jpg');">
         <div class="flex-item-center">
             <p class="lead-home">The best restaurant that connects the Japanese kitchen with a simple Vespa.

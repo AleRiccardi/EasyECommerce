@@ -31,7 +31,7 @@ if (isset($login)) {
 -->
 
 
-<section class="flex-container-center home-section">
+<section class="flex-container-center fit-height-section">
     <div class="container flex-item-center">
         <form class="form-signin" method="post" action="login.php" name="loginform">
             <h2 class="form-signin-heading">Please sign in</h2>

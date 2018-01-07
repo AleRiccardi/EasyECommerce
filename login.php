@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . "/engine.php");
 $login = new \Inc\Classes\Login();
 
 if ($login->isUserLoggedIn() == true) {
-    header("Location: index.php");
+    header("Location: page.php?name=user");
     die();
 
 } else {
