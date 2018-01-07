@@ -52,7 +52,7 @@ $res = DbUser::get(array("user_name" => $_SESSION['user_name']), "OBJECT");
                     </a>
                 </div>
                 <div class="user-action flex-item col-md-3">
-                    <a href="<?php echo $baseController->website_url ?>/login.php?logout">
+                    <a href="<?php echo $baseController->website_url ?>/page.php?name=user">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/id-card.png" alt="logo">
                         </div>

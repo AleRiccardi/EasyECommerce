@@ -16,9 +16,11 @@ $login = new \Inc\Classes\Login();
 <header>
     <nav class="navbar">
         <div class="cont-logo">
+            <a href="<?php echo $baseController->website_url ?>">
             <img id="logo" src="<?php echo $baseController->website_url ?>/assets/img/logo.png" alt="logo"
                  width="70px"
                  height="70px">
+            </a>
         </div>
 
         <div class="wrap-menus">
