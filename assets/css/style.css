@@ -57,7 +57,7 @@ body {
 /* !important */
 .fit-height-section {
     width: 100%;
-    min-height: 100%;
+    min-height: 89%;
     background-size: 100% !important;
     background-repeat: no-repeat !important;
 }
