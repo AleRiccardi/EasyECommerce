@@ -2,7 +2,7 @@
 
 namespace Inc\Classes;
 
-use Inc\Config\Db;
+use Inc\Database\Db;
 
 
 /**

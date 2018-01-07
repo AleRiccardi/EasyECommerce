@@ -4,7 +4,7 @@
  */
 
 require_once(dirname(__FILE__) . "/engine.php");
-require_once(dirname(__FILE__) . "/template/header.php");
+require_once(dirname(__FILE__) . "/template/_header.php");
 
 ?>
 
@@ -57,4 +57,4 @@ require_once(dirname(__FILE__) . "/template/header.php");
         </div>
     </section>
 
-<?php require_once(dirname(__FILE__) . "/template/footer.php");
+<?php require_once(dirname(__FILE__) . "/template/_footer.php");
