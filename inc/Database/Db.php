@@ -12,7 +12,7 @@
  * DB_PASS: the password of the above user
  */
 
-namespace Inc\Config;
+namespace Inc\Database;
 
 class Db {
     const HOST = "localhost";

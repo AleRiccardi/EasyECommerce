@@ -10,7 +10,7 @@ $login = new \Inc\Classes\Login();
     <meta charset="utf-8" content="text/html" ;>
     </meta>
     <title>ZB Sushi</title>
-    <?php require_once("head.php"); ?>
+    <?php require_once("_head.php"); ?>
 </head>
 <body>
 <header>
@@ -45,7 +45,7 @@ $login = new \Inc\Classes\Login();
                                 <span class="mu-dd-button"><?php echo $_SESSION['user_name']; ?></span>
                             </div>
                             <div class="dropdown-menu mu-dd-content " aria-labelledby="dropdown01">
-                                <a class="dropdown-item" href="#">User</a>
+                                <a class="dropdown-item" href="<?php echo $baseController->website_url ?>/page.php?name=user">User</a>
                                 <a class="dropdown-item" href="#">Cart</a>
                                 <a class="dropdown-item" href="<?php echo $baseController->website_url ?>/login.php?logout">Logout</a>
                             </div>

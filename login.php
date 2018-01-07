@@ -9,8 +9,8 @@ if ($login->isUserLoggedIn() == true) {
     die();
 
 } else {
-    require_once(dirname(__FILE__) . "/template/header.php");
-    include("template/not_logged_in.php");
-    require_once(dirname(__FILE__) . "/template/footer.php");
+    require_once(dirname(__FILE__) . "/template/_header.php");
+    include("template/login.php");
+    require_once(dirname(__FILE__) . "/template/_footer.php");
 }
 
