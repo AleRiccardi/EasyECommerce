@@ -1,3 +1,7 @@
+/*
+  Create a database called "restaurant" and then inject the below sql.
+ */
+
 /* IMAGE */
 CREATE TABLE IF NOT EXISTS image (
   id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -42,7 +46,7 @@ CREATE TABLE IF NOT EXISTS users (
   idAddress bigint(20),
   PRIMARY KEY (id),
   UNIQUE KEY (userName),
-  UNIQUE KEY (email),
+  UNIQUE KEY (userEmail),
   FOREIGN KEY (idAddress) REFERENCES address(id),
   FOREIGN KEY (idImage) REFERENCES image(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
