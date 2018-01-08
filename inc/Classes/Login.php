@@ -109,17 +109,73 @@ class Login {
         }
     }
 
+    public static function staticLogin($userName, $userPassword) {
+
+        if (empty($userName)) {
+            $errors[] = "Username field was empty.";
+        } elseif (empty($userPassword)) {
+            $errors[] = "Password field was empty.";
+        } elseif (!empty($userName) && !empty($userPassword)) {
+
+            // create a database connection, using the constants from config/db.php (which we loaded in index.php)
+            $dbConnection = new \mysqli(Db::HOST, Db::USER, Db::PASS, Db::NAME);
+
+            // change character set to utf8 and check it
+            if (!$dbConnection->set_charset("utf8")) {
+                $errors[] = $dbConnection->error;
+            }
+
+            // if no connection errors (= working database connection)
+            if (!$dbConnection->connect_errno) {
+
+                // escape the POST stuff
+                $user_name = $dbConnection->real_escape_string($userName);
+
+                // database query, getting all the info of the selected user (allows login via email address in the
+                // username field)
+                $sql = "SELECT user_name, user_email, user_password_hash
+                        FROM users
+                        WHERE user_name = '" . $user_name . "' OR user_email = '" . $user_name . "';";
+                $result_of_login_check = $dbConnection->query($sql);
+
+                // if this user exists
+                if ($result_of_login_check->num_rows == 1) {
+
+                    // get result row (as an object)
+                    $result_row = $result_of_login_check->fetch_object();
+
+                    // using PHP 5.5's password_verify() function to check if the provided password fits
+                    // the hash of that user's password
+                    if (password_verify($userPassword, $result_row->user_password_hash)) {
+
+                        // write user data into PHP SESSION (a file on your server)
+                        $_SESSION['user_name'] = $result_row->user_name;
+                        $_SESSION['user_email'] = $result_row->user_email;
+                        $_SESSION['user_login_status'] = 1;
+
+                    } else {
+                        $errors[] = "Wrong password. Try again.";
+                    }
+                } else {
+                    $errors[] = "This user does not exist.";
+                }
+            } else {
+                $errors[] = "Database connection problem.";
+            }
+        }
+    }
 
     /**
      * perform the logout
      */
     public function doLogout() {
-        // delete the session of the user
-        $_SESSION = array();
-        session_destroy();
-        // return a little feeedback message
-        $this->messages[] = "You have been logged out.";
-
+        if($this->isUserLoggedIn()){
+            // delete the session of the user
+            $_SESSION = array();
+            session_destroy();
+            // return a little feeedback message
+            $this->messages[] = "You have been logged out.";
+        }
     }
 
     /**

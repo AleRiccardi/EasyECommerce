@@ -31,7 +31,8 @@ final class Init {
     public static function getServices() {
         return array(
             Base\BaseController::class,
-            Classes\Login::class
+            Classes\Login::class,
+            Classes\Registration::class,
         );
     }
 

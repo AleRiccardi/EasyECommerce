@@ -1,5 +1,6 @@
 <?php
 
+require_once($baseController->website_path . "/template/_header.php");
 ?>
 
 <section class="flex-container-center fit-height-section"
@@ -50,3 +51,7 @@
         <span class="cit-right">Rolling Stone</span>
     </div>
 </section>
+
+<?php
+
+require_once($baseController->website_path . "/template/_footer.php");
