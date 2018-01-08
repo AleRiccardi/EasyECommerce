@@ -15,7 +15,7 @@ class DbModel {
     const DB_VERSION = '1.0.0';
     const DB_NAME_VERSION = 'OBF_db_version';
     // default database name
-    static $tableName = "obf_model";
+    static $tableName = "model";
 
     /**
      * Retrieve the name of the database with included
@@ -80,7 +80,7 @@ class DbModel {
      *
      * @return array|null
      */
-    public static function get(array $data = null, $type = OBJECT) {
+    public static function get(array $data = null, $type = "OBJECT") {
         $db = new Db();
         return $db->getResults(self::fetchSql("SELECT", $data), $type);
     }

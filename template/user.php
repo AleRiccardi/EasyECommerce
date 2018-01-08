@@ -1,8 +1,8 @@
 <?php
 
-use Inc\Database\DbUser;
+use Inc\Classes\User;
 
-$res = DbUser::get(array("user_name" => $_SESSION['user_name']), "OBJECT");
+$user = User::get($_SESSION['user_name']);
 
 require_once($baseController->website_path . "/template/_header.php");
 ?>
@@ -11,12 +11,13 @@ require_once($baseController->website_path . "/template/_header.php");
     <div class="jumbotron user-header">
         <div class="container">
             <div class="user-img-name middle-h-container">
-                <div class="pu-img ">
-                    <div class="profile-image" style="background-image: url('<?php echo $baseController->website_url ?>/assets/img/icon/user-image-small.png');"></div>
+                <div class="pu-img">
+                    <img id="preview-icon" class="profile-image"
+                         src="<?php echo $baseController->website_url ?>/assets/upload/image/default-avatar.png"/>
                 </div>
                 <div class="middle-h-item user-name">
-                    <h1 class=""><?php echo $res[0]->user_name; ?></h1>
-                    <span>Registered the <?php echo "20 Jan 17"; ?></span>
+                    <h1 class=""><?php echo $user->userName; ?></h1>
+                    <span>Registered the <?php echo date("d M Y", strtotime($user->dateRegistration)); ?></span>
                 </div>
             </div>
         </div>
@@ -53,7 +54,7 @@ require_once($baseController->website_path . "/template/_header.php");
                     </a>
                 </div>
                 <div class="user-action flex-item col-md-3">
-                    <a href="<?php echo $baseController->website_url ?>/page.php?name=user">
+                    <a href="<?php echo $baseController->website_url ?>/page.php?name=edit-login">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/id-card.png" alt="logo">
                         </div>
