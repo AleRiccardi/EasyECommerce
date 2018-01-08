@@ -1,0 +1,509 @@
+/* ====================
+    GENERAL
+   ==================== */
+
+html, body {
+    overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
+
+body {
+    padding-top: 71px;
+}
+
+main {
+    margin-top: 20px;
+}
+
+.title-center {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 50px;
+    font-weight: 300;
+    letter-spacing: 1.6px;
+}
+
+.message {
+    margin: 0 !important;
+}
+
+/* ====================
+    Util
+   ==================== */
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+
+.flex-item {
+    flex: 1;
+}
+
+.middle-h-container {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+}
+
+.middle-h-item {
+    display: inline-block;
+}
+
+/* !important */
+.fit-height-section {
+    width: 100%;
+    min-height: 100%;
+    background-size: 100% !important;
+    background-repeat: no-repeat !important;
+}
+
+/* ====================
+    Header
+   ==================== */
+
+/*logo*/
+.cont-logo {
+    width: 55px;
+    height: auto;
+}
+
+.cont-logo img {
+    width: 100%;
+    height: auto;
+}
+
+header {
+    background-color: #4c4c4c;
+    color: white !important;
+}
+
+header nav {
+    padding: .5rem 3rem !important;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+
+.wrap-menus {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+}
+
+.wrap-menus .single-menu {
+    flex: 1;
+}
+
+/* main menu */
+.cont-menu {
+    display: inline-block;
+    margin-right: 20px;
+
+}
+
+ul.nav-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu .nav-item {
+    display: inline;
+    width: 14%;
+    padding: 1px;
+}
+
+.nav-menu .nav-item .nav-link {
+    display: inline-block;
+    color: #e7e7e7;
+    font-weight: 300;
+    font-size: 17px;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px 15px;
+}
+
+.nav-menu .nav-item .nav-link:hover {
+    color: white;
+}
+
+/* user menu */
+.cont-menu-user {
+    cursor: pointer;
+}
+
+.mu-info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 10px;
+}
+
+.mu-img {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.mu-img .profile-image {
+    max-width: 100%;
+}
+
+.cont-menu-user .mu-dd-button {
+    border: none;
+    outline: none;
+    background-color: inherit;
+    padding: 10px 5px;
+    display: inline-block;
+}
+
+.mu-dd-content {
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+.mu-dd-content a {
+}
+
+.mu-dd-content a:hover {
+}
+
+/* ====================
+    INDEX
+   ==================== */
+
+.flex-container-center {
+    display: -webkit-flex;
+    display: flex;
+    text-align: center;
+}
+
+.flex-item-center {
+    margin: auto;
+}
+
+.hs-first .logo-container {
+    max-width: 250px;
+    height: auto;
+    margin: 0 auto 50px auto;
+}
+
+.hs-first .logo-container img {
+    width: 100%;
+}
+
+h1.home-title {
+    font-size: 50px;
+    margin-top: 30px;
+    text-shadow: 2px 2px 10px black;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 700;
+}
+
+.hs-second {
+    padding: 150px;
+    background-color: #e2e2e2;
+}
+
+.hs-second p {
+    font-size: 23px;
+    font-weight: 300;
+    letter-spacing: 1.6px;
+}
+
+.hs-third .flex-item-center {
+    background: black;
+    position: relative;
+    padding: 20px 15px 20px 15px;
+    max-width: 800px;
+    border-radius: 5px;
+}
+
+p.lead-home {
+    font-style: italic;
+    text-shadow: 2px 2px 10px #000000;
+    font-size: 45px;
+    font-weight: 200;
+    letter-spacing: 1.6px;
+    color: whitesmoke;
+
+}
+
+.cit-right {
+    float: right;
+    font-style: italic;
+    text-shadow: 2px 2px 10px grey;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: whitesmoke;
+    margin-right: 18px;
+}
+
+/* ====================
+    SIGN-IN
+   ==================== */
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+    background: #e2e2e2;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+/* ====================
+    USER page
+   ==================== */
+
+.page-user {
+
+}
+
+.page-user .user-header {
+}
+
+.page-user .user-body {
+    padding: 30px 0;
+}
+
+.user-img-name {
+
+}
+
+.pu-img {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.pu-img .profile-image {
+    max-width: 100%;
+}
+
+.page-user .user-name {
+
+    margin-left: 20px
+}
+
+.page-user .user-name h1 {
+    font-size: 35px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.page-user .user-name span {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.user-action {
+    padding: 20px;
+    display: flex;
+}
+
+.user-action a {
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid lightgrey;
+    display: block;
+    padding: 20px;
+    flex: 1;
+
+}
+
+.user-action a {
+    text-decoration: none;
+    color: black;
+}
+
+.user-action a:hover {
+    background-color: #dedede;
+    text-decoration: none;
+    text-transform: none;
+    color: black;
+}
+
+.icon-action {
+    margin: 10px auto;
+    width: 30%;
+}
+
+.icon-action img {
+    width: 100%;
+    height: auto;
+}
+
+/* ====================
+    SHOP page
+   ==================== */
+
+.page-shop {
+    /*margin-top: 20px;*/
+}
+
+.page-shop .jumbotron {
+    position: relative;
+    color: white;
+    background-size: 100% !important;
+    background-repeat: no-repeat !important;
+    background-position: center;
+}
+
+.cont-featurette-image{
+    text-align: center;
+}
+
+.featurette-image {
+    margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+}
+
+.featurette-divider {
+    margin: 1rem 0; /* Space out the Bootstrap <hr> more */
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.05rem;
+}
+
+.featurette .text-muted{
+    font-size: 25px;
+}
+
+@media (min-width: 40em) {
+
+    .featurette-heading {
+        font-size: 40px;
+    }
+}
+
+/* ====================
+    EDIT LOGIN page
+   ==================== */
+
+.page-edit-login {
+}
+
+.page-edit-login .container{
+    max-width: 650px;
+}
+
+.cont-edit-form {
+    margin-top: 25px;
+    background-color: #ececec;
+    padding: 20px 28px 20px 28px;
+    border-radius: 10px;
+}
+
+.cont-edit-form form{
+    margin: 0;
+}
+
+
+/* ====================
+    404 page
+   ==================== */
+
+.page-404 {
+
+}
+
+.page-404 .icon-container {
+    margin: auto;
+    max-width: 50%;
+}
+
+.page-404 .icon-container img {
+    width: 100%;
+    height: auto;
+}
+
+/* ====================
+    FOOTER
+   ==================== */
+
+.footer {
+    padding: 30px 0;
+    width: 100%;
+    line-height: 60px;
+}
+
+
+
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 767.99px) {
+    .row-offcanvas {
+        position: relative;
+        transition: all .25s ease-out;
+    }
+
+    .row-offcanvas-right {
+        right: 0;
+    }
+
+    .row-offcanvas-left {
+        left: 0;
+    }
+
+    .row-offcanvas-right .sidebar-offcanvas {
+        right: -100%; /* 12 columns */
+    }
+
+    .row-offcanvas-right.active .sidebar-offcanvas {
+        right: -50%; /* 6 columns */
+    }
+
+    .row-offcanvas-left .sidebar-offcanvas {
+        left: -100%; /* 12 columns */
+    }
+
+    .row-offcanvas-left.active .sidebar-offcanvas {
+        left: -50%; /* 6 columns */
+    }
+
+    .row-offcanvas-right.active {
+        right: 50%; /* 6 columns */
+    }
+
+    .row-offcanvas-left.active {
+        left: 50%; /* 6 columns */
+    }
+
+    .sidebar-offcanvas {
+        position: absolute !important;
+        top: 0;
+        width: 50% !important; /* 6 columns */
+    }
+}
+
+
+
+
