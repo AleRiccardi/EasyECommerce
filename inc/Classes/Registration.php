@@ -2,6 +2,8 @@
 
 namespace Inc\Classes;
 
+use Inc\Database\Db;
+
 /**
  * Class registration
  * handles the user registration
@@ -25,9 +27,19 @@ class Registration {
      * you know, when you do "$registration = new Registration();"
      */
     public function __construct() {
-        if (isset($_POST["register"])) {
-            $this->registerNewUser();
+
+    }
+
+    public function register() {
+        if (session_status() == PHP_SESSION_NONE && !headers_sent()) {
+            session_start();
+            if (isset($_POST["register"])) {
+                if($this->registerNewUser()) Login::staticLogin($_POST['user_name'], $_POST['user_password_new']);
+            }
         }
+
+
+        //$this->showError();
     }
 
     /**
@@ -65,7 +77,7 @@ class Registration {
             && ($_POST['user_password_new'] === $_POST['user_password_repeat'])
         ) {
             // create a database connection
-            $this->db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            $this->db_connection = new \mysqli(Db::HOST, Db::USER, Db::PASS, Db::NAME);
 
             // change character set to utf8 and check it
             if (!$this->db_connection->set_charset("utf8")) {
@@ -101,6 +113,7 @@ class Registration {
                     // if user has been added successfully
                     if ($query_new_user_insert) {
                         $this->messages[] = "Your account has been created successfully. You can now log in.";
+                        return true;
                     } else {
                         $this->errors[] = "Sorry, your registration failed. Please go back and try again.";
                     }
@@ -111,5 +124,39 @@ class Registration {
         } else {
             $this->errors[] = "An unknown error occurred.";
         }
+
+        //default return;
+        return false;
+    }
+
+    /**
+     * simply return the current state of the user's login
+     *
+     * @return boolean user's login status
+     */
+    public function showError() {
+        if ($this->errors) { ?>
+            <div class="message alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php
+                foreach ($this->errors as $error) {
+                    echo $error;
+                }
+                ?>
+            </div>
+            <?php
+        }
+        if ($this->messages) { ?>
+            <div class="message alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php
+                foreach ($this->messages as $message) {
+                    echo $message;
+                }
+                ?>
+            </div>
+            <?php
+        }
+
     }
 }

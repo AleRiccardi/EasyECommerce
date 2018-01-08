@@ -4,29 +4,36 @@
  */
 
 require_once(dirname(__FILE__) . "/engine.php");
-require_once(dirname(__FILE__) . "/template/_header.php");
 
-$pageName = null;
+$currentPage = null;
 
-if (isset($_GET['name'])) $pageName = $_GET['name'];
+if (isset($_GET['name'])) $currentPage = $_GET['name'];
 
 $listTemplate = array(
-    "name" => array("/template/user.php", "/template/login.php")
+    "template/home.php",
+    "template/user.php",
+    "template/login.php",
+    "template/registration.php",
+    "template/shop.php",
 );
 
-if (!empty($pageName)) {
-    switch ($pageName) {
-        case "user":
-            $name = $listTemplate['name'][0];
-            require_once(dirname(__FILE__) . "$name");
-            break;
-        default:
-            $name = $listTemplate['name'][1];
-            require_once(dirname(__FILE__) . "$name");
-            break;
-    }
-} else {
-    echo "<i>nothing to load ...";
-}
+$temp404 = "template/404.php";
 
-require_once(dirname(__FILE__) . "/template/_footer.php");
+$found = false;
+
+if (!empty($currentPage)) {
+
+    foreach ($listTemplate as $template) {
+        $urlSplit = explode('/', $template);
+        $page = $urlSplit[1];
+        $page = substr($page, 0, strpos($page, "."));
+        if($page == $currentPage){
+            $found = true;
+            require_once(dirname(__FILE__) . "/$template");
+        }
+    }
+
+    if(!$found) require_once(dirname(__FILE__) . "/$temp404");
+} else {
+    echo "<i>nothing to load ...</i>";
+}

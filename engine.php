@@ -17,3 +17,5 @@ if (class_exists(Inc\Init::class)) {
     Inc\Init::registerServices();
 }
 
+
+$baseController = new \Inc\Base\BaseController();

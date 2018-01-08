@@ -2,8 +2,9 @@
 
 use Inc\Database\DbUser;
 
-//$res = DbUser::get(array("user_name" => $_SESSION['user_name']), "ARRAY_A");
 $res = DbUser::get(array("user_name" => $_SESSION['user_name']), "OBJECT");
+
+require_once($baseController->website_path . "/template/_header.php");
 ?>
 <div class="page-user fit-height-section">
 
@@ -64,3 +65,6 @@ $res = DbUser::get(array("user_name" => $_SESSION['user_name']), "OBJECT");
         </div>
     </section>
 </div>
+
+<?php
+require_once($baseController->website_path . "/template/_footer.php");

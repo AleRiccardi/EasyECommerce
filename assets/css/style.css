@@ -2,11 +2,13 @@
     GENERAL
    ==================== */
 
-body {
-    font-family: 'Nunito', sans-serif;
+html, body {
+    overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
 
-
+body {
+    padding-top: 71px;
+}
 
 .title-center {
     text-align: center;
@@ -19,7 +21,6 @@ body {
 .message {
     margin: 0 !important;
 }
-
 
 /* ====================
     Util
@@ -53,46 +54,51 @@ body {
     display: inline-block;
 }
 
-
 /* !important */
 .fit-height-section {
     width: 100%;
-    min-height: 89%;
+    min-height: 100%;
     background-size: 100% !important;
     background-repeat: no-repeat !important;
 }
-
 
 /* ====================
     Header
    ==================== */
 
-header {
-    background-color: #f5f5f5;
-    border-bottom: 5px #adb0b6;
+/*logo*/
+.cont-logo {
+    width: 55px;
+    height: auto;
 }
 
-header nav{
+.cont-logo img {
+    width: 100%;
+    height: auto;
+}
+
+header {
+    background-color: #4c4c4c;
+    color: white !important;
+}
+
+header nav {
     padding: .5rem 3rem !important;
     -webkit-justify-content: space-between;
     justify-content: space-between;
 }
-
-
 
 .wrap-menus {
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+}
+
+.wrap-menus .single-menu {
+    flex: 1;
 }
 
 /* main menu */
@@ -114,13 +120,9 @@ ul.nav-menu {
     padding: 1px;
 }
 
-.nav-menu .nav-item.active .nav-link{
-    color: rgba(0,0,0,.9);
-}
-
 .nav-menu .nav-item .nav-link {
     display: inline-block;
-    color: #575756;
+    color: #e7e7e7;
     font-weight: 300;
     font-size: 17px;
     text-align: center;
@@ -129,14 +131,12 @@ ul.nav-menu {
 }
 
 .nav-menu .nav-item .nav-link:hover {
-    color: black;
+    color: white;
 }
-
 
 /* user menu */
 .cont-menu-user {
-    display: inline-block;
-    float: right;
+    cursor: pointer;
 }
 
 .mu-info {
@@ -160,7 +160,6 @@ ul.nav-menu {
 }
 
 .cont-menu-user .mu-dd-button {
-    cursor: pointer;
     border: none;
     outline: none;
     background-color: inherit;
@@ -177,8 +176,6 @@ ul.nav-menu {
 
 .mu-dd-content a:hover {
 }
-
-
 
 /* ====================
     INDEX
@@ -254,7 +251,6 @@ p.lead-home {
     margin-right: 18px;
 }
 
-
 /* ====================
     SIGN-IN
    ==================== */
@@ -268,7 +264,6 @@ p.lead-home {
     padding: 30px;
 }
 
-
 /* ====================
     USER page
    ==================== */
@@ -277,14 +272,14 @@ p.lead-home {
 
 }
 
-.page-user .user-header{
+.page-user .user-header {
 }
 
-.page-user .user-body{
+.page-user .user-body {
     padding: 30px 0;
 }
 
-.user-img-name{
+.user-img-name {
 
 }
 
@@ -306,13 +301,13 @@ p.lead-home {
     margin-left: 20px
 }
 
-.page-user .user-name h1{
+.page-user .user-name h1 {
     font-size: 35px;
     font-weight: 400;
     margin: 0;
 }
 
-.page-user .user-name span{
+.page-user .user-name span {
     font-size: 14px;
     font-weight: 300;
 }
@@ -326,7 +321,7 @@ p.lead-home {
     text-align: center;
     border-radius: 10px;
     border: 2px solid lightgrey;
-    display:block;
+    display: block;
     padding: 20px;
     flex: 1;
 
@@ -349,20 +344,138 @@ p.lead-home {
     width: 30%;
 }
 
-.icon-action img{
+.icon-action img {
     width: 100%;
     height: auto;
 }
 
+/* ====================
+    SHOP page
+   ==================== */
 
+.page-shop {
+    margin-top: 20px;
+}
 
-    /* ====================
-        FOOTER
-       ==================== */
+.page-shop .jumbotron {
+    position: relative;
+    color: white;
+    background-size: 100% !important;
+    background-repeat: no-repeat !important;
+    background-position: center;
+}
+
+.cont-featurette-image{
+    text-align: center;
+}
+
+.featurette-image {
+    margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+}
+
+.featurette-divider {
+    margin: 1rem 0; /* Space out the Bootstrap <hr> more */
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.05rem;
+}
+
+.featurette .text-muted{
+    font-size: 25px;
+}
+
+@media (min-width: 40em) {
+
+    .featurette-heading {
+        font-size: 40px;
+    }
+}
+
+/* ====================
+    404 page
+   ==================== */
+
+.page-404 {
+
+}
+
+.page-404 .icon-container {
+    margin: auto;
+    max-width: 50%;
+}
+
+.page-404 .icon-container img {
+    width: 100%;
+    height: auto;
+}
+
+/* ====================
+    FOOTER
+   ==================== */
 
 .footer {
+    padding: 30px 0;
     width: 100%;
-    height: 60px;
     line-height: 60px;
-    background-color: #f5f5f5;
 }
+
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 767.99px) {
+    .row-offcanvas {
+        position: relative;
+        transition: all .25s ease-out;
+    }
+
+    .row-offcanvas-right {
+        right: 0;
+    }
+
+    .row-offcanvas-left {
+        left: 0;
+    }
+
+    .row-offcanvas-right .sidebar-offcanvas {
+        right: -100%; /* 12 columns */
+    }
+
+    .row-offcanvas-right.active .sidebar-offcanvas {
+        right: -50%; /* 6 columns */
+    }
+
+    .row-offcanvas-left .sidebar-offcanvas {
+        left: -100%; /* 12 columns */
+    }
+
+    .row-offcanvas-left.active .sidebar-offcanvas {
+        left: -50%; /* 6 columns */
+    }
+
+    .row-offcanvas-right.active {
+        right: 50%; /* 6 columns */
+    }
+
+    .row-offcanvas-left.active {
+        left: 50%; /* 6 columns */
+    }
+
+    .sidebar-offcanvas {
+        position: absolute !important;
+        top: 0;
+        width: 50% !important; /* 6 columns */
+    }
+}
+
+
+
+
