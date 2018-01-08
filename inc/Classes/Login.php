@@ -4,7 +4,6 @@ namespace Inc\Classes;
 
 use Inc\Database\Db;
 
-
 /**
  * Class login
  * handles the user's login and logout process
@@ -35,7 +34,7 @@ class Login {
     public function register() {
         // create/read session, absolutely necessary
 
-        if (session_status() == PHP_SESSION_NONE) {
+        if (session_status() == PHP_SESSION_NONE && !headers_sent()) {
             session_start();
         }
 
@@ -44,7 +43,8 @@ class Login {
         if (isset($_GET["logout"])) {
             $this->doLogout();
         } // login via post data (if user just submitted a login form)
-        elseif (isset($_POST["login"])) {
+        else if (isset($_POST["login"])) {
+
             $this->dologinWithPostData();
         }
         $this->showError();
@@ -75,26 +75,21 @@ class Login {
                 // escape the POST stuff
                 $user_name = $this->db_connection->real_escape_string($_POST['user_name']);
 
-                // database query, getting all the info of the selected user (allows login via email address in the
-                // username field)
-                $sql = "SELECT user_name, user_email, user_password_hash
-                        FROM users
-                        WHERE user_name = '" . $user_name . "' OR user_email = '" . $user_name . "';";
-                $result_of_login_check = $this->db_connection->query($sql);
+                $userByName = User::get($user_name, "USERNAME");
+                $userByEmail = User::get($user_name, "USEREMAIL");
 
                 // if this user exists
-                if ($result_of_login_check->num_rows == 1) {
+                if ($userByName || $userByEmail) {
 
-                    // get result row (as an object)
-                    $result_row = $result_of_login_check->fetch_object();
+                    $user = $userByName ? $userByName : $userByEmail;
 
                     // using PHP 5.5's password_verify() function to check if the provided password fits
                     // the hash of that user's password
-                    if (password_verify($_POST['user_password'], $result_row->user_password_hash)) {
+                    if (password_verify($_POST['user_password'], $user->passwordHash)) {
 
                         // write user data into PHP SESSION (a file on your server)
-                        $_SESSION['user_name'] = $result_row->user_name;
-                        $_SESSION['user_email'] = $result_row->user_email;
+                        $_SESSION['user_name'] = $user->userName;
+                        $_SESSION['user_email'] = $user->userEmail;
                         $_SESSION['user_login_status'] = 1;
 
                     } else {
@@ -125,33 +120,30 @@ class Login {
                 $errors[] = $dbConnection->error;
             }
 
+
             // if no connection errors (= working database connection)
             if (!$dbConnection->connect_errno) {
 
                 // escape the POST stuff
-                $user_name = $dbConnection->real_escape_string($userName);
+                $user_name = $dbConnection->real_escape_string($_POST['user_name']);
 
-                // database query, getting all the info of the selected user (allows login via email address in the
-                // username field)
-                $sql = "SELECT user_name, user_email, user_password_hash
-                        FROM users
-                        WHERE user_name = '" . $user_name . "' OR user_email = '" . $user_name . "';";
-                $result_of_login_check = $dbConnection->query($sql);
+                $userByName = User::get($user_name, "USERNAME");
+                $userByEmail = User::get($user_name, "USEREMAIL");
 
                 // if this user exists
-                if ($result_of_login_check->num_rows == 1) {
+                if ($userByName || $userByEmail) {
 
-                    // get result row (as an object)
-                    $result_row = $result_of_login_check->fetch_object();
+                    $user = $userByName ? $userByName : $userByEmail;
 
                     // using PHP 5.5's password_verify() function to check if the provided password fits
                     // the hash of that user's password
-                    if (password_verify($userPassword, $result_row->user_password_hash)) {
+                    if (password_verify($userPassword, $user->passwordHash)) {
 
                         // write user data into PHP SESSION (a file on your server)
-                        $_SESSION['user_name'] = $result_row->user_name;
-                        $_SESSION['user_email'] = $result_row->user_email;
+                        $_SESSION['user_name'] = $user->userName;
+                        $_SESSION['user_email'] = $user->userEmail;
                         $_SESSION['user_login_status'] = 1;
+
 
                     } else {
                         $errors[] = "Wrong password. Try again.";
@@ -169,7 +161,7 @@ class Login {
      * perform the logout
      */
     public function doLogout() {
-        if($this->isUserLoggedIn()){
+        if ($this->isUserLoggedIn()) {
             // delete the session of the user
             $_SESSION = array();
             session_destroy();
@@ -211,11 +203,11 @@ class Login {
         if ($this->messages) { ?>
             <div class="message alert alert-success alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <?php
-            foreach ($this->messages as $message) {
-                echo $message;
-            }
-            ?>
+                <?php
+                foreach ($this->messages as $message) {
+                    echo $message;
+                }
+                ?>
             </div>
             <?php
         }

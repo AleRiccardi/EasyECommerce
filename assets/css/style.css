@@ -10,6 +10,10 @@ body {
     padding-top: 71px;
 }
 
+main {
+    margin-top: 20px;
+}
+
 .title-center {
     text-align: center;
     margin-bottom: 50px;
@@ -148,15 +152,15 @@ ul.nav-menu {
 
 .mu-img {
     display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 5px;
 }
 
 .mu-img .profile-image {
-    margin-right: 10px;
-    width: 40px;
-    height: 40px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center 0;
+    max-width: 100%;
 }
 
 .cont-menu-user .mu-dd-button {
@@ -285,15 +289,14 @@ p.lead-home {
 
 .pu-img {
     display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .pu-img .profile-image {
-    margin-right: 10px;
-    width: 100px;
-    height: 100px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center 0;
+    max-width: 100%;
 }
 
 .page-user .user-name {
@@ -354,7 +357,7 @@ p.lead-home {
    ==================== */
 
 .page-shop {
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 
 .page-shop .jumbotron {
@@ -400,6 +403,29 @@ p.lead-home {
 }
 
 /* ====================
+    EDIT LOGIN page
+   ==================== */
+
+.page-edit-login {
+}
+
+.page-edit-login .container{
+    max-width: 650px;
+}
+
+.cont-edit-form {
+    margin-top: 25px;
+    background-color: #ececec;
+    padding: 20px 28px 20px 28px;
+    border-radius: 10px;
+}
+
+.cont-edit-form form{
+    margin: 0;
+}
+
+
+/* ====================
     404 page
    ==================== */
 
@@ -426,6 +452,8 @@ p.lead-home {
     width: 100%;
     line-height: 60px;
 }
+
+
 
 /*
  * Off Canvas

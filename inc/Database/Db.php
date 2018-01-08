@@ -28,7 +28,7 @@ define('ARRAY_N', 'ARRAY_N');
  */
 class Db {
     const HOST = "localhost";
-    const NAME = "login";
+    const NAME = "resturant";
     const USER = "root";
     const PASS = "root";
 
@@ -59,11 +59,6 @@ class Db {
     public function query($sql) {
         if(!$ret = $this->dbConn->query($sql)) return null;
 
-        /*foreach ($ret as $row) {
-            print " User: " . $row['user_name'] . "\t ";
-            print " Pass: " . $row['user_password_hash'] . " \t ";
-        }*/
-
         if($ret->num_rows == 1) {
             $this->lastResult = $ret->fetch_object();
             $this->lastResult = array($this->lastResult);
@@ -77,6 +72,112 @@ class Db {
     }
 
     /**
+     * Insert query.
+     *
+     */
+    public function insert($table, $data) {
+
+        // QUERY creation
+        $sql = "INSERT INTO $table (";
+
+        $listKeys = array_keys($data);
+        $lastKey = end($listKeys);
+        foreach($data as $key => $value){
+            $sql .= "$key";
+            if(!($key == $lastKey)){
+                $sql .= ", ";
+            }
+        }
+        $sql .= ") VALUES (";
+        foreach ($data as $key => $value) {
+            if (is_string($value)) {
+                $sql .= "'$value'";
+            } else {
+                $sql .=  $value;
+            }
+
+            if (!($key == $lastKey)) {
+                $sql .= ", ";
+            }
+        }
+        $sql .= ")";
+
+        return $this->dbConn->query($sql);
+    }
+
+    /**
+     * Update a row in the table
+     *
+     *     wpdb::update( 'table', array( 'column' => 'foo', 'field' => 'bar' ), array( 'ID' => 1 ) )
+     *     wpdb::update( 'table', array( 'column' => 'foo', 'field' => 1337 ), array( 'ID' => 1 ), array( '%s', '%d' ), array( '%d' ) )
+     *
+     * @since 2.5.0
+     * @see wpdb::prepare()
+     * @see wpdb::$field_types
+     * @see wp_set_wpdb_vars()
+     *
+     * @param string       $table        Table name
+     * @param array        $data         Data to update (in column => value pairs).
+     *                                   Both $data columns and $data values should be "raw" (neither should be SQL escaped).
+     *                                   Sending a null value will cause the column to be set to NULL - the corresponding
+     *                                   format is ignored in this case.
+     * @param array        $where        A named array of WHERE clauses (in column => value pairs).
+     *                                   Multiple clauses will be joined with ANDs.
+     *                                   Both $where columns and $where values should be "raw".
+     *                                   Sending a null value will create an IS NULL comparison - the corresponding format will be ignored in this case.
+     * @param array|string $format       Optional. An array of formats to be mapped to each of the values in $data.
+     *                                   If string, that format will be used for all of the values in $data.
+     *                                   A format is one of '%d', '%f', '%s' (integer, float, string).
+     *                                   If omitted, all values in $data will be treated as strings unless otherwise specified in wpdb::$field_types.
+     * @param array|string $where_format Optional. An array of formats to be mapped to each of the values in $where.
+     *                                   If string, that format will be used for all of the items in $where.
+     *                                   A format is one of '%d', '%f', '%s' (integer, float, string).
+     *                                   If omitted, all values in $where will be treated as strings.
+     * @return int|false The number of rows updated, or false on error.
+     */
+    public function update( $table, $data, $where ) {
+
+        // QUERY creation
+        $sql = "UPDATE $table SET ";
+
+        $listKeys = array_keys($data);
+        $lastKey = end($listKeys);
+        foreach($data as $key => $value){
+            $sql .= "$key = ";
+
+            if (is_string($value)) {
+                $sql .= "'$value'";
+            } else {
+                $sql .=  $value;
+            }
+
+            if(!($key == $lastKey)){
+                $sql .= ", ";
+            }
+        }
+
+        $sql .= " WHERE ";
+
+        $listKeys = array_keys($where);
+        $lastKey = end($listKeys);
+        foreach($where as $key => $value){
+            $sql .= "$key = ";
+
+            if (is_string($value)) {
+                $sql .= "'$value'";
+            } else {
+                $sql .=  $value;
+            }
+
+            if(!($key == $lastKey)){
+                $sql .= ", ";
+            }
+        }
+        echo $sql;
+        return $this->dbConn->query($sql);
+    }
+
+    /**
      * Get results.
      *
      * @param null   $query
@@ -86,9 +187,9 @@ class Db {
      */
     public function getResults($query = null, $output = OBJECT) {
         $this->log = "\$db->get_results(\"$query\", $output)";
-
         if ($this->checkCurrentQuery() && $this->checkSafeCollation($query)) {
             $this->query($query);
+
         } else {
             return null;
         }

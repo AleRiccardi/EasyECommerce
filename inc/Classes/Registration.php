@@ -3,6 +3,7 @@
 namespace Inc\Classes;
 
 use Inc\Database\Db;
+use Inc\Database\DbUser;
 
 /**
  * Class registration
@@ -33,13 +34,18 @@ class Registration {
     public function register() {
         if (session_status() == PHP_SESSION_NONE && !headers_sent()) {
             session_start();
-            if (isset($_POST["register"])) {
-                if($this->registerNewUser()) Login::staticLogin($_POST['user_name'], $_POST['user_password_new']);
+        }
+
+        if (isset($_POST["register"])) {
+            if ($this->registerNewUser()){
+                Login::staticLogin($_POST['user_name'], $_POST['user_password_new']);
+            } else {
+                $this->showError();
             }
         }
 
 
-        //$this->showError();
+
     }
 
     /**
@@ -52,7 +58,7 @@ class Registration {
         } elseif (empty($_POST['user_password_new']) || empty($_POST['user_password_repeat'])) {
             $this->errors[] = "Empty Password";
         } elseif ($_POST['user_password_new'] !== $_POST['user_password_repeat']) {
-            $this->errors[] = "Password and password repeat are not the same";
+            $this->errors[] = "The password doesn't match";
         } elseif (strlen($_POST['user_password_new']) < 6) {
             $this->errors[] = "Password has a minimum length of 6 characters";
         } elseif (strlen($_POST['user_name']) > 64 || strlen($_POST['user_name']) < 2) {
@@ -99,19 +105,14 @@ class Registration {
                 $user_password_hash = password_hash($user_password, PASSWORD_DEFAULT);
 
                 // check if user or email address already exists
-                $sql = "SELECT * FROM users WHERE user_name = '" . $user_name . "' OR user_email = '" . $user_email . "';";
-                $query_check_user_name = $this->db_connection->query($sql);
-
-                if ($query_check_user_name->num_rows == 1) {
+                if (User::get($user_name, "USERNAME") || User::get($user_email, "USEREMAIL")) {
                     $this->errors[] = "Sorry, that username / email address is already taken.";
                 } else {
                     // write new user's data into database
-                    $sql = "INSERT INTO users (user_name, user_password_hash, user_email)
-                            VALUES('" . $user_name . "', '" . $user_password_hash . "', '" . $user_email . "');";
-                    $query_new_user_insert = $this->db_connection->query($sql);
+                    $insertResponse = User::register($user_name, $user_email, $user_password_hash);
 
                     // if user has been added successfully
-                    if ($query_new_user_insert) {
+                    if ($insertResponse) {
                         $this->messages[] = "Your account has been created successfully. You can now log in.";
                         return true;
                     } else {

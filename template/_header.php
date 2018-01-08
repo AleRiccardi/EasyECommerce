@@ -46,10 +46,10 @@ $login = new \Inc\Classes\Login();
                     <div class="nav-item dropdown">
                         <div class="mu-info" id="dropdown01" data-toggle="dropdown"
                              aria-haspopup="true" aria-expanded="true">
-                            <div class="mu-img">
-                                <div class="profile-image"
-                                     style="background-image: url('<?php echo $baseController->website_url ?>/assets/img/icon/user-image-small.png');"></div>
-                            </div>
+                                <div class="mu-img">
+                                    <img class="profile-image"
+                                         src="<?php echo $baseController->website_url ?>/assets/upload/image/default-avatar.png"/>
+                                </div>
                             <span class="mu-dd-button"><?php echo $_SESSION['user_name']; ?></span>
                         </div>
                         <div class="dropdown-menu mu-dd-content " aria-labelledby="dropdown01">

@@ -16,9 +16,6 @@ if ($login->isUserLoggedIn() == true) {
                 <h2 class="form-signin-heading">Registration</h2>
 
                 <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
-                <input style="display:none" name="user_name">
-                <input style="display:none" name="user_email">
-                <input style="display:none" type="password">
 
                 <label for="register_input_username" class="sr-only">Username</label>
                 <input name="user_name" id="register_input_username" class="form-control" placeholder="Username"
