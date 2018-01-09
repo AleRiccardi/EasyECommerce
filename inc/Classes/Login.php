@@ -75,8 +75,8 @@ class Login {
                 // escape the POST stuff
                 $user_name = $this->db_connection->real_escape_string($_POST['user_name']);
 
-                $userByName = User::get($user_name, "USERNAME");
-                $userByEmail = User::get($user_name, "USEREMAIL");
+                $userByName = User::getByNameEmail($user_name, "USERNAME");
+                $userByEmail = User::getByNameEmail($user_name, "USEREMAIL");
 
                 // if this user exists
                 if ($userByName || $userByEmail) {
@@ -127,8 +127,8 @@ class Login {
                 // escape the POST stuff
                 $user_name = $dbConnection->real_escape_string($_POST['user_name']);
 
-                $userByName = User::get($user_name, "USERNAME");
-                $userByEmail = User::get($user_name, "USEREMAIL");
+                $userByName = User::getByNameEmail($user_name, "USERNAME");
+                $userByEmail = User::getByNameEmail($user_name, "USEREMAIL");
 
                 // if this user exists
                 if ($userByName || $userByEmail) {

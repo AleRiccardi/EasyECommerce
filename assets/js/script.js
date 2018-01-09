@@ -5,7 +5,7 @@ $(function () {
         $('.row-offcanvas').toggleClass('active')
     })
 
-    $('#upload-icon').change(function(e) {
+    $('#uploadIcon').change(function(e) {
         var preview = document.getElementById('preview-icon');
         var file = e.target.files[0]; //sames as here
         var reader = new FileReader();

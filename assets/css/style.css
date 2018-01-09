@@ -7,7 +7,7 @@ html, body {
 }
 
 body {
-    padding-top: 71px;
+    padding-top: 68px;
 }
 
 main {
@@ -72,8 +72,9 @@ main {
 
 /*logo*/
 .cont-logo {
-    width: 55px;
+    width: 160px;
     height: auto;
+    padding-bottom: 8px;
 }
 
 .cont-logo img {
@@ -139,8 +140,18 @@ ul.nav-menu {
 }
 
 /* user menu */
+.cont-menu-cart {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* user menu */
 .cont-menu-user {
     cursor: pointer;
+}
+
+.dropdown-menu {
+    left: -33px !important;
 }
 
 .mu-info {
@@ -150,11 +161,14 @@ ul.nav-menu {
     padding: 10px;
 }
 
+.menu-icon-circle {
+    border-radius: 50%;
+}
+
 .mu-img {
     display: inline-block;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     overflow: hidden;
     margin-right: 5px;
 }
@@ -167,7 +181,7 @@ ul.nav-menu {
     border: none;
     outline: none;
     background-color: inherit;
-    padding: 10px 5px;
+    padding: 4px 5px;
     display: inline-block;
 }
 
@@ -182,7 +196,7 @@ ul.nav-menu {
 }
 
 /* ====================
-    INDEX
+    HOME
    ==================== */
 
 .flex-container-center {
@@ -195,21 +209,21 @@ ul.nav-menu {
     margin: auto;
 }
 
-.hs-first .logo-container {
-    max-width: 250px;
+.logo-container {
+    max-width: 60%;
     height: auto;
     margin: 0 auto 50px auto;
 }
 
-.hs-first .logo-container img {
+.logo-container img {
     width: 100%;
 }
 
 h1.home-title {
-    font-size: 50px;
+    font-size: 38px;
     margin-top: 30px;
-    text-shadow: 2px 2px 10px black;
-    letter-spacing: 5px;
+    text-shadow: 5px 5px 14px black;
+    letter-spacing: 3px;
     text-transform: uppercase;
     color: white;
     font-weight: 700;
@@ -416,12 +430,45 @@ p.lead-home {
 .cont-edit-form {
     margin-top: 25px;
     background-color: #ececec;
-    padding: 20px 28px 20px 28px;
+    padding: 20px 35px 20px 35px !important;
     border-radius: 10px;
 }
 
 .cont-edit-form form{
     margin: 0;
+}
+
+
+.fileContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+.fileContainer [type=file] {
+    cursor: inherit;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+}
+
+/* Example stylistic flourishes */
+
+.fileContainer {
+    background: red;
+    border-radius: .5em;
+    float: left;
+    padding: .5em;
+}
+
+.fileContainer [type=file] {
+    cursor: pointer;
 }
 
 

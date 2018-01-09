@@ -8,7 +8,9 @@
 
 namespace Inc\Classes;
 
+use Inc\Base\BaseController;
 use Inc\Database\Db;
+use Inc\Database\DbImage;
 use Inc\Database\DbUser;
 
 class User {
@@ -18,7 +20,7 @@ class User {
         return DbUser::insert($data);
     }
 
-    public static function get($data, $type = "USERNAME") {
+    public static function getByNameEmail($data, $type = "USERNAME") {
         if (!is_string($data)) return null;
 
         if ($type == "USERNAME") {
@@ -37,9 +39,16 @@ class User {
     }
 
     public static function getProfilePic($userName){
-        $user = self::get($userName, $type = "USERNAME");
+        $baseController = new BaseController();
+        $user = self::getByNameEmail($userName, $type = "USERNAME");
         if($user->idImage){
-
+            if($image = DbImage::get(array("id" => $user->idImage))[0]){
+                return $baseController->website_url .$image->path;
+            } else {
+                return $baseController->website_url . "/assets/img/icon/default-avatar.png";
+            }
+        } else {
+            return null;
         }
     }
 

@@ -2,7 +2,7 @@
 
 use Inc\Classes\User;
 
-$user = User::get($_SESSION['user_name']);
+$user = User::getByNameEmail($_SESSION['user_name']);
 
 require_once($baseController->website_path . "/template/_header.php");
 ?>
@@ -13,7 +13,7 @@ require_once($baseController->website_path . "/template/_header.php");
             <div class="user-img-name middle-h-container">
                 <div class="pu-img">
                     <img id="preview-icon" class="profile-image"
-                         src="<?php echo $baseController->website_url ?>/assets/upload/image/default-avatar.png"/>
+                         src="<?php echo User::getProfilePic($_SESSION['user_name']); ?>"/>
                 </div>
                 <div class="middle-h-item user-name">
                     <h1 class=""><?php echo $user->userName; ?></h1>

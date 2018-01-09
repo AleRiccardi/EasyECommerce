@@ -5,7 +5,7 @@
 /* IMAGE */
 CREATE TABLE IF NOT EXISTS image (
   id bigint(20) NOT NULL AUTO_INCREMENT,
-  url varchar(255) NOT NULL,
+  path varchar(255) NOT NULL,
   dateCreation datetime,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

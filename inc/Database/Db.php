@@ -173,7 +173,6 @@ class Db {
                 $sql .= ", ";
             }
         }
-        echo $sql;
         return $this->dbConn->query($sql);
     }
 

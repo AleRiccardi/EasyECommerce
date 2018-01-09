@@ -92,7 +92,7 @@ class DbModel {
      *
      * @return mixed
      */
-    public static function insert(array $data) {
+    public static function insert($data) {
         $db = new Db();
         $res = $db->insert(self::getTableName(), $data);
         return $res;

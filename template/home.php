@@ -4,13 +4,13 @@ require_once($baseController->website_path . "/template/_header.php");
 ?>
 
 <section class="flex-container-center fit-height-section"
-         style="background: url('<?php echo $baseController->website_url ?>/assets/img/sushi-table.jpg');">
+         style="background: url('<?php echo $baseController->website_url ?>/assets/img/all-chocolate.jpg');">
     <div class="flex-item-center">
         <div class="logo-container">
-            <img src="<?php echo $baseController->website_url ?>/assets/img/logo.png" alt="logo">
+            <img src="<?php echo $baseController->website_url ?>/assets/img/logo-brown.png" alt="logo">
         </div>
         <div>
-            <h1 class="home-title ">Experience <br> the taste of Japan</h1>
+            <h1 class="home-title ">Experience <br> the taste of real chocolate</h1>
         </div>
     </div>
 </section>
@@ -22,20 +22,20 @@ require_once($baseController->website_path . "/template/_header.php");
             <div class="col-4 flex-container-center">
                 <div class="flex-item-center">
                     <p>
-                        Sushi Lounge is the Concept Store where the tradition of Asian cuisine combines with Mediterranean excellence.
+                        At inceptos proin cursus integer mattis morbi urna hendrerit, eu suspendisse curae placerat consequat placerat neque, venenatis amet et erat aliquam sed praesent.
                     </p>
                 </div>
             </div>
             <div class="col-4 flex-container-center">
                 <div class="flex-item-center">
-                    <img width="100%" src="<?php echo $baseController->website_url ?>/assets/img/sushi/1.png"
+                    <img width="100%" src="<?php echo $baseController->website_url ?>/assets/img/icon/chocolate.png"
                          alt="Funny sushi">
                 </div>
             </div>
             <div class="col-4 flex-container-center">
                 <div class="flex-item-center">
                     <p>
-                        Sushi & Go is the line of recipes designed for Take Away.
+                        Commodo fames sociosqu habitasse eros aliquam hac tellus consequat augue, aenean blandit curabitur tempus fames nisi aptent cras rhoncus tempus.
                     </p>
                 </div>
             </div>
@@ -44,9 +44,9 @@ require_once($baseController->website_path . "/template/_header.php");
 </section>
 
 <section class="flex-container-center fit-height-section hs-third"
-         style="background: url('<?php echo $baseController->website_url ?>/assets/img/japan-street.jpg');">
+         style="background: url('<?php echo $baseController->website_url ?>/assets/img/ice-cream.jpg');">
     <div class="flex-item-center">
-        <p class="lead-home">The best restaurant that connects the Japanese kitchen with a simple Vespa.
+        <p class="lead-home">The best chocolate restaurant that connects the fat kitchen with a Vespa.
         </p>
         <span class="cit-right">Rolling Stone</span>
     </div>

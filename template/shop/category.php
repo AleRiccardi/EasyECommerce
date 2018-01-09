@@ -14,7 +14,7 @@ require_once($baseController->website_path . "/template/_header.php");
                      style="background-image:
                          linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.30)),
                          linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0.8) 100%),
-                         url('<?php echo $baseController->website_url ?>/assets/img/cat-sushi.jpg');">
+                         url('<?php echo $baseController->website_url ?>/assets/img/cat-cake.jpg');">
                     <h1>Rice</h1>
                     <p>For over 2000 years, rice has been the most important food in Japanese cuisine.
                         Despite changes in eating patterns over the last few decades and slowly decreasing rice
@@ -24,7 +24,7 @@ require_once($baseController->website_path . "/template/_header.php");
                 </div>
                 <div class="card-columns">
                     <div class="card">
-                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/upload/image/ricebowl.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/uploads/image/ricebowl.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Card title that wraps to a new line</h5>
                             <p class="card-text">This is a longer card with supporting text below as a natural lead-in
@@ -32,7 +32,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         </div>
                     </div>
                     <div class="card">
-                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/upload/image/sushi.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/uploads/image/sushi.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This card has supporting text below as a natural lead-in to additional
@@ -43,7 +43,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         </div>
                     </div>
                     <div class="card">
-                        <img class="card-img" src="<?php echo $baseController->website_url ?>/assets/upload/image/fried-ric.jpg" alt="Card image">
+                        <img class="card-img" src="<?php echo $baseController->website_url ?>/assets/uploads/image/fried-ric.jpg" alt="Card image">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This card has supporting text below as a natural lead-in to additional
@@ -54,7 +54,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         </div>
                     </div>
                     <div class="card">
-                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/upload/image/sushi.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/uploads/image/sushi.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This card has supporting text below as a natural lead-in to additional
@@ -65,7 +65,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         </div>
                     </div>
                     <div class="card">
-                        <img class="card-img" src="<?php echo $baseController->website_url ?>/assets/upload/image/fried-ric.jpg" alt="Card image">
+                        <img class="card-img" src="<?php echo $baseController->website_url ?>/assets/uploads/image/fried-ric.jpg" alt="Card image">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This card has supporting text below as a natural lead-in to additional
@@ -76,7 +76,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         </div>
                     </div>
                     <div class="card">
-                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/upload/image/sushi.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/uploads/image/sushi.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This card has supporting text below as a natural lead-in to additional
@@ -87,7 +87,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         </div>
                     </div>
                     <div class="card">
-                        <img class="card-img" src="<?php echo $baseController->website_url ?>/assets/upload/image/fried-ric.jpg" alt="Card image">
+                        <img class="card-img" src="<?php echo $baseController->website_url ?>/assets/uploads/image/fried-ric.jpg" alt="Card image">
                         <div class="card-body">
                             <h5 class="card-title">Card title</h5>
                             <p class="card-text">This card has supporting text below as a natural lead-in to additional
@@ -104,14 +104,9 @@ require_once($baseController->website_path . "/template/_header.php");
                 <div class="list-group">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=shop"
                        class="list-group-item">Shop</a>
-                    <a href="<?php echo $baseController->website_url ?>/page.php?name=shop&category=rice" class="list-group-item active">Rice</a>
-                    <a href="#" class="list-group-item">Seafood</a>
-                    <a href="#" class="list-group-item">Noodle</a>
-                    <a href="#" class="list-group-item">Nabe</a>
-                    <a href="#" class="list-group-item">Meat</a>
-                    <a href="#" class="list-group-item">Soybean</a>
-                    <a href="#" class="list-group-item">Yoshoku</a>
-                    <a href="#" class="list-group-item">Other</a>
+                    <a href="<?php echo $baseController->website_url ?>/page.php?name=shop&category=rice" class="list-group-item active">Cake</a>
+                    <a href="#" class="list-group-item">Cookies</a>
+                    <a href="#" class="list-group-item">Sweets</a>
                 </div>
             </div><!--/span-->
         </div><!--/row-->
