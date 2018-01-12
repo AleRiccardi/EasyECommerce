@@ -29,11 +29,11 @@ if ($login->isUserLoggedIn() == true) {
                            required="" type="email" autocomplete="off" value="<?php echo $userEmail; ?>">
 
                     <label for="register_input_password" class="sr-only">Password</label>
-                    <input name="user_password_new" id="register_input_password" class="form-control"
+                    <input name="userPasswordNew" id="register_input_password" class="form-control"
                            placeholder="Password" type="password" autocomplete="off" required="" autocomplete="nope">
 
                     <label for="login_input_password_repeat" class="sr-only">Password</label>
-                    <input name="user_password_repeat" id="login_input_password_repeat" class="form-control"
+                    <input name="userPassword_repeat" id="login_input_password_repeat" class="form-control"
                            placeholder="Repeat password" type="password" autocomplete="off" required="" autocomplete="nope">
 
                     <br>

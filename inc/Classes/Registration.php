@@ -35,7 +35,8 @@ class Registration {
 
         if (isset($_POST["register"])) {
             if ($this->registerNewUser()) {
-                Login::doStaticLogin($_POST['userName'], $_POST['user_password_new']);
+                $login = new Login();
+                $login->doLogin($_POST['userName'], $_POST['userPasswordNew']);
             } else {
                 $this->showError();
             }
@@ -51,11 +52,11 @@ class Registration {
     private function registerNewUser() {
         if (empty($_POST['userName'])) {
             $this->errors[] = "Empty Username";
-        } elseif (empty($_POST['user_password_new']) || empty($_POST['user_password_repeat'])) {
+        } elseif (empty($_POST['userPasswordNew']) || empty($_POST['userPassword_repeat'])) {
             $this->errors[] = "Empty Password";
-        } elseif ($_POST['user_password_new'] !== $_POST['user_password_repeat']) {
+        } elseif ($_POST['userPasswordNew'] !== $_POST['userPassword_repeat']) {
             $this->errors[] = "The password doesn't match";
-        } elseif (strlen($_POST['user_password_new']) < 6) {
+        } elseif (strlen($_POST['userPasswordNew']) < 6) {
             $this->errors[] = "Password has a minimum length of 6 characters";
         } elseif (strlen($_POST['userName']) > 64 || strlen($_POST['userName']) < 2) {
             $this->errors[] = "Username cannot be shorter than 2 or longer than 64 characters";
@@ -74,9 +75,9 @@ class Registration {
             && !empty($_POST['userEmail'])
             && strlen($_POST['userEmail']) <= 64
             && filter_var($_POST['userEmail'], FILTER_VALIDATE_EMAIL)
-            && !empty($_POST['user_password_new'])
-            && !empty($_POST['user_password_repeat'])
-            && ($_POST['user_password_new'] === $_POST['user_password_repeat'])
+            && !empty($_POST['userPasswordNew'])
+            && !empty($_POST['userPassword_repeat'])
+            && ($_POST['userPasswordNew'] === $_POST['userPassword_repeat'])
         ) {
             // create a database connection
             $this->db_connection = new \mysqli(Db::HOST, Db::USER, Db::PASS, Db::NAME);
@@ -93,19 +94,19 @@ class Registration {
                 $userName = $this->db_connection->real_escape_string(strip_tags($_POST['userName'], ENT_QUOTES));
                 $userEmail = $this->db_connection->real_escape_string(strip_tags($_POST['userEmail'], ENT_QUOTES));
 
-                $user_password = $_POST['user_password_new'];
+                $userPassword = $_POST['userPasswordNew'];
 
                 // crypt the user's password with PHP 5.5's password_hash() function, results in a 60 character
                 // hash string. the PASSWORD_DEFAULT constant is defined by the PHP 5.5, or if you are using
                 // PHP 5.3/5.4, by the password hashing compatibility library
-                $user_password_hash = password_hash($user_password, PASSWORD_DEFAULT);
+                $userPassword_hash = password_hash($userPassword, PASSWORD_DEFAULT);
 
                 // check if user or email address already exists
                 if (User::getByNameOrEmail($userName, "USERNAME") || User::getByNameOrEmail($userEmail, "USEREMAIL")) {
                     $this->errors[] = "Sorry, that username / email address is already taken.";
                 } else {
                     // write new user's data into database
-                    $insertResponse = User::registerNewUser($userName, $userEmail, $user_password_hash);
+                    $insertResponse = User::registerNewUser($userName, $userEmail, $userPassword_hash);
 
                     // if user has been added successfully
                     if ($insertResponse) {

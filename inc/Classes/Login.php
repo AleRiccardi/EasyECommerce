@@ -50,24 +50,29 @@ class Login {
             $this->doLogout();
         } // login via post data (if user just submitted a login form)
         else if (isset($_POST["login"])) {
-
-            $this->doLogin();
+            $username = isset($_POST['userName']) ? $_POST['userName'] : "";
+            $password = isset($_POST['userPassword']) ? $_POST['userPassword'] : "";
+            $this->doLogin($username, $password);
+            //$this->doStaticLogin($username, $password);
         }
         $this->showError();
     }
 
     /**
-     * Log in with post data.
+     * Permit to login a user that exist in the db.
+     *
+     * @param $userName
+     * @param $userPassword
      *
      * @return bool true if success, false otherwise
      */
-    private function doLogin() {
-        // check login form contents
-        if (empty($_POST['userName'])) {
-            $this->errors[] = "Username field was empty.";
-        } elseif (empty($_POST['user_password'])) {
-            $this->errors[] = "Password field was empty.";
-        } elseif (!empty($_POST['userName']) && !empty($_POST['user_password'])) {
+    public function doLogin($userName, $userPassword) {
+
+        if (empty($userName)) {
+            $errors[] = "Username field was empty.";
+        } elseif (empty($userPassword)) {
+            $errors[] = "Password field was empty.";
+        } elseif (!empty($userName) && !empty($userPassword)) {
 
             // create a database connection, using the constants from config/db.php (which we loaded in index.php)
             $this->db_connection = new \mysqli(Db::HOST, Db::USER, Db::PASS, Db::NAME);
@@ -93,7 +98,7 @@ class Login {
 
                     // using PHP 5.5's password_verify() function to check if the provided password fits
                     // the hash of that user's password
-                    if (password_verify($_POST['user_password'], $user->passwordHash)) {
+                    if (password_verify($userPassword, $user->passwordHash)) {
 
                         // write user data into PHP SESSION (a file on your server)
                         $_SESSION['userName'] = $user->userName;
@@ -115,61 +120,8 @@ class Login {
         return false;
     }
 
-    public static function doStaticLogin($userName, $userPassword) {
-
-        if (empty($userName)) {
-            $errors[] = "Username field was empty.";
-        } elseif (empty($userPassword)) {
-            $errors[] = "Password field was empty.";
-        } elseif (!empty($userName) && !empty($userPassword)) {
-
-            // create a database connection, using the constants from config/db.php (which we loaded in index.php)
-            $dbConnection = new \mysqli(Db::HOST, Db::USER, Db::PASS, Db::NAME);
-
-            // change character set to utf8 and check it
-            if (!$dbConnection->set_charset("utf8")) {
-                $errors[] = $dbConnection->error;
-            }
-
-
-            // if no connection errors (= working database connection)
-            if (!$dbConnection->connect_errno) {
-
-                // escape the POST stuff
-                $userName = $dbConnection->real_escape_string($_POST['userName']);
-
-                $userByName = User::getByNameOrEmail($userName, "USERNAME");
-                $userByEmail = User::getByNameOrEmail($userName, "USEREMAIL");
-
-                // if this user exists
-                if ($userByName || $userByEmail) {
-
-                    $user = $userByName ? $userByName : $userByEmail;
-
-                    // using PHP 5.5's password_verify() function to check if the provided password fits
-                    // the hash of that user's password
-                    if (password_verify($userPassword, $user->passwordHash)) {
-
-                        // write user data into PHP SESSION (a file on your server)
-                        $_SESSION['userName'] = $user->userName;
-                        $_SESSION['userEmail'] = $user->userEmail;
-                        $_SESSION['userLoginStatus'] = 1;
-
-
-                    } else {
-                        $errors[] = "Wrong password. Try again.";
-                    }
-                } else {
-                    $errors[] = "This user does not exist.";
-                }
-            } else {
-                $errors[] = "Database connection problem.";
-            }
-        }
-    }
-
     /**
-     * perform the logout
+     * perform the logout.
      */
     public function doLogout() {
         if ($this->isUserLoggedIn()) {

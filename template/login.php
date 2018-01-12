@@ -21,7 +21,7 @@ if ($login->isUserLoggedIn() == true) {
                            required="" autofocus="" value="<?php echo $userName; ?>">
                     <label for="login_input_password" class="sr-only">Password</label>
                     <input type="password" id="login_input_password" class="form-control" placeholder="Password"
-                           name="user_password"
+                           name="userPassword"
                            autocomplete="off" required="">
                     <div class="checkbox">
                         <label>

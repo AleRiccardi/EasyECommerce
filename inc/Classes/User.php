@@ -143,10 +143,10 @@ class User {
             );
 
             // PASSWORD
-            $user_password = isset($_POST['password']) && !empty($_POST['password']) ? $_POST['password'] : null;
-            if ($user_password) {
-                $user_password_hash = password_hash($user_password, PASSWORD_DEFAULT);
-                $data['passwordHash'] = $user_password_hash;
+            $userPassword = isset($_POST['password']) && !empty($_POST['password']) ? $_POST['password'] : null;
+            if ($userPassword) {
+                $userPassword_hash = password_hash($userPassword, PASSWORD_DEFAULT);
+                $data['passwordHash'] = $userPassword_hash;
             }
 
             // FILE
