@@ -9,10 +9,6 @@ namespace Inc\Database;
  * @package Inc\Database
  */
 class DbImage extends DbModel {
-    const ER_DONT_EXIST = "The badge don't exist.\n";
-    const ER_DUPLICATE = "The badge is duplicate.\n";
-    const ER_WRONG_FIELDS = "Wrong fields passed in the array.\n";
-    const ER_ERROR = "There's an error in the database.\n";
     // database name
     static $tableName = "image";
 
@@ -30,7 +26,7 @@ class DbImage extends DbModel {
         );
 
         // Check if exist
-        if(!($image = self::get($data))) {
+        if(!($image = self::get($data, "OBJECT"))) {
             $data = array(
                 "path" => $url,
                 "dateCreation" => self::now()
@@ -40,7 +36,7 @@ class DbImage extends DbModel {
                 $data = array(
                     "path" => $url,
                 );
-                $image = self::get($data);
+                $image = self::get($data, "OBJECT");
                 return $image->id;
             } else {
                 return null;

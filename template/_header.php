@@ -60,9 +60,9 @@ $login = new \Inc\Classes\Login();
                          aria-haspopup="true" aria-expanded="true">
                         <div class="mu-img menu-icon-circle">
                             <img class="profile-image"
-                                 src="<?php echo User::getProfilePic($_SESSION['user_name']); ?>"/>
+                                 src="<?php echo User::getProfilePic($_SESSION['userName']); ?>"/>
                         </div>
-                        <span class="mu-dd-button"><?php echo $_SESSION['user_name']; ?></span>
+                        <span class="mu-dd-button"><?php echo $_SESSION['userName']; ?></span>
                     </div>
                     <div class="dropdown-menu mu-dd-content " aria-labelledby="dropdown01">
                         <a class="dropdown-item"

@@ -30,21 +30,19 @@ class DbModel {
     }
 
     /**
-     * Creation of the query and injection.
+     * Creation of the query for the Selection and deletion.
      *
      * @param string $type of query that we want to inject
      *
      * @param array  $data list of information that will be
      *                     placed after the expression WHERE
      *
-     * @return string the name.
+     * @return string the sql query.
      */
-    public static function fetchSql($type, $data) {
+    public static function fetchSql($data, $type) {
 
         if ($type == "SELECT") {
             $sql = "SELECT * FROM " . self::getTableName();
-        } else if ($type == "UPDATE") {
-            $sql = "UPDATE * FROM " . self::getTableName();
         } else if ($type == "DELETE") {
             $sql = "DELETE FROM " . self::getTableName();
         }
@@ -73,17 +71,22 @@ class DbModel {
     }
 
     /**
-     * Get a somethings.
+     * Get information from table.
      *
      * @param array|null $data  list of information that will be
      *                          placed after the expression WHERE
+     * @param string     $type  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
      *
-     * @return array|null
+     * @return array|object|null array of results, if single will be as an object,
+     *                    null if error.
      */
-    public static function get(array $data = null, $type = "OBJECT") {
+    public static function get(array $data = null, $type) {
         $db = new Db();
-        $res = $db->getResults(self::fetchSql("SELECT", $data), $type);
+        $query = self::fetchSql($data, "SELECT");
+        $res = $db->getResults($query, $type);
 
+        // if we have only one result we will take out the first element of the
+        // array inside a variable, like --> array(value) --> value
         if (count($res) == 1) {
             $res = $res[0];
         }
@@ -92,11 +95,11 @@ class DbModel {
     }
 
     /**
-     * Insert
+     * Insert in the table
      *
-     * @param $data
+     * @param array $data information to be insert
      *
-     * @return array|bool|null|object|\stdClass
+     * @return bool|int id of the row if everything right, false otherwise
      */
     public static function insert($data) {
         // QUERY creation
@@ -125,7 +128,11 @@ class DbModel {
         $sql .= ")";
 
         $db = new Db();
-        return $db->query($sql);
+
+        if ($db->query($sql) === true) {
+            return $db->insertId;
+        }
+        return false;
     }
 
     /**
@@ -134,7 +141,7 @@ class DbModel {
      * @param array $data  Data to update (in column => value pairs).
      * @param array $where A named array of WHERE clauses (in column => value pairs).
      *
-     * @return int|false The number of rows updated, or false on error.
+     * @return int|false The number of rows updated, or false for errors.
      */
     public static function update(array $data, array $where) {
         // QUERY creation
@@ -192,7 +199,7 @@ class DbModel {
      *
      * @param array $data
      *
-     * @return mixed
+     * @return mixed value (to be tested)
      */
     public static function delete(array $data) {
         $db = new Db();
@@ -203,7 +210,7 @@ class DbModel {
     /**
      * Get the time now.
      *
-     * @return false|string
+     * @return false|string of the date, false if errors
      */
     public static function now() {
         return date('Y-m-d H:i:s');

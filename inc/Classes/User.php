@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: aleric
- * Date: 07/01/2018
- * Time: 04:54
- */
 
 namespace Inc\Classes;
 
@@ -12,18 +6,59 @@ use Inc\Base\BaseController;
 use Inc\Database\DbImage;
 use Inc\Database\DbUser;
 
+/**
+ * Class User
+ *
+ * @package Inc\Classes
+ */
 class User {
 
+    /**
+     * Init function run form the Init class every
+     * time that we load a page.
+     */
     public function register() {
         self::editUser();
     }
 
-    public static function registration($userName, $userEmail, $passwordHas) {
-        $data = array("userName" => $userName, "userEmail" => $userEmail, "passwordHash" => $passwordHas, 'dateRegistration' => DbUser::now());
+    /**
+     * Register a new user.
+     *
+     * @param string $userName     username
+     * @param string $userEmail    email address
+     * @param string $passwordHash password
+     *
+     * @return bool|int id of the row if everything right, false otherwise
+     */
+    public static function registerNewUser($userName, $userEmail, $passwordHash) {
+        $data = array(
+            "userName" => $userName,
+            "userEmail" => $userEmail,
+            "passwordHash" => $passwordHash,
+            'dateRegistration' => DbUser::now()
+        );
         return DbUser::insert($data);
     }
 
-    public static function getByNameEmail($id, $type = "USERNAME") {
+    /**
+     * Get the current user logged.
+     *
+     * @return array|null
+     */
+    public static function getCurrentUser() {
+        return self::getByNameOrEmail($_SESSION['userName'], "USERNAME");
+    }
+
+
+    /**
+     * Get user from username or email address.
+     *
+     * @param        $id   the username or email
+     * @param string $type USERNAME | USEREMAIL
+     *
+     * @return array|object|null
+     */
+    public static function getByNameOrEmail($id, $type = "USERNAME") {
         if (!is_string($id)) return null;
 
         if ($type == "USERNAME") {
@@ -32,18 +67,24 @@ class User {
             $data = array("userEmail" => $id);
         }
 
-        $ret = DbUser::get($data);
+        $ret = DbUser::get($data, "OBJECT");
         return $ret;
     }
 
-
+    /**
+     * Get the profile pic of a user.
+     *
+     * @param string $userName the username
+     *
+     * @return null|string the url of the img
+     */
     public static function getProfilePic($userName) {
         $imageFinalPath = null;
         $baseController = new BaseController();
-        $user = self::getByNameEmail($userName, $type = "USERNAME");
+        $user = self::getByNameOrEmail($userName, $type = "USERNAME");
         if ($user->idImage) {
             // get row from Image table
-            $image = DbImage::get(array("id" => $user->idImage));
+            $image = DbImage::get(array("id" => $user->idImage), "OBJECT");
             if ($image) {
                 $imageFinalPath = $baseController->website_url . $image->path;
             } else {
@@ -60,11 +101,19 @@ class User {
         return $imageFinalPath;
     }
 
+    /**
+     *  Remove image of a specific user.
+     *
+     * @param string $id   the username or email
+     * @param string $type USERNAME | USEREMAIL
+     *
+     * @return bool true if success, false otherwise
+     */
     public static function removeImage($id, $type = "USERNAME") {
-        if (!is_string($id)) return null;
+        if (!is_string($id)) return false;
         $data = array("idImage" => null);
 
-        $user = self::getByNameEmail($id, $type);
+        $user = self::getByNameOrEmail($id, $type);
 
         $where = array('id' => $user->id);
         if (!(DbUser::update($data, $where))) {
@@ -78,6 +127,13 @@ class User {
         return true;
     }
 
+    /**
+     * When clicked the button editLogin||removeImage  in edit-user.php
+     * page the form send $_POST information and that function permit to
+     * catch them.
+     *
+     * @return bool|false|int
+     */
     public static function editUser() {
         if (isset($_POST['editLogin'])) {
 
@@ -95,14 +151,14 @@ class User {
 
             // FILE
             if ($_FILES["uploadIcon"]['name']) {
-                $idImage = Image::upload($_SESSION['user_name'], $_FILES['uploadIcon']);
+                $idImage = Image::upload($_SESSION['userName'], $_FILES['uploadIcon']);
                 $data['idImage'] = $idImage;
             }
 
-            return DbUser::update($data, ["userName" => $_SESSION['user_name']]);
+            return DbUser::update($data, ["userName" => $_SESSION['userName']]);
         } else if (isset($_POST["removeImage"])) {
 
-            return self::removeImage($_SESSION["user_name"]);
+            return self::removeImage($_SESSION["userName"]);
         }
         // default
         return false;

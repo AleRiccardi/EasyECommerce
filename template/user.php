@@ -2,9 +2,9 @@
 
 use Inc\Classes\User;
 
-$user = User::getByNameEmail($_SESSION['user_name']);
-
 require_once($baseController->website_path . "/template/_header.php");
+
+$user = User::getByNameOrEmail($_SESSION['userName'], "USERNAME");
 
 ?>
 <div class="page-user fit-height-section">
@@ -14,7 +14,7 @@ require_once($baseController->website_path . "/template/_header.php");
             <div class="user-img-name middle-h-cont">
                 <div class="pu-img">
                     <img id="preview-icon" class="profile-image"
-                         src="<?php echo User::getProfilePic($_SESSION['user_name']); ?>"/>
+                         src="<?php echo User::getProfilePic($_SESSION['userName']); ?>"/>
                 </div>
                 <div class="middle-h-item user-name">
                     <h1 class=""><?php echo $user->userName; ?></h1>
@@ -46,7 +46,7 @@ require_once($baseController->website_path . "/template/_header.php");
                     </a>
                 </div>
                 <div class="user-action flex-item col-md-3">
-                    <a href="<?php echo $baseController->website_url ?>/page.php?name=address">
+                    <a href="<?php echo $baseController->website_url ?>/page.php?name=edit-address">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/truck.png" alt="logo">
                         </div>

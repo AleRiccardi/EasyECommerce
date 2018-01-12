@@ -24,16 +24,4 @@ class DbUser extends DbModel {
 
     }
 
-    /**
-     * Get all the badge.
-     *
-     * @author      Alessandro RICCARDI
-     * @since       1.0.0
-     *
-     * @return string
-     */
-    public static function getAll() {
-        return parent::get();
-    }
-
 }

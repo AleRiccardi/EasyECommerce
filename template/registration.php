@@ -8,8 +8,8 @@ if ($login->isUserLoggedIn() == true) {
 
 } else {
     require_once($baseController->website_path . "/template/_header.php");
-    $userName = isset($_POST['user_name']) ? $_POST['user_name'] : "";
-    $userEmail = isset($_POST['user_email']) ? $_POST['user_email'] : "";
+    $userName = isset($_POST['userName']) ? $_POST['userName'] : "";
+    $userEmail = isset($_POST['userEmail']) ? $_POST['userEmail'] : "";
 
     ?>
     <main>
@@ -21,11 +21,11 @@ if ($login->isUserLoggedIn() == true) {
                     <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
 
                     <label for="register_input_username" class="sr-only">Username</label>
-                    <input name="user_name" id="register_input_username" class="form-control" placeholder="Username"
+                    <input name="userName" id="register_input_username" class="form-control" placeholder="Username"
                            required="" type="text" pattern="[a-zA-Z0-9]{2,64}" autofocus="" autocomplete="off"
                            value="<?php echo $userName; ?>">
                     <label for="register_input_email" class="sr-only">Email</label>
-                    <input name="user_email" id="register_input_email" class="form-control" placeholder="Email"
+                    <input name="userEmail" id="register_input_email" class="form-control" placeholder="Email"
                            required="" type="email" autocomplete="off" value="<?php echo $userEmail; ?>">
 
                     <label for="register_input_password" class="sr-only">Password</label>

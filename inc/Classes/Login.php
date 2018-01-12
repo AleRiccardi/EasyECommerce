@@ -7,6 +7,8 @@ use Inc\Database\Db;
 /**
  * Class login
  * handles the user's login and logout process
+ *
+ * @package Inc\Classes
  */
 class Login {
 
@@ -31,6 +33,10 @@ class Login {
 
     }
 
+    /**
+     * Init function run form the Init class every
+     * time that we load a page.
+     */
     public function register() {
         // create/read session, absolutely necessary
 
@@ -45,21 +51,23 @@ class Login {
         } // login via post data (if user just submitted a login form)
         else if (isset($_POST["login"])) {
 
-            $this->dologinWithPostData();
+            $this->doLogin();
         }
         $this->showError();
     }
 
     /**
-     * log in with post data
+     * Log in with post data.
+     *
+     * @return bool true if success, false otherwise
      */
-    private function dologinWithPostData() {
+    private function doLogin() {
         // check login form contents
-        if (empty($_POST['user_name'])) {
+        if (empty($_POST['userName'])) {
             $this->errors[] = "Username field was empty.";
         } elseif (empty($_POST['user_password'])) {
             $this->errors[] = "Password field was empty.";
-        } elseif (!empty($_POST['user_name']) && !empty($_POST['user_password'])) {
+        } elseif (!empty($_POST['userName']) && !empty($_POST['user_password'])) {
 
             // create a database connection, using the constants from config/db.php (which we loaded in index.php)
             $this->db_connection = new \mysqli(Db::HOST, Db::USER, Db::PASS, Db::NAME);
@@ -73,10 +81,10 @@ class Login {
             if (!$this->db_connection->connect_errno) {
 
                 // escape the POST stuff
-                $user_name = $this->db_connection->real_escape_string($_POST['user_name']);
+                $userName = $this->db_connection->real_escape_string($_POST['userName']);
 
-                $userByName = User::getByNameEmail($user_name, "USERNAME");
-                $userByEmail = User::getByNameEmail($user_name, "USEREMAIL");
+                $userByName = User::getByNameOrEmail($userName, "USERNAME");
+                $userByEmail = User::getByNameOrEmail($userName, "USEREMAIL");
 
                 // if this user exists
                 if ($userByName || $userByEmail) {
@@ -88,10 +96,11 @@ class Login {
                     if (password_verify($_POST['user_password'], $user->passwordHash)) {
 
                         // write user data into PHP SESSION (a file on your server)
-                        $_SESSION['user_name'] = $user->userName;
-                        $_SESSION['user_email'] = $user->userEmail;
-                        $_SESSION['user_login_status'] = 1;
+                        $_SESSION['userName'] = $user->userName;
+                        $_SESSION['userEmail'] = $user->userEmail;
+                        $_SESSION['userLoginStatus'] = 1;
 
+                        return true;
                     } else {
                         $this->errors[] = "Wrong password. Try again.";
                     }
@@ -102,9 +111,11 @@ class Login {
                 $this->errors[] = "Database connection problem.";
             }
         }
+        // default
+        return false;
     }
 
-    public static function staticLogin($userName, $userPassword) {
+    public static function doStaticLogin($userName, $userPassword) {
 
         if (empty($userName)) {
             $errors[] = "Username field was empty.";
@@ -125,10 +136,10 @@ class Login {
             if (!$dbConnection->connect_errno) {
 
                 // escape the POST stuff
-                $user_name = $dbConnection->real_escape_string($_POST['user_name']);
+                $userName = $dbConnection->real_escape_string($_POST['userName']);
 
-                $userByName = User::getByNameEmail($user_name, "USERNAME");
-                $userByEmail = User::getByNameEmail($user_name, "USEREMAIL");
+                $userByName = User::getByNameOrEmail($userName, "USERNAME");
+                $userByEmail = User::getByNameOrEmail($userName, "USEREMAIL");
 
                 // if this user exists
                 if ($userByName || $userByEmail) {
@@ -140,9 +151,9 @@ class Login {
                     if (password_verify($userPassword, $user->passwordHash)) {
 
                         // write user data into PHP SESSION (a file on your server)
-                        $_SESSION['user_name'] = $user->userName;
-                        $_SESSION['user_email'] = $user->userEmail;
-                        $_SESSION['user_login_status'] = 1;
+                        $_SESSION['userName'] = $user->userName;
+                        $_SESSION['userEmail'] = $user->userEmail;
+                        $_SESSION['userLoginStatus'] = 1;
 
 
                     } else {
@@ -176,7 +187,7 @@ class Login {
      * @return boolean user's login status
      */
     public function isUserLoggedIn() {
-        if (isset($_SESSION['user_login_status']) AND $_SESSION['user_login_status'] == 1) {
+        if (isset($_SESSION['userLoginStatus']) AND $_SESSION['userLoginStatus'] == 1) {
             return true;
         }
         // default return
