@@ -16,6 +16,9 @@ $listTemplate = array(
     "template/registration.php",
     "template/shop.php",
     "template/edit-login.php",
+    "template/cart.php",
+    "template/order.php",
+    "template/address.php",
 );
 
 $temp404 = "template/404.php";

@@ -82,7 +82,13 @@ class DbModel {
      */
     public static function get(array $data = null, $type = "OBJECT") {
         $db = new Db();
-        return $db->getResults(self::fetchSql("SELECT", $data), $type);
+        $res = $db->getResults(self::fetchSql("SELECT", $data), $type);
+
+        if (count($res) == 1) {
+            $res = $res[0];
+        }
+
+        return $res;
     }
 
     /**
@@ -94,8 +100,7 @@ class DbModel {
      */
     public static function insert($data) {
         $db = new Db();
-        $res = $db->insert(self::getTableName(), $data);
-        return $res;
+        return $db->insert(self::getTableName(), $data);
     }
 
     /**
@@ -106,7 +111,7 @@ class DbModel {
      */
     public static function update(array $data, array $where) {
         $db = new Db();
-        $db->update(self::getTableName(), $data, $where);
+        return $db->update(self::getTableName(), $data, $where);
     }
 
     /**
@@ -119,7 +124,7 @@ class DbModel {
      */
     public static function delete(array $data) {
         $db = new Db();
-        echo $sql = self::fetchSql('DELETE', $data);
+        $sql = self::fetchSql('DELETE', $data);
         return $db->query($sql);
     }
 

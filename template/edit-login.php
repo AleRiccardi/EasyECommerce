@@ -5,7 +5,7 @@ use \Inc\Classes\Image;
 
 require_once($baseController->website_path . "/template/_header.php");
 
-if (isset($_POST['edit-login'])) {
+if (isset($_POST['editLogin'])) {
 
     $data = array(
         "firstName" => $_POST['firstName'],
@@ -25,16 +25,18 @@ if (isset($_POST['edit-login'])) {
         $data['idImage'] = $idImage;
     }
 
-    User::edit($data);
+    User::edit($_SESSION['user_name'], $data);
+} else if (isset($_POST["removeImage"])) {
+    echo User::removeImage($_SESSION["user_name"]) ? "yeahhhhhhhhhhhhh" : "fucking idiot";
 }
 
 $user = User::getByNameEmail($_SESSION['user_name']);
 ?>
-    <main class="page-edit-login">
-        <section class="fit-height-section">
-            <div class="container">
-                <h1 class="display-4">Edit Login</h1>
+    <main class="page-edit">
+        <section class="flex-container-center fit-height-section">
+            <div class="container flex-item-center">
                 <div class="col-12 cont-edit-form">
+                    <h1 class="display-4">Edit Login</h1>
                     <form class="form-edit-login" method="post" action="page.php?name=edit-login"
                           enctype="multipart/form-data"
                           name="edit-login-form">
@@ -43,7 +45,7 @@ $user = User::getByNameEmail($_SESSION['user_name']);
                         <input style="display: none;" class="form-control" name="secondName">
                         <input style="display: none;" type="password" class="form-control" placeholder="Password">
 
-                        <div class="user-img-name middle-h-container form-group row">
+                        <div class="user-img-name middle-h-cont form-group row">
                             <div class="col-sm-3">
                                 <div class="pu-img">
                                     <img id="preview-icon" class="profile-image"
@@ -56,7 +58,9 @@ $user = User::getByNameEmail($_SESSION['user_name']);
                                     <input id="uploadIcon" type="file" name="uploadIcon"/>
                                 </label>
                                 &nbsp;
-                                <button id="remove-icon" class="btn btn-outline-danger">Remove it</button>
+                                <input id="remove-icon" type="submit" name='removeImage'
+                                       value="Remove it"
+                                       class="btn btn-outline-danger btn-remove-file">
                             </div>
 
                         </div>
@@ -71,7 +75,7 @@ $user = User::getByNameEmail($_SESSION['user_name']);
                         <div class="form-group row">
                             <label for="secondName" class="col-sm-3 col-form-label">Second Name</label>
                             <div class="col-sm-9">
-                                <input name="secondName" class="form-control" id="secondName" placeholder="First Name"
+                                <input name="secondName" class="form-control" id="secondName" placeholder="Second Name"
                                        value="<?php echo $user->secondName; ?>">
                             </div>
                         </div>
@@ -82,7 +86,7 @@ $user = User::getByNameEmail($_SESSION['user_name']);
                                        placeholder="Password">
                             </div>
                         </div>
-                        <button class="btn btn-primary" name="edit-login" type="submit">Update</button>
+                        <button class="btn btn-primary" name="editLogin" type="submit">Update</button>
                     </form>
                 </div>
             </div>

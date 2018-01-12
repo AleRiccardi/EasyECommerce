@@ -8,17 +8,17 @@ if ($login->isUserLoggedIn() == true) {
 
 } else {
     require_once($baseController->website_path . "/template/_header.php");
+    $userName = isset($_POST['user_name']) ? $_POST['user_name'] : "";
 
     ?>
-    <main class="page-edit-login">
+    <main>
         <section class="flex-container-center fit-height-section">
             <div class="container flex-item-center">
                 <form class="form-signin" method="post" action="page.php?name=login" name="loginform">
                     <h2 class="form-signin-heading">Please sign in</h2>
                     <label for="login_input_username" class="sr-only">Username</label>
                     <input name="user_name" id="login_input_username" class="form-control" placeholder="Username"
-                           required=""
-                           autofocus="">
+                           required="" autofocus="" value="<?php echo $userName; ?>">
                     <label for="login_input_password" class="sr-only">Password</label>
                     <input type="password" id="login_input_password" class="form-control" placeholder="Password"
                            name="user_password"

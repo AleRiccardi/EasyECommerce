@@ -17,12 +17,12 @@ class Image {
 
     const MAX_SIZE = 5000000;
 
-    public static function upload($userName, $file){
+    public static function upload($userName, $file) {
         $baseController = new BaseController();
-        
+
         $target_dir = "/assets/uploads/user-avatar/";
         $imageFileType = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $relativePath = $target_dir . strtolower($_SESSION['user_name']) . "-avatar.$imageFileType";
+        $relativePath = $target_dir . strtolower($userName) . "-avatar.$imageFileType";
         $target_file = $baseController->website_path . $relativePath;
 
         $uploadOk = 1;
@@ -39,7 +39,7 @@ class Image {
 
         // Check file size
         if ($file["size"] > self::MAX_SIZE) {
-            echo "Sorry, your file is too large: " .$file["size"];
+            echo "Sorry, your file is too large: " . $file["size"];
             $uploadOk = 0;
         }
         // Allow certain file formats
@@ -54,11 +54,22 @@ class Image {
             // if everything is ok, try to upload file
         } else {
             if (move_uploaded_file($file["tmp_name"], $target_file)) {
-                return DbImage::insert($relativePath);
+                $uploadOk = 1;
             } else {
                 echo "Sorry, there was an error uploading your file.";
             }
         }
+
+        if ($uploadOk) {
+            $idImage = DbImage::insert($relativePath);
+            return $idImage;
+        }
     }
-    
+
+
+    public static function removeById($id) {
+        $data = array("id" => $id);
+        return DbImage::delete($data);
+    }
+
 }

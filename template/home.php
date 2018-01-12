@@ -46,7 +46,7 @@ require_once($baseController->website_path . "/template/_header.php");
 <section class="flex-container-center fit-height-section hs-third"
          style="background: url('<?php echo $baseController->website_url ?>/assets/img/ice-cream.jpg');">
     <div class="flex-item-center">
-        <p class="lead-home">The best chocolate restaurant that connects the fat kitchen with a Vespa.
+        <p class="lead-home">The best shop that connect the chocolate with a simple Vespa.
         </p>
         <span class="cit-right">Rolling Stone</span>
     </div>

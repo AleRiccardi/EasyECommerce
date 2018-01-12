@@ -23,7 +23,8 @@ if (isset($_GET['category'])) {
                 <div class="jumbotron"
                      style="background-image:
                              linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.30)),
-                             linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0.8) 100%),
+                             linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 25%,
+                             rgba(0,0,0,0.5) 75%, rgba(0,0,0,0.8) 100%),
                              url('<?php echo $baseController->website_url ?>/assets/img/blur-food.jpg');">
                     <h1>Shop</h1>
                     <p>
@@ -37,7 +38,7 @@ if (isset($_GET['category'])) {
                 </div>
 
                 <!-- Rice -->
-                <div class="row featurette middle-h-container">
+                <div class="row featurette middle-h-cont">
                     <div class="col-md-7 middle-h-item">
                         <h2 class="featurette-heading">Cake <span class="text-muted">Category</span></h2>
                         <p class="lead">For over 2000 years, rice has been the most important food in Japanese cuisine.
@@ -56,7 +57,7 @@ if (isset($_GET['category'])) {
                 <hr class="featurette-divider">
 
                 <!-- Seafood -->
-                <div class="row featurette middle-h-container">
+                <div class="row featurette middle-h-cont">
                     <div class="col-md-7 order-md-2 middle-h-item">
                         <h2 class="featurette-heading">Cookies <span class="text-muted">Category</span></h2>
                         <p class="lead">Hundreds of different fish, shellfish and other seafood from the oceans, seas,
@@ -74,7 +75,7 @@ if (isset($_GET['category'])) {
                 <hr class="featurette-divider">
 
                 <!-- Rice -->
-                <div class="row featurette middle-h-container">
+                <div class="row featurette middle-h-cont">
                     <div class="col-md-7 middle-h-item">
                         <h2 class="featurette-heading">Sweets <span class="text-muted">Category</span></h2>
                         <p class="lead">For over 2000 years, rice has been the most important food in Japanese cuisine.

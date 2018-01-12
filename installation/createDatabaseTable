@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS users (
   passwordHash varchar(255) NOT NULL,
   firstName varchar(64),
   secondName varchar(64),
+  isAdmin boolean,
   dateRegistration datetime,
   idImage bigint(20),
   idAddress bigint(20),

@@ -11,7 +11,7 @@ $login = new \Inc\Classes\Login();
 <head>
     <meta charset="utf-8" content="text/html" ;>
     </meta>
-    <title>ZB Sushi</title>
+    <title>Willychok</title>
     <?php require_once("_head.php"); ?>
 </head>
 <body>
@@ -47,9 +47,12 @@ $login = new \Inc\Classes\Login();
 
             <?php if ($login->isUserLoggedIn()) { ?>
                 <div class="cont-menu-cart nav-item">
-                    <div class="mu-img ">
+                    <div class="mc-img">
                         <img class="profile-image"
                              src="<?php echo $baseController->website_url ?>/assets/img/icon/cart-white.png"/>
+                    </div>
+                    <div class="mc-number-item">
+                        <span class="badge badge-primary">2</span>
                     </div>
                 </div>
                 <div class="cont-menu-user nav-item dropdown">
@@ -64,7 +67,6 @@ $login = new \Inc\Classes\Login();
                     <div class="dropdown-menu mu-dd-content " aria-labelledby="dropdown01">
                         <a class="dropdown-item"
                            href="<?php echo $baseController->website_url ?>/page.php?name=user">User</a>
-                        <a class="dropdown-item" href="#">Cart</a>
                         <a class="dropdown-item"
                            href="<?php echo $baseController->website_url ?>/page.php?name=login&logout">Logout</a>
                     </div>

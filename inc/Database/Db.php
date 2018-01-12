@@ -56,9 +56,23 @@ class Db {
      *
      * @return bool|\mysqli_result|null
      */
+    /**
+     * @param $sql
+     *
+     * @return array|null|object|\stdClass
+     */
+    /**
+     * @param $sql
+     *
+     * @return array|bool|null|object|\stdClass
+     */
     public function query($sql) {
+        //if error
         if(!$ret = $this->dbConn->query($sql)) return null;
+        //if is just a normal query without nothing to return
+        if($ret === true) return true;
 
+        //if have information
         if($ret->num_rows == 1) {
             $this->lastResult = $ret->fetch_object();
             $this->lastResult = array($this->lastResult);
@@ -67,13 +81,15 @@ class Db {
                 $this->lastResult[] = $obj;
             }
         }
-
         return $this->lastResult;
     }
 
+
     /**
-     * Insert query.
+     * @param $table
+     * @param $data
      *
+     * @return bool|\mysqli_result
      */
     public function insert($table, $data) {
 
@@ -102,7 +118,7 @@ class Db {
         }
         $sql .= ")";
 
-        return $this->dbConn->query($sql);
+        return $this->query($sql);
     }
 
     /**
@@ -147,8 +163,12 @@ class Db {
 
             if (is_string($value)) {
                 $sql .= "'$value'";
-            } else {
+            } else if(is_numeric($value)){
                 $sql .=  $value;
+            } else if(is_null($value)){
+                $sql .=  "NULL";
+            } else {
+                return null;
             }
 
             if(!($key == $lastKey)){
@@ -173,7 +193,7 @@ class Db {
                 $sql .= ", ";
             }
         }
-        return $this->dbConn->query($sql);
+        return $this->query($sql);
     }
 
     /**

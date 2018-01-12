@@ -25,7 +25,6 @@ class DbImage extends DbModel {
     }
 
     public static function insert($url) {
-
         $data = array(
             "path" => $url,
         );
@@ -36,9 +35,18 @@ class DbImage extends DbModel {
                 "path" => $url,
                 "dateCreation" => self::now()
             );
-            return parent::insert($data) ? $image = self::get($data) : null;
+
+            if(parent::insert($data)){
+                $data = array(
+                    "path" => $url,
+                );
+                $image = self::get($data);
+                return $image->id;
+            } else {
+                return null;
+            }
         } else {
-            return $image[0]->id;
+            return $image->id;
         }
     }
 

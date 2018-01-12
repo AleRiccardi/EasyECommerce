@@ -36,17 +36,4 @@ class DbUser extends DbModel {
         return parent::get();
     }
 
-    /**
-     * Get all the badge.
-     *
-     * @author      Alessandro RICCARDI
-     * @since       1.0.0
-     *
-     * @return array of badges
-     */
-    public static function getKeys() {
-        $data = parent::get();
-        return $data ? $data[0] : array();
-    }
-
 }

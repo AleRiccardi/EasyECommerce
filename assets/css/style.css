@@ -11,8 +11,8 @@ body {
 }
 
 main {
-    margin-top: 20px;
 }
+
 
 .title-center {
     text-align: center;
@@ -40,7 +40,7 @@ main {
     flex: 1;
 }
 
-.middle-h-container {
+.middle-h-cont {
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -93,6 +93,10 @@ header nav {
     justify-content: space-between;
 }
 
+.fixed-top {
+    height: 68px;
+}
+
 .wrap-menus {
     position: relative;
     display: -webkit-box;
@@ -139,13 +143,35 @@ ul.nav-menu {
     color: white;
 }
 
-/* user menu */
+/* ## Menu Cart  --> .mc ## */
+
 .cont-menu-cart {
+    position: relative;
+    padding: 10px;
     margin-right: 10px;
     cursor: pointer;
 }
 
-/* user menu */
+.mc-img {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.mc-img img {
+    max-width: 100%;
+}
+
+.mc-number-item{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/* ## Menu User  --> .mu ## */
+
 .cont-menu-user {
     cursor: pointer;
 }
@@ -249,7 +275,6 @@ h1.home-title {
 }
 
 p.lead-home {
-    font-style: italic;
     text-shadow: 2px 2px 10px #000000;
     font-size: 45px;
     font-weight: 200;
@@ -261,7 +286,7 @@ p.lead-home {
 .cit-right {
     float: right;
     font-style: italic;
-    text-shadow: 2px 2px 10px grey;
+    text-shadow: 2px 2px 10px #000000;
     font-size: 28px;
     font-weight: 300;
     letter-spacing: 1px;
@@ -375,11 +400,10 @@ p.lead-home {
 }
 
 .page-shop .jumbotron {
-    position: relative;
     color: white;
-    background-size: 100% !important;
-    background-repeat: no-repeat !important;
+    background-size: cover;
     background-position: center;
+    background-repeat: no-repeat !important;
 }
 
 .cont-featurette-image{
@@ -420,21 +444,29 @@ p.lead-home {
     EDIT LOGIN page
    ==================== */
 
-.page-edit-login {
+.page-edit *{
+    text-align: left;
 }
 
-.page-edit-login .container{
+.page-edit .container{
     max-width: 650px;
 }
 
+.page-edit h1{
+    margin-bottom: 35px;
+}
+
+.page-edit .btn{
+    margin-top: 20px;
+}
+
 .cont-edit-form {
-    margin-top: 25px;
     background-color: #ececec;
     padding: 20px 35px 20px 35px !important;
     border-radius: 10px;
 }
 
-.cont-edit-form form{
+.cont-edit-form form.form-edit-login{
     margin: 0;
 }
 
@@ -456,6 +488,11 @@ p.lead-home {
     right: 0;
     text-align: right;
     top: 0;
+}
+
+.btn-remove-file {
+    float: left;
+    margin-left: 20px;
 }
 
 /* Example stylistic flourishes */

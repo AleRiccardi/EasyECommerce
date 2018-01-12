@@ -20,36 +20,65 @@ class User {
         return DbUser::insert($data);
     }
 
-    public static function getByNameEmail($data, $type = "USERNAME") {
-        if (!is_string($data)) return null;
+    public static function getByNameEmail($id, $type = "USERNAME") {
+        if (!is_string($id)) return null;
 
         if ($type == "USERNAME") {
-            $data = array("userName" => $data);
+            $data = array("userName" => $id);
         } else if ($type == "USEREMAIL") {
-            $data = array("userEmail" => $data);
+            $data = array("userEmail" => $id);
         }
 
-        $ret = DbUser::get($data)[0];
+        $ret = DbUser::get($data);
         return $ret;
     }
 
-    public static function edit($data){
-        $where = array('userName' => $_SESSION['user_name']);
+    public static function edit($data, $userName) {
+        $where = array('userName' => $userName);
         return DbUser::update($data, $where);
     }
 
-    public static function getProfilePic($userName){
+    public static function getProfilePic($userName) {
+        $imageFinalPath = null;
         $baseController = new BaseController();
         $user = self::getByNameEmail($userName, $type = "USERNAME");
-        if($user->idImage){
-            if($image = DbImage::get(array("id" => $user->idImage))[0]){
-                return $baseController->website_url .$image->path;
+        if ($user->idImage) {
+            // get row from Image table
+            $image = DbImage::get(array("id" => $user->idImage));
+            if ($image) {
+                $imageFinalPath = $baseController->website_url . $image->path;
             } else {
-                return $baseController->website_url . "/assets/img/icon/default-avatar.png";
+                $imageFinalPath = $baseController->website_url . "/assets/img/icon/default-avatar.png";
             }
         } else {
-            return null;
+            $imageFinalPath = $baseController->website_url . "/assets/img/icon/default-avatar.png";
         }
+
+        // Append a query string with an arbitrary unique number to
+        // force the browser to refresh the image.
+        $imageFinalPath .= "?" . rand(1, 500000000);
+
+        return $imageFinalPath;
+    }
+
+    public static function removeImage($id, $type = "USERNAME") {
+        if (!is_string($id)) return null;
+        $data = array("idImage" => NULL);
+
+        $user = self::getByNameEmail($id, $type);
+
+        $where = array('id' => $user->id);
+        if (!(DbUser::update($data, $where))) {
+            echo "update user";
+            return false;
+        }
+
+        if (!(Image::removeById($user->idImage))) {
+            echo "remove image";
+            return false;
+        }
+
+        return true;
     }
 
 }

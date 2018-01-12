@@ -10,7 +10,7 @@ require_once($baseController->website_path . "/template/_header.php");
 
     <div class="jumbotron user-header">
         <div class="container">
-            <div class="user-img-name middle-h-container">
+            <div class="user-img-name middle-h-cont">
                 <div class="pu-img">
                     <img id="preview-icon" class="profile-image"
                          src="<?php echo User::getProfilePic($_SESSION['user_name']); ?>"/>
@@ -27,7 +27,7 @@ require_once($baseController->website_path . "/template/_header.php");
             <!-- Example row of columns -->
             <div class="row flex-container">
                 <div class="user-action flex-item col-md-3">
-                    <a href="<?php echo $baseController->website_url ?>/page.php?name=user">
+                    <a href="<?php echo $baseController->website_url ?>/page.php?name=cart">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/cart.png" alt="logo">
                         </div>
@@ -36,7 +36,7 @@ require_once($baseController->website_path . "/template/_header.php");
                     </a>
                 </div>
                 <div class="user-action flex-item col-md-3">
-                    <a href="<?php echo $baseController->website_url ?>/page.php?name=user">
+                    <a href="<?php echo $baseController->website_url ?>/page.php?name=order">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/box.png" alt="logo">
                         </div>
@@ -45,7 +45,7 @@ require_once($baseController->website_path . "/template/_header.php");
                     </a>
                 </div>
                 <div class="user-action flex-item col-md-3">
-                    <a href="<?php echo $baseController->website_url ?>/page.php?name=user">
+                    <a href="<?php echo $baseController->website_url ?>/page.php?name=address">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/truck.png" alt="logo">
                         </div>
