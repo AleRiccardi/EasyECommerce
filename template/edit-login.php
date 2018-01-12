@@ -5,31 +5,6 @@ use \Inc\Classes\Image;
 
 require_once($baseController->website_path . "/template/_header.php");
 
-if (isset($_POST['editLogin'])) {
-
-    $data = array(
-        "firstName" => $_POST['firstName'],
-        "secondName" => $_POST['secondName'],
-    );
-
-    // PASSWORD
-    $user_password = isset($_POST['password']) && !empty($_POST['password']) ? $_POST['password'] : null;
-    if ($user_password) {
-        $user_password_hash = password_hash($user_password, PASSWORD_DEFAULT);
-        $data['passwordHash'] = $user_password_hash;
-    }
-
-    // FILE
-    if ($_FILES["uploadIcon"]['name']) {
-        $idImage = Image::upload($_SESSION['user_name'], $_FILES['uploadIcon']);
-        $data['idImage'] = $idImage;
-    }
-
-    User::edit($_SESSION['user_name'], $data);
-} else if (isset($_POST["removeImage"])) {
-    echo User::removeImage($_SESSION["user_name"]) ? "yeahhhhhhhhhhhhh" : "fucking idiot";
-}
-
 $user = User::getByNameEmail($_SESSION['user_name']);
 ?>
     <main class="page-edit">
@@ -49,7 +24,7 @@ $user = User::getByNameEmail($_SESSION['user_name']);
                             <div class="col-sm-3">
                                 <div class="pu-img">
                                     <img id="preview-icon" class="profile-image"
-                                         src="<?php echo User::getProfilePic($_SESSION['user_name']); ?>"/>
+                                         src="<?php echo User::getProfilePic($user->userName); ?>"/>
                                 </div>
                             </div>
                             <div class="middle-h-item col-sm-9">

@@ -42,7 +42,7 @@ class Db {
 
     public function __construct() {
         $this->dbConn = new \mysqli(Db::HOST, Db::USER, Db::PASS, Db::NAME);
-
+        //var_dump($z);
         // change character set to utf8 and check it
         if (!$this->dbConn->set_charset("utf8")) $this->errors[] = $this->dbConn->error;
         // database error
@@ -54,23 +54,20 @@ class Db {
      *
      * @param $sql
      *
-     * @return bool|\mysqli_result|null
-     */
-    /**
-     * @param $sql
-     *
-     * @return array|null|object|\stdClass
-     */
-    /**
-     * @param $sql
-     *
      * @return array|bool|null|object|\stdClass
      */
     public function query($sql) {
-        //if error
-        if(!$ret = $this->dbConn->query($sql)) return null;
+
+        $ret = $this->dbConn->query($sql);
         //if is just a normal query without nothing to return
         if($ret === true) return true;
+        else if ($ret === false) return false;
+
+        /* check connection */
+        if ($this->dbConn->connect_errno) {
+            printf("Connect failed: %s\n", $this->dbConn->connect_error);
+            return false;
+        }
 
         //if have information
         if($ret->num_rows == 1) {
@@ -81,120 +78,10 @@ class Db {
                 $this->lastResult[] = $obj;
             }
         }
+
         return $this->lastResult;
     }
 
-
-    /**
-     * @param $table
-     * @param $data
-     *
-     * @return bool|\mysqli_result
-     */
-    public function insert($table, $data) {
-
-        // QUERY creation
-        $sql = "INSERT INTO $table (";
-
-        $listKeys = array_keys($data);
-        $lastKey = end($listKeys);
-        foreach($data as $key => $value){
-            $sql .= "$key";
-            if(!($key == $lastKey)){
-                $sql .= ", ";
-            }
-        }
-        $sql .= ") VALUES (";
-        foreach ($data as $key => $value) {
-            if (is_string($value)) {
-                $sql .= "'$value'";
-            } else {
-                $sql .=  $value;
-            }
-
-            if (!($key == $lastKey)) {
-                $sql .= ", ";
-            }
-        }
-        $sql .= ")";
-
-        return $this->query($sql);
-    }
-
-    /**
-     * Update a row in the table
-     *
-     *     wpdb::update( 'table', array( 'column' => 'foo', 'field' => 'bar' ), array( 'ID' => 1 ) )
-     *     wpdb::update( 'table', array( 'column' => 'foo', 'field' => 1337 ), array( 'ID' => 1 ), array( '%s', '%d' ), array( '%d' ) )
-     *
-     * @since 2.5.0
-     * @see wpdb::prepare()
-     * @see wpdb::$field_types
-     * @see wp_set_wpdb_vars()
-     *
-     * @param string       $table        Table name
-     * @param array        $data         Data to update (in column => value pairs).
-     *                                   Both $data columns and $data values should be "raw" (neither should be SQL escaped).
-     *                                   Sending a null value will cause the column to be set to NULL - the corresponding
-     *                                   format is ignored in this case.
-     * @param array        $where        A named array of WHERE clauses (in column => value pairs).
-     *                                   Multiple clauses will be joined with ANDs.
-     *                                   Both $where columns and $where values should be "raw".
-     *                                   Sending a null value will create an IS NULL comparison - the corresponding format will be ignored in this case.
-     * @param array|string $format       Optional. An array of formats to be mapped to each of the values in $data.
-     *                                   If string, that format will be used for all of the values in $data.
-     *                                   A format is one of '%d', '%f', '%s' (integer, float, string).
-     *                                   If omitted, all values in $data will be treated as strings unless otherwise specified in wpdb::$field_types.
-     * @param array|string $where_format Optional. An array of formats to be mapped to each of the values in $where.
-     *                                   If string, that format will be used for all of the items in $where.
-     *                                   A format is one of '%d', '%f', '%s' (integer, float, string).
-     *                                   If omitted, all values in $where will be treated as strings.
-     * @return int|false The number of rows updated, or false on error.
-     */
-    public function update( $table, $data, $where ) {
-
-        // QUERY creation
-        $sql = "UPDATE $table SET ";
-
-        $listKeys = array_keys($data);
-        $lastKey = end($listKeys);
-        foreach($data as $key => $value){
-            $sql .= "$key = ";
-
-            if (is_string($value)) {
-                $sql .= "'$value'";
-            } else if(is_numeric($value)){
-                $sql .=  $value;
-            } else if(is_null($value)){
-                $sql .=  "NULL";
-            } else {
-                return null;
-            }
-
-            if(!($key == $lastKey)){
-                $sql .= ", ";
-            }
-        }
-
-        $sql .= " WHERE ";
-
-        $listKeys = array_keys($where);
-        $lastKey = end($listKeys);
-        foreach($where as $key => $value){
-            $sql .= "$key = ";
-
-            if (is_string($value)) {
-                $sql .= "'$value'";
-            } else {
-                $sql .=  $value;
-            }
-
-            if(!($key == $lastKey)){
-                $sql .= ", ";
-            }
-        }
-        return $this->query($sql);
-    }
 
     /**
      * Get results.
@@ -205,13 +92,7 @@ class Db {
      * @return array|null
      */
     public function getResults($query = null, $output = OBJECT) {
-        $this->log = "\$db->get_results(\"$query\", $output)";
-        if ($this->checkCurrentQuery() && $this->checkSafeCollation($query)) {
-            $this->query($query);
-
-        } else {
-            return null;
-        }
+        $this->query($query);
 
         $new_array = array();
         if ($output == OBJECT) {
@@ -246,21 +127,5 @@ class Db {
             return $this->lastResult;
         }
         return null;
-    }
-
-    /**
-     * @return int
-     */
-    private function checkCurrentQuery() {
-        if ($this->log) return 1;
-    }
-
-    /**
-     * @param $query
-     *
-     * @return int
-     */
-    private function checkSafeCollation($query) {
-        if ($query) return 1;
     }
 }

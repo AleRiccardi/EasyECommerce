@@ -33,6 +33,7 @@ final class Init {
             Base\BaseController::class,
             Classes\Login::class,
             Classes\Registration::class,
+            Classes\User::class,
         );
     }
 

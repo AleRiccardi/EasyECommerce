@@ -9,13 +9,16 @@
 namespace Inc\Classes;
 
 use Inc\Base\BaseController;
-use Inc\Database\Db;
 use Inc\Database\DbImage;
 use Inc\Database\DbUser;
 
 class User {
 
-    public static function register($userName, $userEmail, $passwordHas) {
+    public function register() {
+        self::editUser();
+    }
+
+    public static function registration($userName, $userEmail, $passwordHas) {
         $data = array("userName" => $userName, "userEmail" => $userEmail, "passwordHash" => $passwordHas, 'dateRegistration' => DbUser::now());
         return DbUser::insert($data);
     }
@@ -33,10 +36,6 @@ class User {
         return $ret;
     }
 
-    public static function edit($data, $userName) {
-        $where = array('userName' => $userName);
-        return DbUser::update($data, $where);
-    }
 
     public static function getProfilePic($userName) {
         $imageFinalPath = null;
@@ -63,22 +62,51 @@ class User {
 
     public static function removeImage($id, $type = "USERNAME") {
         if (!is_string($id)) return null;
-        $data = array("idImage" => NULL);
+        $data = array("idImage" => null);
 
         $user = self::getByNameEmail($id, $type);
 
         $where = array('id' => $user->id);
         if (!(DbUser::update($data, $where))) {
-            echo "update user";
             return false;
         }
 
         if (!(Image::removeById($user->idImage))) {
-            echo "remove image";
             return false;
         }
 
         return true;
     }
+
+    public static function editUser() {
+        if (isset($_POST['editLogin'])) {
+
+            $data = array(
+                "firstName" => $_POST['firstName'],
+                "secondName" => $_POST['secondName'],
+            );
+
+            // PASSWORD
+            $user_password = isset($_POST['password']) && !empty($_POST['password']) ? $_POST['password'] : null;
+            if ($user_password) {
+                $user_password_hash = password_hash($user_password, PASSWORD_DEFAULT);
+                $data['passwordHash'] = $user_password_hash;
+            }
+
+            // FILE
+            if ($_FILES["uploadIcon"]['name']) {
+                $idImage = Image::upload($_SESSION['user_name'], $_FILES['uploadIcon']);
+                $data['idImage'] = $idImage;
+            }
+
+            return DbUser::update($data, ["userName" => $_SESSION['user_name']]);
+        } else if (isset($_POST["removeImage"])) {
+
+            return self::removeImage($_SESSION["user_name"]);
+        }
+        // default
+        return false;
+    }
+
 
 }

@@ -5,6 +5,7 @@ use Inc\Classes\User;
 $user = User::getByNameEmail($_SESSION['user_name']);
 
 require_once($baseController->website_path . "/template/_header.php");
+
 ?>
 <div class="page-user fit-height-section">
 

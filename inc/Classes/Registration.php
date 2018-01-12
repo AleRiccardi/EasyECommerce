@@ -109,7 +109,7 @@ class Registration {
                     $this->errors[] = "Sorry, that username / email address is already taken.";
                 } else {
                     // write new user's data into database
-                    $insertResponse = User::register($user_name, $user_email, $user_password_hash);
+                    $insertResponse = User::registration($user_name, $user_email, $user_password_hash);
 
                     // if user has been added successfully
                     if ($insertResponse) {

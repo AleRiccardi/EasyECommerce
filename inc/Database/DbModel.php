@@ -92,26 +92,98 @@ class DbModel {
     }
 
     /**
-     * NOT WORKING
+     * Insert
      *
-     * @param array $data
+     * @param $data
      *
-     * @return mixed
+     * @return array|bool|null|object|\stdClass
      */
     public static function insert($data) {
+        // QUERY creation
+        $sql = "INSERT INTO " . self::getTableName() . " (";
+
+        $listKeys = array_keys($data);
+        $lastKey = end($listKeys);
+        foreach ($data as $key => $value) {
+            $sql .= "$key";
+            if (!($key == $lastKey)) {
+                $sql .= ", ";
+            }
+        }
+        $sql .= ") VALUES (";
+        foreach ($data as $key => $value) {
+            if (is_string($value)) {
+                $sql .= "'$value'";
+            } else {
+                $sql .= $value;
+            }
+
+            if (!($key == $lastKey)) {
+                $sql .= ", ";
+            }
+        }
+        $sql .= ")";
+
         $db = new Db();
-        return $db->insert(self::getTableName(), $data);
+        return $db->query($sql);
     }
 
     /**
-     * NOT WORKING
+     * Update a row in the table
      *
-     * @param array $data
-     * @param array $where
+     * @param array $data  Data to update (in column => value pairs).
+     * @param array $where A named array of WHERE clauses (in column => value pairs).
+     *
+     * @return int|false The number of rows updated, or false on error.
      */
     public static function update(array $data, array $where) {
+        // QUERY creation
+        $sql = "UPDATE " . self::getTableName() . " SET ";
+
+        $listKeys = array_keys($data);
+        $lastKey = end($listKeys);
+        foreach ($data as $key => $value) {
+            $sql .= "$key = ";
+
+            if (is_string($value)) {
+                $sql .= "'$value'";
+            } else if (is_numeric($value)) {
+                $sql .= $value;
+            } else if (is_null($value)) {
+                $sql .= "NULL";
+            } else {
+                return null;
+            }
+
+            if (!($key == $lastKey)) {
+                $sql .= ", ";
+            }
+        }
+
+        $sql .= " WHERE ";
+
+        $listKeys = array_keys($where);
+        $lastKey = end($listKeys);
+        foreach ($where as $key => $value) {
+            $sql .= "$key = ";
+
+            if (is_string($value)) {
+                $sql .= "'$value'";
+            } else if (is_numeric($value)) {
+                $sql .= $value;
+            } else if (is_null($value)) {
+                $sql .= "NULL";
+            } else {
+                return null;
+            }
+
+            if (!($key == $lastKey)) {
+                $sql .= ", ";
+            }
+        }
+
         $db = new Db();
-        return $db->update(self::getTableName(), $data, $where);
+        return $db->query($sql);
     }
 
     /**
