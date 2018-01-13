@@ -7,7 +7,7 @@ require_once($baseController->website_path . "/template/_header.php");
 $user = User::getByNameOrEmail($_SESSION['userName'], "USERNAME");
 
 ?>
-<div class="page-user fit-height-section">
+<div class="page fit-height-section">
 
     <div class="jumbotron user-header">
         <div class="container">

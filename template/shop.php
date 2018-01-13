@@ -12,7 +12,7 @@ if (isset($_GET['category'])) {
 
     ?>
 
-    <main role="main" class="page-shop container">
+    <main role="main" class="page container">
 
         <div class="row row-offcanvas row-offcanvas-right">
 

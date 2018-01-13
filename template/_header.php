@@ -67,6 +67,10 @@ $login = new \Inc\Classes\Login();
                     <div class="dropdown-menu mu-dd-content " aria-labelledby="dropdown01">
                         <a class="dropdown-item"
                            href="<?php echo $baseController->website_url ?>/page.php?name=user">User</a>
+                        <?php if (User::isAdmin()) { ?>
+                        <a class="dropdown-item"
+                           href="<?php echo $baseController->website_url ?>/page.php?name=admin-area&overview">Admin area</a>
+                        <?php } ?>
                         <a class="dropdown-item"
                            href="<?php echo $baseController->website_url ?>/page.php?name=login&logout">Logout</a>
                     </div>

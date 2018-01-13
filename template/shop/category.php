@@ -2,7 +2,7 @@
 
 require_once($baseController->website_path . "/template/_header.php");
 ?>
-    <main role="main" class="page-shop container">
+    <main role="main" class="page container">
 
         <div class="row row-offcanvas row-offcanvas-right">
 

@@ -19,6 +19,7 @@ $listTemplate = array(
     "template/cart.php",
     "template/order.php",
     "template/edit-address.php",
+    "template/admin-area.php",
 );
 
 $temp404 = "template/404.php";

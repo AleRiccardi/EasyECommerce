@@ -49,6 +49,18 @@ class User {
         return self::getByNameOrEmail($_SESSION['userName'], "USERNAME");
     }
 
+    /**
+     * Get the current user logged.
+     *
+     * @return array|null
+     */
+    public static function isAdmin() {
+        $user = self::getCurrentUser();
+        return $user->isAdmin ? true : false;
+    }
+
+
+
 
     /**
      * Get user from username or email address.

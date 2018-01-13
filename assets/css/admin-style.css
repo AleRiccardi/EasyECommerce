@@ -1,0 +1,60 @@
+/*
+ * Base structure
+ */
+
+
+/*
+ * Typography
+ */
+
+h1.admin-title {
+    padding-bottom: 9px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+/*
+ * Sidebar
+ */
+
+.admin-sidebar {
+    position: fixed !important;
+    top: 68px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px 0 !important;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    border-right: 1px solid #eee;
+}
+
+.admin-sidebar .nav {
+    margin-bottom: 20px;
+}
+
+.admin-sidebar .nav-item {
+    width: 100%;
+}
+
+.admin-sidebar .nav-item + .nav-item {
+    margin-left: 0;
+}
+
+.admin-sidebar .nav-link {
+    border-radius: 0 !important;
+}
+
+/*
+ * Dashboard
+ */
+
+/* Placeholders */
+.placeholders {
+    padding-bottom: 3rem;
+}
+
+.placeholder img {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}

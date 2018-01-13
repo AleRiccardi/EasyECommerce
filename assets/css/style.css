@@ -10,7 +10,8 @@ body {
     padding-top: 68px;
 }
 
-main {
+main.page {
+    padding-top: 1.5rem;
 }
 
 
@@ -311,14 +312,14 @@ p.lead-home {
     USER page
    ==================== */
 
-.page-user {
+.page {
 
 }
 
-.page-user .user-header {
+.page .user-header {
 }
 
-.page-user .user-body {
+.page .user-body {
     padding: 30px 0;
 }
 
@@ -338,18 +339,18 @@ p.lead-home {
     max-width: 100%;
 }
 
-.page-user .user-name {
+.page .user-name {
 
     margin-left: 20px
 }
 
-.page-user .user-name h1 {
+.page .user-name h1 {
     font-size: 35px;
     font-weight: 400;
     margin: 0;
 }
 
-.page-user .user-name span {
+.page .user-name span {
     font-size: 14px;
     font-weight: 300;
 }
@@ -395,11 +396,11 @@ p.lead-home {
     SHOP page
    ==================== */
 
-.page-shop {
+.page {
     /*margin-top: 20px;*/
 }
 
-.page-shop .jumbotron {
+.page .jumbotron {
     color: white;
     background-size: cover;
     background-position: center;
