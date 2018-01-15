@@ -9,78 +9,217 @@
 namespace Inc\Admin;
 
 
-class Product {
+use Inc\Base\BaseController;
+use Inc\Database\DbCategory;
+use Inc\Database\DbImage;
+use Inc\Database\DbProduct;
 
-    public $idProduct = null;
-    private $isAddNew = false;
+class Product extends BaseController {
+
 
     public function register() {
         // in this case unless class
-        if (!isset($_GET['product'])) {
-            return false;
-        } else {
-            $this->isAddNew = isset($_GET['add-new']) ? true : false;
-            // what we matters
-            $this->idProduct = $_GET['product'];
+        if (isset($_GET['product'])) {
 
-            if ($this->idProduct == "") {
-                //show overview
-                if(!$this->isAddNew){
-                    $this->showDashboard();
-                } else {
-                    $this->addNew();
-                }
-
+            if (isset($_GET['add-new'])) {
+                $this->showAddNew();
+            } else if (isset($_GET['edit']) && isset($_GET['id'])) {
+                $this->showEdit($_GET['id']);
             } else {
-                // show specific cat
-                $this->showSpecific($this->idCategory);
+                $this->getMain("Category");
             }
+
         }
     }
 
-    public function showDashboard() {
-        $this->getMain("Products");
-    }
 
-    public function showSpecific($name) { ?>
+    public function showEdit($id) {
+        $product = DbProduct::get(["id" => $id], "OBJECT");
+        if (!$product) {
+            $this->getMain("Category");
+            return;
+        }
+        $image = DbImage::get(['id' => $product->idImage], "OBJECT");
+
+        if ($image) {
+            $image = $this->website_url . $image->path;
+        } else {
+            $image = false;
+        }
+        ?>
+
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-            <h1 class="admin-title"><?php echo $name; ?></h1>
+            <h2 class="admin-title">Edit product</h2>
+            <form class="form-add-new" method="post"
+                  action="?name=admin-area&product&edit&id=<?php echo $product->id; ?>"
+                  enctype="multipart/form-data"
+                  name="edit-login-form">
+                <div class="row row-offcanvas row-offcanvas-right">
+                    <div class="col-12 col-md-9">
+                        <input class="form-control form-control-lg" type="text" name="title"
+                               placeholder="Insert title here" value="<?php echo $product->title; ?>">
+                        <br>
+                        <textarea class="form-control" name="description" rows="5"
+                                  placeholder="Insert description"><?php echo $product->description; ?></textarea>
+                        <br>
+                        <p>
+                            <small>Date creation:
+                                <em><?php echo date("d M Y @ h:i:sa", strtotime($product->dateCreation)); ?></em>
+                            </small>
+                            <br>
+                            <small>Last update:
+                                <em><?php echo date("d M Y @ h:i:sa", strtotime($product->dateLastUpdate)); ?></em>
+                            </small>
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-md-3" id="sidebar">
+                        <div class="admin-sidebar-addnew ">
+                            <input class="form-control" type="text" name="slug" placeholder="Slug"
+                                   value="<?php echo $product->slug; ?>">
+                            <br>
+                            <div class="col-sm-12 admin-preview-img">
+                                <img id="previewCat" class="img-cat <?php echo !$image ? "admin-hide" : "" ?>"
+                                     src="<?php echo $image; ?>">
+                                <label class="admin-btn-upload fileContainer">
+                                    <label>Upload image</label>
+                                    <input id="uploadImgCat" name="image" type="file" name="uploadIcon"/>
+                                </label>
+                                <label id="removeImgCat"
+                                       class="admin-btn-remove <?php echo !$image ? "admin-hide" : "" ?>">Remove</label>
+                            </div>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary btn-sm" name="updateCategory" type="submit">Update</button>
+                            <button class="btn btn-danger btn-sm" name="deleteCategory" type="submit">Delete</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
         </main>
         <?php
     }
 
 
-    public function getMain($name) { ?>
+    /**
+     *
+     */
+    public function showAddNew() {
+        $title = isset($_POST['title']) ? $_POST['title'] : "";
+        $slug = empty($_POST['slug']) ?
+            (str_replace(' ', '-', strtolower($title))) :
+            $_POST['slug'];
+        $desc = isset($_POST['description']) ? $_POST['description'] : "";
+        $image = isset($_POST['image']) ? $_POST['image'] : "";
+        ?>
+        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+            <h2 class="admin-title">Add new</h2>
+            <form class="form-add-new" method="post" action="?name=admin-area&product&add-new"
+                  enctype="multipart/form-data"
+                  name="edit-login-form">
+                <div class="row row-offcanvas row-offcanvas-right">
+                    <div class="col-12 col-md-9">
+                        <input class="form-control form-control-lg" type="text" name="title"
+                               placeholder="Insert title here" value="<?php echo $title; ?>" required>
+                        <br>
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <input class="form-control form-control-sm" type="number" step="any" min="0" name="price"
+                                       placeholder="Price" value="<?php //echo $price; ?>" required>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <select id="inputState" class="form-control form-control-sm" required>
+                                    <option value="">Category...</option>
+                                    <?php
+                                    $categories = DbCategory::getAll('object');
+                                    foreach ($categories as $category) {
+                                        echo "<option value='$category->id'>$category->title</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="form-check">
+                                    <input name="available" class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked>
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Available
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <textarea class="form-control" name="description" rows="5"
+                                  placeholder="Insert description"><?php echo $desc; ?></textarea>
+                        <br>
+                    </div>
+
+                    <div class="col-6 col-md-3" id="sidebar">
+                        <div class="admin-sidebar-addnew ">
+                            <input class="form-control" type="text" name="slug" placeholder="Slug"
+                                   value="<?php echo $slug; ?>">
+                            <br>
+                            <div class="col-sm-12 admin-preview-img">
+                                <img id="previewCat" class="img-cat admin-hide" src="<?php echo $image; ?>">
+                                <label class="admin-btn-upload fileContainer">
+                                    <label>Upload image</label>
+                                    <input id="uploadImgCat" name="image" type="file"/>
+                                </label>
+                                <label id="removeImgCat" class="admin-btn-remove admin-hide">Remove</label>
+                            </div>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary btn-sm" name="addProduct" type="submit">Add</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+        </main>
+        <?php
+    }
+
+    /**
+     * @param $name
+     */
+    public function getMain($name) {
+        $products = DbProduct::getAll("object");
+        ?>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
             <h1 class="admin-title"><?php echo $name; ?></h1>
-            <h4>List products</h4>
+            <h4>List categories</h4>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
+                        <th>n°</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Available</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Last update</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1,001</td>
-                        <td>Lorem</td>
-                        <td>ipsum</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                    </tr>
-                    <tr>
-                        <td>1,002</td>
-                        <td>amet</td>
-                        <td>consectetur</td>
-                        <td>adipiscing</td>
-                        <td>elit</td>
-                    </tr>
-
+                    <?php
+                    if ($products) {
+                        foreach ($products as $product) { ?>
+                            <tr onclick="window.location='?name=admin-area&product&edit&id=<?php echo $product->id; ?>';">
+                                <td><?php echo $product->id; ?></td>
+                                <td><?php echo $product->title; ?></td>
+                                <td><?php echo $product->description; ?></td>
+                                <td><?php echo $product->dateLastUpdate; ?></td>
+                            </tr>
+                            <?php
+                        }
+                    } ?>
                     </tbody>
                 </table>
         </main>

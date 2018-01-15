@@ -29,7 +29,9 @@ $(function () {
     $('#removeImgCat').on('click', function () {
         var preview = document.getElementById('previewCat');
         var btnRemove = document.getElementById('removeImgCat');
+        var fileSelector = $("#uploadImgCat");
 
+        fileSelector.val("");
         preview.classList.add("admin-hide");
         btnRemove.classList.add('admin-hide');
 

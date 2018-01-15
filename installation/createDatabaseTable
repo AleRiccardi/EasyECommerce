@@ -66,10 +66,10 @@ CREATE TABLE IF NOT EXISTS cart (
 CREATE TABLE IF NOT EXISTS item (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   slug varchar(60) NOT NULL,
-  itemName varchar(60) NOT NULL,
+  title varchar(60) NOT NULL,
   description longtext,
   price int(11) NOT NULL,
-  avariable boolean,
+  available boolean,
   dateCreation datetime,
   dateLastUpdate datetime,
   idCategory bigint(20) NOT NULL,

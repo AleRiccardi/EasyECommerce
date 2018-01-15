@@ -80,7 +80,7 @@ class DbModel {
      * @return array|object|null array of results, if single will be as an object,
      *                    null if error.
      */
-    public static function get(array $data = null, $type) {
+    public static function get(array $data, $type) {
         $db = new Db();
         $query = self::fetchSql($data, "SELECT");
         $res = $db->getResults($query, $type);
@@ -90,6 +90,22 @@ class DbModel {
         if (count($res) == 1) {
             $res = $res[0];
         }
+
+        return $res;
+    }
+
+    /**
+     * Get all the information from table.
+     *
+     * @param string     $type  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
+     *
+     * @return array|object|null array of results, if single will be as an object,
+     *                    null if error.
+     */
+    public static function getAll($type) {
+        $db = new Db();
+        $query = self::fetchSql(null, "SELECT");
+        $res = $db->getResults($query, $type);
 
         return $res;
     }
@@ -128,7 +144,6 @@ class DbModel {
         $sql .= ")";
 
         $db = new Db();
-
         if ($db->query($sql) === true) {
             return $db->insertId;
         }
@@ -199,12 +214,12 @@ class DbModel {
      *
      * @param array $data
      *
-     * @return mixed value (to be tested)
+     * @return bool value (to be tested)
      */
     public static function delete(array $data) {
         $db = new Db();
-        $sql = self::fetchSql('DELETE', $data);
-        return $db->query($sql);
+        $sql = self::fetchSql($data, 'DELETE');
+        return $db->query($sql) ? true : false;
     }
 
     /**

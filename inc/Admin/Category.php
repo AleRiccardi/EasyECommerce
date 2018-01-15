@@ -9,49 +9,93 @@
 namespace Inc\Admin;
 
 
+use Inc\Base\BaseController;
+use Inc\Classes\Image;
 use Inc\Classes\User;
+use Inc\Database\DbCategory;
+use Inc\Database\DbImage;
 
-class Category {
+class Category extends BaseController {
 
-    public $idCategory = null;
-    private $isAddNew = false;
 
 
     public function register() {
         // in this case unless class
-        if (!isset($_GET['category'])) {
-            return false;
-        } else {
-            $this->isAddNew = isset($_GET['add-new']) ? true : false;
-            // what we matters
-            $this->idCategory = $_GET['category'];
+        if (isset($_GET['category'])) {
 
-            if ($this->idCategory == "") {
-
-                if (!$this->isAddNew) {
-                    $this->showDashboard();
-                } else {
-                    $this->showAddNew();
-                }
+            if (isset($_GET['add-new'])) {
+                $this->showAddNew();
+            } else if(isset($_GET['edit']) && isset($_GET['id'])) {
+                $this->showEdit($_GET['id']);
             } else {
-                // show specific cat
-                $this->showSpecificCategory($this->idCategory);
+                $this->getMain("Category");
             }
+
         }
     }
 
-    public function showDashboard() {
-        $this->getMain("Category");
-    }
 
-    public function showAddNew() {
-        $this->getAddNew();
-    }
+    public function showEdit($id) {
+        $category = DbCategory::get(["id" => $id], "OBJECT");
+        if(!$category){
+            $this->getMain("Category");
+            return;
+        }
+        $image = DbImage::get(['id' => $category->idImage], "OBJECT");
 
+        if($image){
+            $image = $this->website_url . $image->path;
+        } else {
+            $image = false;
+        }
+        ?>
 
-    public function showSpecificCategory($name) { ?>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-            <h1 class="admin-title"><?php echo $name; ?></h1>
+            <h2 class="admin-title">Edit category</h2>
+            <form class="form-add-new" method="post" action="?name=admin-area&category&edit&id=<?php echo $category->id; ?>"
+                  enctype="multipart/form-data"
+                  name="edit-login-form">
+                <div class="row row-offcanvas row-offcanvas-right">
+                    <div class="col-12 col-md-9">
+                        <input class="form-control form-control-lg" type="text" name="title"
+                               placeholder="Insert title here" value="<?php echo $category->title; ?>">
+                        <br>
+                        <textarea class="form-control" name="description" rows="5"
+                                  placeholder="Insert description"><?php echo $category->description; ?></textarea>
+                        <br>
+                        <p>
+                            <small>Date creation:
+                                <em><?php echo date("d M Y @ h:i:sa", strtotime($category->dateCreation)); ?></em></small>
+                            <br>
+                            <small>Last update:
+                                <em><?php echo date("d M Y @ h:i:sa", strtotime($category->dateLastUpdate)); ?></em></small>
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-md-3" id="sidebar">
+                        <div class="admin-sidebar-addnew ">
+                            <input class="form-control" type="text" name="slug" placeholder="Slug"
+                                   value="<?php echo $category->slug; ?>">
+                            <br>
+                            <div class="col-sm-12 admin-preview-img">
+                                <img id="previewCat" class="img-cat <?php echo !$image ? "admin-hide" : "" ?>" src="<?php echo $image; ?>">
+                                <label class="admin-btn-upload fileContainer">
+                                    <label>Upload image</label>
+                                    <input id="uploadImgCat" name="image" type="file" name="uploadIcon"/>
+                                </label>
+                                <label id="removeImgCat" class="admin-btn-remove <?php echo !$image ? "admin-hide" : "" ?>">Remove</label>
+                            </div>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary btn-sm" name="updateCategory" type="submit">Update</button>
+                            <button class="btn btn-danger btn-sm" name="deleteCategory" type="submit">Delete</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
         </main>
         <?php
     }
@@ -60,7 +104,7 @@ class Category {
     /**
      *
      */
-    public function getAddNew() {
+    public function showAddNew() {
         $title = isset($_POST['title']) ? $_POST['title'] : "";
         $slug = empty($_POST['slug']) ?
             (str_replace(' ', '-', strtolower($title))) :
@@ -69,8 +113,9 @@ class Category {
         $image = isset($_POST['image']) ? $_POST['image'] : "";
         ?>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-            <h1 class="admin-title">Add new</h1>
-            <form class="form-add-new" method="post" action="?name=admin-area&category&add-new" enctype="multipart/form-data"
+            <h2 class="admin-title">Add new</h2>
+            <form class="form-add-new" method="post" action="?name=admin-area&category&add-new"
+                  enctype="multipart/form-data"
                   name="edit-login-form">
                 <div class="row row-offcanvas row-offcanvas-right">
                     <div class="col-12 col-md-9">
@@ -79,27 +124,24 @@ class Category {
                         <br>
                         <textarea class="form-control" name="description" rows="5"
                                   placeholder="Insert description"><?php echo $desc; ?></textarea>
-                        <br>
-                        <p>
-                            <small>Date creation: <em>10 Oct 2017</em></small>
-                            <br>
-                            <small>Last update: <em>15 Oct 2017</em></small>
-                        </p>
-                        <button class="btn btn-primary" name="addCategory" type="submit">Add</button>
                     </div>
 
                     <div class="col-6 col-md-3" id="sidebar">
                         <div class="admin-sidebar-addnew ">
-                            <input class="form-control" type="text" name="slug" placeholder="Slug" value="<?php echo $slug; ?>">
+                            <input class="form-control" type="text" name="slug" placeholder="Slug"
+                                   value="<?php echo $slug; ?>">
                             <br>
-                            <div class="col-sm-12 admin-category-img">
+                            <div class="col-sm-12 admin-preview-img">
                                 <img id="previewCat" class="img-cat admin-hide" src="<?php echo $image; ?>">
                                 <label class="admin-btn-upload fileContainer">
                                     <label>Upload image</label>
-                                    <input id="uploadImgCat" name="image" type="file" name="uploadIcon"/>
+                                    <input id="uploadImgCat" name="image" type="file" />
                                 </label>
                                 <label id="removeImgCat" class="admin-btn-remove admin-hide">Remove</label>
                             </div>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary btn-sm" name="addCategory" type="submit">Add</button>
                         </div>
 
                     </div>
@@ -114,7 +156,9 @@ class Category {
     /**
      * @param $name
      */
-    public function getMain($name) { ?>
+    public function getMain($name) {
+        $categories = DbCategory::getAll("object");
+        ?>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
             <h1 class="admin-title"><?php echo $name; ?></h1>
             <h4>List categories</h4>
@@ -122,28 +166,25 @@ class Category {
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
+                        <th>n°</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Last update</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1,001</td>
-                        <td>Lorem</td>
-                        <td>ipsum</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                    </tr>
-                    <tr>
-                        <td>1,002</td>
-                        <td>amet</td>
-                        <td>consectetur</td>
-                        <td>adipiscing</td>
-                        <td>elit</td>
-                    </tr>
+                    <?php
+                    if ($categories) {
+                        foreach ($categories as $category) { ?>
+                            <tr onclick="window.location='?name=admin-area&category&edit&id=<?php echo $category->id; ?>';">
+                                <td><?php echo $category->id; ?></td>
+                                <td><?php echo $category->title; ?></td>
+                                <td><?php echo $category->description; ?></td>
+                                <td><?php echo $category->dateLastUpdate; ?></td>
+                            </tr>
+                            <?php
+                        }
+                    } ?>
                     </tbody>
                 </table>
         </main>

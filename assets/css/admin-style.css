@@ -2,10 +2,20 @@
  * Typography
  */
 
-h1.admin-title {
+
+
+.admin-title {
     padding-bottom: 9px;
     margin-bottom: 20px;
     border-bottom: 1px solid #eee;
+}
+
+h1.admin-title {
+    font-size: 50px;
+}
+
+h2.admin-title {
+    font-weight: 300;
 }
 
 /*
@@ -24,6 +34,10 @@ h1.admin-title {
     top: 75px;
     right: 10px;
     box-shadow: 5px 4px 14px 0px #b9b9b9;
+}
+
+.form-check {
+    text-align: center;
 }
 
 /*
@@ -100,24 +114,24 @@ h1.admin-title {
     border-radius: 5px;
 }
 
-.admin-category-img {
+.admin-preview-img {
     display: inline-block;
     border: 1px solid lightgrey;
     border-radius: 5px;
     padding: 15px;
 }
 
-.admin-category-img *{
+.admin-preview-img *{
     margin-bottom: 0;
 }
 
-.admin-category-img .img-cat {
+.admin-preview-img .img-cat {
     width: 100%;
     max-height: 300px;
     padding-bottom: 10px;
 }
 
-.admin-category-img p {
+.admin-preview-img p {
     margin: 5px 0;
 }
 

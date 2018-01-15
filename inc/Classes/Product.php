@@ -11,8 +11,9 @@ namespace Inc\Classes;
 
 use Inc\Base\BaseController;
 use Inc\Database\DbCategory;
+use Inc\Database\DbProduct;
 
-class Category extends BaseController {
+class Product extends BaseController {
 
 
     /**
@@ -29,20 +30,22 @@ class Category extends BaseController {
      * time that we load a page.
      */
     public function register() {
-        if (isset($_POST['addCategory'])) {
+        if (isset($_POST['addProduct'])) {
             if ($id = $this->catchAdd()) {
-                header("Location: $this->website_url/page.php?name=admin-area&category&edit&id=$id");
+                header("Location: $this->website_url/page.php?name=admin-area&product&edit&id=$id");
+            } else {
+                $this->errors[] = "Something's went wrong";
             }
             $this->showError();
-        } else if (isset($_POST['updateCategory'])) {
+        } else if (isset($_POST['updateProduct'])) {
             if ($id = $this->catchEdit()) {
-                header("Location: $this->website_url/page.php?name=admin-area&category&edit&id=$id");
+                header("Location: $this->website_url/page.php?name=admin-area&product&edit&id=$id");
+            } else {
+                $this->errors[] = "Something's went wrong";
             }
             $this->showError();
-        } else if (isset($_POST['deleteCategory'])) {
-            if ($id = $this->catchDelete()) {
-                header("Location: $this->website_url/page.php?name=admin-area&category");
-            }
+        } else if (isset($_POST['deleteProduct'])) {
+
         }
 
     }
@@ -69,8 +72,8 @@ class Category extends BaseController {
                 "title" => $title,
                 "description" => $desc,
                 "slug" => $slug,
-                "dateCreation" => DbCategory::now(),
-                "dateLastUpdate" => DbCategory::now(),
+                "dateCreation" => DbProduct::now(),
+                "dateLastUpdate" => DbProduct::now(),
             );
 
             // IMAGE
@@ -80,14 +83,14 @@ class Category extends BaseController {
                 }
             }
 
-            $existCategory = DbCategory::get(["slug" => $slug], "OBJECT"); // Get the address
+            $existCategory = DbProduct::get(["slug" => $slug], "OBJECT"); // Get the address
             // if exist
             if (!$existCategory) {
                 $messages[] = "Category inserted";
-                return DbCategory::insert($data);
+                return DbProduct::insert($data);
 
             } else {
-                $this->errors[] = "The category already exist, please change the slug";
+                $this->errors[] = "The Product already exist, please change the slug";
                 return false;
             }
         } else {
@@ -163,11 +166,6 @@ class Category extends BaseController {
         }
     }
 
-    public function catchDelete() {
-        $id = $_GET['id'];
-        return DbCategory::delete(["id" => $id]);
-    }
-
     /**
      * simply return the current state of the user's login
      *
@@ -178,8 +176,10 @@ class Category extends BaseController {
             <div class="admin-message message alert alert-danger alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <?php
+                $i = 0;
                 foreach ($this->errors as $error) {
-                    echo $error . " ";
+                    echo $error;
+                    echo count($this->errors) != ++$i ? " - " : "";
                 }
                 ?>
             </div>
