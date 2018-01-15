@@ -4,7 +4,7 @@ use Inc\Classes\User;
 
 require_once($baseController->website_path . "/template/_header.php");
 
-$user = User::getByNameOrEmail($_SESSION['userName'], "USERNAME");
+$user = User::getBy($_SESSION['userName'], "USERNAME");
 
 ?>
 <div class="page fit-height-section">

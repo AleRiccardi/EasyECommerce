@@ -20,7 +20,7 @@ if (isset($_GET['category'])) {
                 <p class="float-right d-md-none">
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
                 </p>
-                <div class="jumbotron"
+                <div class="jumbotron j-shop"
                      style="background-image:
                              linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.30)),
                              linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 25%,
@@ -90,7 +90,6 @@ if (isset($_GET['category'])) {
                              src="<?php echo $baseController->website_url ?>/assets/img/pastry.jpg">
                     </div>
                 </div>
-
             </div><!--/span-->
 
             <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
@@ -103,8 +102,6 @@ if (isset($_GET['category'])) {
                 </div>
             </div><!--/span-->
         </div><!--/row-->
-
-        <hr>
 
     </main>
 

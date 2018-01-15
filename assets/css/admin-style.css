@@ -1,9 +1,4 @@
 /*
- * Base structure
- */
-
-
-/*
  * Typography
  */
 
@@ -11,6 +6,20 @@ h1.admin-title {
     padding-bottom: 9px;
     margin-bottom: 20px;
     border-bottom: 1px solid #eee;
+}
+
+/*
+ * Button
+ */
+
+.admin-btn-load {
+    color: #4c4c4c;
+    padding: .5em 3px;
+}
+
+.admin-btn-load:hover {
+    color: black;
+    text-decoration: underline;
 }
 
 /*
@@ -45,6 +54,39 @@ h1.admin-title {
     border-radius: 0 !important;
 }
 
+.admin-sub-menu {
+    border-bottom: 1px solid lightgrey;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.admin-sidebar-addnew {
+    display: inline-block;
+    padding: 20px 5px 25px 5px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+.admin-category-img {
+    display: inline-block;
+
+    padding: 15px 15px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.admin-category-img img {
+    width: 100%;
+}
+
+.admin-category-img p {
+    margin: 5px 0;
+}
+
+.form-add-new {
+    padding: 20px 20px;
+}
+
 /*
  * Dashboard
  */
@@ -58,3 +100,4 @@ h1.admin-title {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
 }
+

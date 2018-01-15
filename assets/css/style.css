@@ -400,7 +400,8 @@ p.lead-home {
     /*margin-top: 20px;*/
 }
 
-.page .jumbotron {
+
+.jumbotron.j-shop {
     color: white;
     background-size: cover;
     background-position: center;
@@ -471,14 +472,15 @@ p.lead-home {
     margin: 0;
 }
 
-
 .fileContainer {
     overflow: hidden;
     position: relative;
+    border-radius: .5em;
+    float: left;
 }
 
 .fileContainer [type=file] {
-    cursor: inherit;
+    cursor: pointer;
     display: block;
     font-size: 999px;
     filter: alpha(opacity=0);
@@ -494,19 +496,6 @@ p.lead-home {
 .btn-remove-file {
     float: left;
     margin-left: 20px;
-}
-
-/* Example stylistic flourishes */
-
-.fileContainer {
-    background: red;
-    border-radius: .5em;
-    float: left;
-    padding: .5em;
-}
-
-.fileContainer [type=file] {
-    cursor: pointer;
 }
 
 
@@ -533,6 +522,7 @@ p.lead-home {
    ==================== */
 
 .footer {
+    border-top: 1px solid #dee2e6;
     padding: 30px 0;
     width: 100%;
     line-height: 60px;

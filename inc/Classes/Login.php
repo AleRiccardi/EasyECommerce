@@ -88,8 +88,8 @@ class Login {
                 // escape the POST stuff
                 $userName = $this->db_connection->real_escape_string($_POST['userName']);
 
-                $userByName = User::getByNameOrEmail($userName, "USERNAME");
-                $userByEmail = User::getByNameOrEmail($userName, "USEREMAIL");
+                $userByName = User::getBy($userName, "USERNAME");
+                $userByEmail = User::getBy($userName, "USEREMAIL");
 
                 // if this user exists
                 if ($userByName || $userByEmail) {

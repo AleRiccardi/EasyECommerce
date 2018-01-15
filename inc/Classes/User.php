@@ -46,7 +46,7 @@ class User {
      * @return array|null
      */
     public static function getCurrentUser() {
-        return self::getByNameOrEmail($_SESSION['userName'], "USERNAME");
+        return self::getBy($_SESSION['userName'], "USERNAME");
     }
 
     /**
@@ -70,7 +70,7 @@ class User {
      *
      * @return array|object|null
      */
-    public static function getByNameOrEmail($id, $type = "USERNAME") {
+    public static function getBy($id, $type = "USERNAME") {
         if (!is_string($id)) return null;
 
         if ($type == "USERNAME") {
@@ -93,8 +93,8 @@ class User {
     public static function getProfilePic($userName) {
         $imageFinalPath = null;
         $baseController = new BaseController();
-        $user = self::getByNameOrEmail($userName, $type = "USERNAME");
-        if ($user->idImage) {
+        $user = self::getBy($userName, $type = "USERNAME");
+        if ($user && $user->idImage) {
             // get row from Image table
             $image = DbImage::get(array("id" => $user->idImage), "OBJECT");
             if ($image) {
@@ -125,7 +125,7 @@ class User {
         if (!is_string($id)) return false;
         $data = array("idImage" => null);
 
-        $user = self::getByNameOrEmail($id, $type);
+        $user = self::getBy($id, $type);
 
         $where = array('id' => $user->id);
         if (!(DbUser::update($data, $where))) {

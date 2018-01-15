@@ -1,9 +1,8 @@
 <?php
 
-use Inc\Admin\AdminTemplate;
+use Inc\Admin\AdminEngine;
 
 require_once($baseController->website_path . "/template/_header.php");
 
-$admin = new AdminTemplate();
+$admin = new AdminEngine();
 
-require_once($baseController->website_path . "/template/_footer.php");

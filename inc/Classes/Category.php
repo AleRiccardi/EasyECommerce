@@ -1,38 +1,23 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: aleric
+ * Date: 14/01/2018
+ * Time: 19:03
+ */
 
 namespace Inc\Classes;
 
-use Inc\Database\DbAddress;
-use Inc\Database\DbUser;
 
-/**
- * Class Address
- *
- * @package Inc\Classes
- */
-class Address {
-
+class Category {
     /**
      * Init function run form the Init class every
      * time that we load a page.
      */
     public function register() {
-        self::editAddress();
+        self::catchAddCategory();
     }
 
-    /**
-     * Permit to retrieve the address of a specific user.
-     *
-     * @param $userName username of the user
-     *
-     * @return array|null array of objects, if single will be an object,
-     *                    null if error.
-     */
-    public static function getAddress($userName){
-        $user = User::getBy($userName,"USERNAME");
-        $res = DbAddress::get(["id" => $user->idAddress], "OBJECT");
-        return $res;
-    }
 
     /**
      * When clicked the button editAddress in edit-address.php
@@ -41,8 +26,8 @@ class Address {
      *
      * @return bool
      */
-    public static function editAddress() {
-        if (isset($_POST['editAddress'])) {
+    public static function catchAddCategory() {
+        if (isset($_POST['addCategory'])) {
             $user = User::getCurrentUser();
 
             $address = null;

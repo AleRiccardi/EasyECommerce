@@ -10,7 +10,7 @@ require_once($baseController->website_path . "/template/_header.php");
                 <p class="float-right d-md-none">
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
                 </p>
-                <div class="jumbotron"
+                <div class="jumbotron j-shop"
                      style="background-image:
                          linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.30)),
                          linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0.8) 100%),

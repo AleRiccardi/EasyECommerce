@@ -9,17 +9,22 @@
 namespace Inc\Admin;
 
 
-class AdminTemplate {
+class AdminEngine {
     const SLUG_OVERVIEW = "overview";
     const SLUG_CATEGORY = "category";
     const SLUG_PRODUCT = "product";
 
+    // page overview
     private $isOverview = false;
     private $nameOverview = false;
+    // page categories
     private $isCategories = false;
     private $nameCategory = null;
+    // page products
     private $isProducts = false;
     private $nameProduct = null;
+
+    private $isAddNew = false;
 
     private $overviewTemp = null;
     private $categoryTemp = null;
@@ -50,12 +55,15 @@ class AdminTemplate {
     }
 
     private function getMain() {
+        $this->isAddNew = isset($_GET['add-new']) ? true : false;
+
         if (isset($_GET[self::SLUG_OVERVIEW])) {
             // OVERVIEW
             $this->isOverview = true;
             $this->nameOverview = !empty($_GET[self::SLUG_OVERVIEW]) ?
                 $_GET[self::SLUG_OVERVIEW] : null;
             $this->getSidebar();
+
             $this->overviewTemp->register();
 
         } else if (isset($_GET[self::SLUG_CATEGORY])) {
@@ -65,6 +73,7 @@ class AdminTemplate {
                 $_GET[self::SLUG_CATEGORY] : null;
             $this->getSidebar();
             $this->categoryTemp->register();
+
 
         } else if (isset($_GET[self::SLUG_PRODUCT])) {
             // PRODUCT
@@ -96,14 +105,50 @@ class AdminTemplate {
                     <?php if ($this->isCategories) { ?>
                         <a class="nav-link active" href="?name=admin-area&category">Category <span
                                     class="sr-only">(current)</span></a>
+                        <ul class="admin-sub-menu">
+                            <li class="">
+                                <a href="?name=admin-area&category"><?php
+                                    echo !$this->isAddNew ?
+                                        "<b>All Categories</b>" :
+                                        "All Categories";
+                                    ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="?name=admin-area&category&add-new"><?php
+                                    echo $this->isAddNew ?
+                                        "<b>Add New</b>" :
+                                        "Add New";
+                                    ?></a>
+                            </li>
+                        </ul>
                     <?php } else { ?>
                         <a class="nav-link" href="?name=admin-area&category">Category</a>
+
                     <?php } ?>
                 </li>
                 <li class="nav-item">
                     <?php if ($this->isProducts) { ?>
                         <a class="nav-link active" href="?name=admin-area&product">Product<span
                                     class="sr-only">(current)</span></a>
+                        <ul class="admin-sub-menu">
+                            <li class="">
+                                <a href="?name=admin-area&product">
+                                    <?php echo !$this->isAddNew ?
+                                        "<b>All Products</b>" :
+                                        "All Products";
+                                    ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="?name=admin-area&product&add-new">
+                                    <?php echo $this->isAddNew ?
+                                        "<b>Add New</b>" :
+                                        "Add New";
+                                    ?>
+                                </a>
+                            </li>
+                        </ul>
                     <?php } else { ?>
                         <a class="nav-link" href="?name=admin-area&product">Product</a>
                     <?php } ?>

@@ -5,7 +5,7 @@ use \Inc\Classes\Image;
 
 require_once($baseController->website_path . "/template/_header.php");
 
-$user = User::getByNameOrEmail($_SESSION['userName']);
+$user = User::getBy($_SESSION['userName']);
 ?>
     <main class="page-edit">
         <section class="flex-container-center fit-height-section">
