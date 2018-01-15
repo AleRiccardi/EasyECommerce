@@ -26,7 +26,7 @@ class Product extends BaseController {
             } else if (isset($_GET['edit']) && isset($_GET['id'])) {
                 $this->showEdit($_GET['id']);
             } else {
-                $this->getMain("Category");
+                $this->getMain("Product");
             }
 
         }
@@ -59,6 +59,38 @@ class Product extends BaseController {
                         <input class="form-control form-control-lg" type="text" name="title"
                                placeholder="Insert title here" value="<?php echo $product->title; ?>">
                         <br>
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <input name="price" class="form-control form-control-sm" type="number" step="any"
+                                       min="0.1"
+                                       placeholder="Price" value="<?php echo $product->price; ?>" required>
+                            </div>
+                            <div class="form-group col-md-5">
+                                <select name="category" class="form-control form-control-sm" required>
+                                    <option value="">Category...</option>
+                                    <?php
+                                    $categories = DbCategory::getAll('object');
+                                    foreach ($categories as $category) {
+                                        if ($product->idCategory === $category->id) {
+                                            echo "<option value='$category->id' selected>$category->title</option>";
+                                        } else {
+                                            echo "<option value='$category->id'>$category->title</option>";
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="form-check">
+                                    <input name="available" class="form-check-input" type="checkbox"
+                                           value="1" <?php echo $product->available ? "checked" : "" ?>>
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Available
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                         <textarea class="form-control" name="description" rows="5"
                                   placeholder="Insert description"><?php echo $product->description; ?></textarea>
                         <br>
@@ -90,14 +122,12 @@ class Product extends BaseController {
                             </div>
                             <br>
                             <br>
-                            <button class="btn btn-primary btn-sm" name="updateCategory" type="submit">Update</button>
-                            <button class="btn btn-danger btn-sm" name="deleteCategory" type="submit">Delete</button>
+                            <button class="btn btn-primary btn-sm" name="updateProduct" type="submit">Update</button>
+                            <button class="btn btn-danger btn-sm" name="deleteProduct" type="submit">Delete</button>
                         </div>
-
                     </div>
 
                 </div>
-
             </form>
         </main>
         <?php
@@ -112,6 +142,7 @@ class Product extends BaseController {
         $slug = empty($_POST['slug']) ?
             (str_replace(' ', '-', strtolower($title))) :
             $_POST['slug'];
+        $price = isset($_POST['price']) ? $_POST['price'] : "";
         $desc = isset($_POST['description']) ? $_POST['description'] : "";
         $image = isset($_POST['image']) ? $_POST['image'] : "";
         ?>
@@ -122,16 +153,17 @@ class Product extends BaseController {
                   name="edit-login-form">
                 <div class="row row-offcanvas row-offcanvas-right">
                     <div class="col-12 col-md-9">
-                        <input class="form-control form-control-lg" type="text" name="title"
+                        <input name="title" class="form-control form-control-lg" type="text"
                                placeholder="Insert title here" value="<?php echo $title; ?>" required>
                         <br>
                         <div class="form-row">
                             <div class="form-group col-md-5">
-                                <input class="form-control form-control-sm" type="number" step="any" min="0" name="price"
-                                       placeholder="Price" value="<?php //echo $price; ?>" required>
+                                <input name="price" class="form-control form-control-sm" type="number" step="any"
+                                       min="0.1"
+                                       placeholder="Price" value="<?php echo $price; ?>" required>
                             </div>
                             <div class="form-group col-md-5">
-                                <select id="inputState" class="form-control form-control-sm" required>
+                                <select name="category" class="form-control form-control-sm" required>
                                     <option value="">Category...</option>
                                     <?php
                                     $categories = DbCategory::getAll('object');
@@ -143,7 +175,7 @@ class Product extends BaseController {
                             </div>
                             <div class="form-group col-md-2">
                                 <div class="form-check">
-                                    <input name="available" class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked>
+                                    <input name="available" class="form-check-input" type="checkbox" value="1" checked>
                                     <label class="form-check-label" for="defaultCheck1">
                                         Available
                                     </label>
@@ -152,7 +184,7 @@ class Product extends BaseController {
                         </div>
 
                         <br>
-                        <textarea class="form-control" name="description" rows="5"
+                        <textarea name="description" class="form-control" rows="5"
                                   placeholder="Insert description"><?php echo $desc; ?></textarea>
                         <br>
                     </div>
@@ -200,7 +232,6 @@ class Product extends BaseController {
                         <th>n°</th>
                         <th>Title</th>
                         <th>Price</th>
-                        <th>Description</th>
                         <th>Available</th>
                         <th>Category</th>
                         <th>Description</th>
@@ -214,7 +245,11 @@ class Product extends BaseController {
                             <tr onclick="window.location='?name=admin-area&product&edit&id=<?php echo $product->id; ?>';">
                                 <td><?php echo $product->id; ?></td>
                                 <td><?php echo $product->title; ?></td>
+                                <td><?php echo $product->price; ?></td>
+                                <td><?php echo $product->available ? 1 : 0; ?></td>
+                                <td><?php echo $product->idCategory; ?></td>
                                 <td><?php echo $product->description; ?></td>
+
                                 <td><?php echo $product->dateLastUpdate; ?></td>
                             </tr>
                             <?php

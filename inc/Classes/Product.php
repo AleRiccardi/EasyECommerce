@@ -45,7 +45,9 @@ class Product extends BaseController {
             }
             $this->showError();
         } else if (isset($_POST['deleteProduct'])) {
-
+            if ($id = $this->catchDelete()) {
+                header("Location: $this->website_url/page.php?name=admin-area&product");
+            }
         }
 
     }
@@ -64,16 +66,22 @@ class Product extends BaseController {
             (str_replace(' ', '-', strtolower($title))) :
             (str_replace(' ', '-', strtolower($_POST['slug'])));
         $desc = $_POST['description'];
+        $price = $_POST['price'];
+        $available = $_POST['available'];
+        $category = $_POST['category'];
         $image = $_FILES["image"];
 
-        if (!(empty($title))) {
+        if (!(empty($title)) && $available) {
 
             $data = array(
+                "slug" => $slug,
                 "title" => $title,
                 "description" => $desc,
-                "slug" => $slug,
+                "price" => $price,
+                "available" => $available ? true : false,
                 "dateCreation" => DbProduct::now(),
                 "dateLastUpdate" => DbProduct::now(),
+                "idCategory" => $category,
             );
 
             // IMAGE
@@ -86,7 +94,6 @@ class Product extends BaseController {
             $existCategory = DbProduct::get(["slug" => $slug], "OBJECT"); // Get the address
             // if exist
             if (!$existCategory) {
-                $messages[] = "Category inserted";
                 return DbProduct::insert($data);
 
             } else {
@@ -113,16 +120,26 @@ class Product extends BaseController {
             (str_replace(' ', '-', strtolower($title))) :
             (str_replace(' ', '-', strtolower($_POST['slug'])));
         $desc = $_POST['description'];
+        $price = $_POST['price'];
+        if (isset($_POST['available']) && $_POST['available'] == '1') {
+            $available = 1;
+        } else {
+            $available = 0;
+        }
+        $category = $_POST['category'];
         $image = $_FILES["image"];
         $valid = null;
 
         if (!(empty($title))) {
 
             $data = array(
+                "slug" => $slug,
                 "title" => $title,
                 "description" => $desc,
-                "slug" => $slug,
-                "dateLastUpdate" => DbCategory::now(),
+                "price" => $price,
+                "available" => $available,
+                "dateLastUpdate" => DbProduct::now(),
+                "idCategory" => $category,
             );
 
             // IMAGE
@@ -134,18 +151,18 @@ class Product extends BaseController {
                 $data['idImage'] = null;
             }
 
-            $categoryToEdit = DbCategory::get(["id" => $id], "OBJECT"); // Get the category from ID
-            $categoryOfSlug = DbCategory::get(["slug" => $slug], "OBJECT"); // Get the category from SLUG
+            $productToEdit = DbProduct::get(["id" => $id], "OBJECT"); // Get the product from ID
+            $productOfSlug = DbProduct::get(["slug" => $slug], "OBJECT"); // Get the product from SLUG
 
             // if exist
-            if ($categoryToEdit) {
+            if ($productToEdit) {
                 // check the slug
-                if (!$categoryOfSlug) {
+                if (!$productOfSlug) {
                     // no one have this slug
                     $valid = true;
                 } else {
                     // only if is the same slug we can update it
-                    if (($categoryOfSlug->id === $categoryToEdit->id)) {
+                    if (($productOfSlug->id === $productToEdit->id)) {
                         $valid = true;
                     } else {
                         $this->errors[] = "Slug not available";
@@ -154,8 +171,7 @@ class Product extends BaseController {
                 }
 
                 if ($valid) {
-                    $messages[] = "Category inserted";
-                    return DbCategory::update($data, ["id" => $id]) ? $id : false;
+                    return DbProduct::update($data, ["id" => $id]) ? $id : false;
                 } else {
                     return false;
                 }
@@ -165,6 +181,12 @@ class Product extends BaseController {
             return false;
         }
     }
+
+    public function catchDelete() {
+        $id = $_GET['id'];
+        return DbProduct::delete(["id" => $id]);
+    }
+
 
     /**
      * simply return the current state of the user's login

@@ -97,7 +97,7 @@ class DbModel {
     /**
      * Get all the information from table.
      *
-     * @param string     $type  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
+     * @param string $type OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
      *
      * @return array|object|null array of results, if single will be as an object,
      *                    null if error.
@@ -142,7 +142,6 @@ class DbModel {
             }
         }
         $sql .= ")";
-
         $db = new Db();
         if ($db->query($sql) === true) {
             return $db->insertId;
@@ -161,12 +160,10 @@ class DbModel {
     public static function update(array $data, array $where) {
         // QUERY creation
         $sql = "UPDATE " . self::getTableName() . " SET ";
-
         $listKeys = array_keys($data);
         $lastKey = end($listKeys);
         foreach ($data as $key => $value) {
             $sql .= "$key = ";
-
             if (is_string($value)) {
                 $sql .= "'$value'";
             } else if (is_numeric($value)) {
@@ -174,13 +171,14 @@ class DbModel {
             } else if (is_null($value)) {
                 $sql .= "NULL";
             } else {
-                return null;
+                $sql .= $value;
             }
 
             if (!($key == $lastKey)) {
                 $sql .= ", ";
             }
         }
+
 
         $sql .= " WHERE ";
 
