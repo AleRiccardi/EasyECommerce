@@ -60,43 +60,52 @@ class Category {
     /**
      *
      */
-    public function getAddNew() { ?>
+    public function getAddNew() {
+        $title = isset($_POST['title']) ? $_POST['title'] : "";
+        $slug = empty($_POST['slug']) ?
+            (str_replace(' ', '-', strtolower($title))) :
+            $_POST['slug'];
+        $desc = isset($_POST['description']) ? $_POST['description'] : "";
+        $image = isset($_POST['image']) ? $_POST['image'] : "";
+        ?>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
             <h1 class="admin-title">Add new</h1>
-            <form class="form-add-new" method="post" action="?name=admin-area&category" enctype="multipart/form-data"
+            <form class="form-add-new" method="post" action="?name=admin-area&category&add-new" enctype="multipart/form-data"
                   name="edit-login-form">
                 <div class="row row-offcanvas row-offcanvas-right">
                     <div class="col-12 col-md-9">
-                        <input class="form-control form-control-lg" type="text" id="title"
-                               placeholder="Insert title here">
+                        <input class="form-control form-control-lg" type="text" name="title"
+                               placeholder="Insert title here" value="<?php echo $title; ?>">
                         <br>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"
-                                  placeholder="Insert description"></textarea>
+                        <textarea class="form-control" name="description" rows="5"
+                                  placeholder="Insert description"><?php echo $desc; ?></textarea>
                         <br>
                         <p>
                             <small>Date creation: <em>10 Oct 2017</em></small>
                             <br>
                             <small>Last update: <em>15 Oct 2017</em></small>
                         </p>
+                        <button class="btn btn-primary" name="addCategory" type="submit">Add</button>
                     </div>
 
-                    <div class="admin-sidebar-addnew col-6 col-md-3 sidebar-offcanvas " id="sidebar">
-                        <input class="form-control" type="text" id="slug" placeholder="Slug">
-                        <br>
-                        <div class="col-sm-12 admin-category-img">
-                            <img id="previewCat" src="">
-                            <label class="admin-btn-load fileContainer">
-                                Upload image
-                                <input id="uploadImgCat" type="file" name="uploadIcon"/>
-                            </label>
+                    <div class="col-6 col-md-3" id="sidebar">
+                        <div class="admin-sidebar-addnew ">
+                            <input class="form-control" type="text" name="slug" placeholder="Slug" value="<?php echo $slug; ?>">
+                            <br>
+                            <div class="col-sm-12 admin-category-img">
+                                <img id="previewCat" class="img-cat admin-hide" src="<?php echo $image; ?>">
+                                <label class="admin-btn-upload fileContainer">
+                                    <label>Upload image</label>
+                                    <input id="uploadImgCat" name="image" type="file" name="uploadIcon"/>
+                                </label>
+                                <label id="removeImgCat" class="admin-btn-remove admin-hide">Remove</label>
+                            </div>
                         </div>
 
                     </div>
 
                 </div>
 
-
-                <button class="btn btn-primary" name="addCategory" type="submit">Add</button>
             </form>
         </main>
         <?php

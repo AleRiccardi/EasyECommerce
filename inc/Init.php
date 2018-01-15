@@ -35,6 +35,7 @@ final class Init {
             Classes\Registration::class,
             Classes\User::class,
             Classes\Address::class,
+            Classes\Category::class,
         );
     }
 

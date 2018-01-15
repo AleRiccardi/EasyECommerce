@@ -9,13 +9,37 @@
 namespace Inc\Classes;
 
 
-class Category {
+use Inc\Base\BaseController;
+use Inc\Database\DbCategory;
+
+class Category extends BaseController {
+
+    public $title = "";
+    public $slug = "";
+    public $desc = "";
+    public $image = "";
+
+    /**
+     * @var array Collection of error messages
+     */
+    public $errors = array();
+    /**
+     * @var array Collection of success / neutral messages
+     */
+    public $messages = array();
+
     /**
      * Init function run form the Init class every
      * time that we load a page.
      */
     public function register() {
-        self::catchAddCategory();
+        if (isset($_POST['addCategory'])) {
+            if($this->catchAddCategory()){
+                $slug = $this->slug;
+                //header("Location: $this->website_url/page.php?name=admin-area&category&slug=$slug");
+            }
+            $this->showError();
+        }
     }
 
 
@@ -26,30 +50,86 @@ class Category {
      *
      * @return bool
      */
-    public static function catchAddCategory() {
-        if (isset($_POST['addCategory'])) {
-            $user = User::getCurrentUser();
+    public function catchAddCategory() {
 
-            $address = null;
+        $user = User::getCurrentUser();
+
+        $this->title = $_POST['title'];
+        $this->slug = empty($_POST['slug']) ?
+            (str_replace(' ', '-', strtolower($this->title))) :
+            $_POST['slug'];
+        $this->desc = $_POST['description'];
+        $this->image = $_FILES["image"];
+
+        if (!(empty($this->title))) {
+
             $data = array(
-                "department" => $_POST['department'],
-                "class" => $_POST['class'],
+                "title" => $this->title,
+                "description" => $this->desc,
+                "slug" => $this->slug,
+                "dateCreation" => DbCategory::now(),
+                "dateLastUpdate" => DbCategory::now(),
             );
 
-            $existAddress = DbAddress::get(["id" => $user->idAddress], "OBJECT"); // Get the address
-            // if exist
-            if($existAddress){
-                $res = DbAddress::update($data, ["id" => $existAddress->id]);
-                return $res ? true : false;
-            } else {
-                // if doesn't exist it will be create
-                $idAddress = DbAddress::insert($data); // return the id of the row that is added
-                $res = DbUser::update(["idAddress" => $idAddress], ["userName" => $user->userName]); // connect the address row with the user idAddress
-                return $res ? true : false;
+            // IMAGE
+            if ($this->image['name']) {
+                if($idImage = Image::upload($this->image)){
+                    $data['idImage'] = $idImage;
+                }
             }
+
+            $existAddress = DbCategory::get(["slug" => $this->slug], "OBJECT"); // Get the address
+            // if exist
+            if (!$existAddress) {
+                $this->messages[] = "Category inserted";
+                return DbCategory::insert($data);
+
+                /*$res = DbCategory::update($data, ["id" => $existAddress->id]);
+                return $res ? true : false;*/
+            } else {
+                $this->errors[] = "The category already exist, please change the slug";
+                return false;
+
+                // if doesn't exist it will be create
+                /*$idAddress = DbCategory::insert($data); // return the id of the row that is added
+                $res = DbUser::update(["idAddress" => $idAddress], ["userName" => $user->userName]); // connect the address row with the user idAddress
+                return $res ? true : false;*/
+            }
+        } else {
+            $this->errors[] = "Insert title";
+            return false;
         }
-        // default
-        return false;
+    }
+
+    /**
+     * simply return the current state of the user's login
+     *
+     * @return boolean user's login status
+     */
+    public function showError() {
+        if ($this->errors) { ?>
+            <div class="admin-message message alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php
+                foreach ($this->errors as $error) {
+                    echo $error;
+                }
+                ?>
+            </div>
+            <?php
+        }
+        if ($this->messages) { ?>
+            <div class="admin-message message alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php
+                foreach ($this->messages as $message) {
+                    echo $message;
+                }
+                ?>
+            </div>
+            <?php
+        }
+
     }
 
 }

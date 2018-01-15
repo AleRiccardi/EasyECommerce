@@ -163,7 +163,7 @@ class User {
 
             // FILE
             if ($_FILES["uploadIcon"]['name']) {
-                $idImage = Image::upload($_SESSION['userName'], $_FILES['uploadIcon']);
+                $idImage = Image::uploadProfile($_SESSION['userName'], $_FILES['uploadIcon']);
                 $data['idImage'] = $idImage;
             }
 
