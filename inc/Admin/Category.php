@@ -81,7 +81,8 @@ class Category extends BaseController {
                                 <img id="previewCat" class="img-cat <?php echo !$image ? "admin-hide" : "" ?>" src="<?php echo $image; ?>">
                                 <label class="admin-btn-upload fileContainer">
                                     <label>Upload image</label>
-                                    <input id="uploadImgCat" name="image" type="file" name="uploadIcon"/>
+                                    <input id="uploadImgCat" name="image" type="file" value="12" accept=".jpg, .jpeg, .png"/>
+                                    <?php echo $image ? '<input class="admin-hide" name="image-exist" id="image-exist"/>' : ""; ?>
                                 </label>
                                 <label id="removeImgCat" class="admin-btn-remove <?php echo !$image ? "admin-hide" : "" ?>">Remove</label>
                             </div>
@@ -135,7 +136,7 @@ class Category extends BaseController {
                                 <img id="previewCat" class="img-cat admin-hide" src="<?php echo $image; ?>">
                                 <label class="admin-btn-upload fileContainer">
                                     <label>Upload image</label>
-                                    <input id="uploadImgCat" name="image" type="file" />
+                                    <input id="uploadImgCat" name="image" type="file" accept=".jpg, .jpeg, .png"/>
                                 </label>
                                 <label id="removeImgCat" class="admin-btn-remove admin-hide">Remove</label>
                             </div>
@@ -166,20 +167,29 @@ class Category extends BaseController {
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>n°</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Last update</th>
+                        <th scope="col">n°</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Last update</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
                     if ($categories) {
-                        foreach ($categories as $category) { ?>
+                        foreach ($categories as $category) {
+                            $max_length = 80;
+                            $desc = $category->description;
+
+                            if (strlen($desc) > $max_length)
+                            {
+                                $offset = ($max_length - 3) - strlen($desc);
+                                $desc = substr($desc, 0, strrpos($desc, ' ', $offset)) . '...';
+                            }
+                            ?>
                             <tr onclick="window.location='?name=admin-area&category&edit&id=<?php echo $category->id; ?>';">
-                                <td><?php echo $category->id; ?></td>
+                                <th scope="row"><?php echo $category->id; ?></th>
                                 <td><?php echo $category->title; ?></td>
-                                <td><?php echo $category->description; ?></td>
+                                <td><div class=""><?php echo $desc; ?></div> </td>
                                 <td><?php echo $category->dateLastUpdate; ?></td>
                             </tr>
                             <?php

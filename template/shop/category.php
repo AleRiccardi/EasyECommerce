@@ -1,6 +1,8 @@
 <?php
 
 require_once($baseController->website_path . "/template/_header.php");
+
+
 ?>
     <main role="main" class="page container">
 
@@ -10,6 +12,7 @@ require_once($baseController->website_path . "/template/_header.php");
                 <p class="float-right d-md-none">
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
                 </p>
+
                 <div class="jumbotron j-shop"
                      style="background-image:
                          linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.30)),
@@ -23,6 +26,7 @@ require_once($baseController->website_path . "/template/_header.php");
                     </p>
                 </div>
                 <div class="card-columns">
+
                     <div class="card">
                         <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/uploads/image/ricebowl.jpg" alt="Card image cap">
                         <div class="card-body">

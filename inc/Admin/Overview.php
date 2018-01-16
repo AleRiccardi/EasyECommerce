@@ -52,7 +52,7 @@ class Overview {
 
     private function getMain() { ?>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-            <h1 class="admin-title">Dashboard</h1>
+            <h1 class="admin-title">Overview</h1>
 
             <h2>List categories</h2>
             <section class="row text-center placeholders">

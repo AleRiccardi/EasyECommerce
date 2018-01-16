@@ -147,7 +147,7 @@ class Product extends BaseController {
                 if ($idImage = Image::upload($image)) {
                     $data['idImage'] = $idImage;
                 }
-            } else {
+            } else if (!(isset($_POST['image-exist']))) {
                 $data['idImage'] = null;
             }
 
@@ -184,7 +184,7 @@ class Product extends BaseController {
 
     public function catchDelete() {
         $id = $_GET['id'];
-        return DbProduct::delete(["id" => $id]);
+        return DbProduct::delete($id);
     }
 
 

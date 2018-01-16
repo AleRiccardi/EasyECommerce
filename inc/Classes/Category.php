@@ -25,8 +25,8 @@ class Category extends BaseController {
     public $messages = array();
 
     /**
-     * Init function run form the Init class every
-     * time that we load a page.
+     * Init function run form the Init class every time that we load
+     * a page. Here were always attending that a form submit a form.
      */
     public function register() {
         if (isset($_POST['addCategory'])) {
@@ -43,17 +43,17 @@ class Category extends BaseController {
             if ($id = $this->catchDelete()) {
                 header("Location: $this->website_url/page.php?name=admin-area&category");
             }
+            $this->showError();
         }
 
     }
 
-
     /**
-     * When clicked the button editAddress in edit-address.php
-     * page the form send $_POST information and that function
-     * permit to catch them.
+     * Catch all the information submitted from the form
+     * that create (add) the category.
      *
-     * @return bool
+     * @return false|int the number of the category updated,
+     *                   false if errors.
      */
     public function catchAdd() {
         $title = $_POST['title'];
@@ -97,11 +97,11 @@ class Category extends BaseController {
     }
 
     /**
-     * When clicked the button editAddress in edit-address.php
-     * page the form send $_POST information and that function
-     * permit to catch them.
+     * Catch all the information submitted from the form
+     * that edit the category.
      *
-     * @return bool
+     * @return false|int the number of the category updated,
+     *                   false if errors.
      */
     public function catchEdit() {
         $id = $_GET['id'];
@@ -127,7 +127,7 @@ class Category extends BaseController {
                 if ($idImage = Image::upload($image)) {
                     $data['idImage'] = $idImage;
                 }
-            } else {
+            } else if (!(isset($_POST['image-exist']))) {
                 $data['idImage'] = null;
             }
 
@@ -163,15 +163,34 @@ class Category extends BaseController {
         }
     }
 
+    /**
+     * Catch when we want to delete a category.
+     *
+     * @return bool ture if success, false if errors.
+     */
     public function catchDelete() {
         $id = $_GET['id'];
-        return DbCategory::delete(["id" => $id]);
+        $res = DbCategory::delete($id);
+        if ($res === null) {
+            // trying to delete default
+            $this->errors[] = "You're trying to delete the default category. It is not 
+                                possible if you don't remove before that category to all your products.";
+            return false;
+        } else if ($res === false) {
+            // errors
+            return false;
+        } else if ($res === true) {
+            // success
+            return true;
+        }
+
+        // default
+        return false;
     }
 
     /**
-     * simply return the current state of the user's login
-     *
-     * @return boolean user's login status
+     * Simply return the error and success that we store in the
+     * two variable $errors and $messages.
      */
     public function showError() {
         if ($this->errors) { ?>

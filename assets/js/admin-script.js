@@ -30,10 +30,12 @@ $(function () {
         var preview = document.getElementById('previewCat');
         var btnRemove = document.getElementById('removeImgCat');
         var fileSelector = $("#uploadImgCat");
+        var hiddenImageExist = document.getElementById("image-exist");
 
         fileSelector.val("");
         preview.classList.add("admin-hide");
         btnRemove.classList.add('admin-hide');
+        hiddenImageExist.remove();
 
     });
 });

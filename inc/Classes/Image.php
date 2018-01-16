@@ -132,8 +132,7 @@ class Image {
 
 
     public static function removeById($id) {
-        $data = array("id" => $id);
-        return DbImage::delete($data);
+        return DbImage::delete($id);
     }
 
 }

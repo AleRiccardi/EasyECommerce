@@ -66,6 +66,7 @@ class DbModel {
                     $sql .= " AND ";
                 }
             }
+
             return $sql;
         }
     }
@@ -73,16 +74,16 @@ class DbModel {
     /**
      * Get information from table.
      *
-     * @param array|null $data  list of information that will be
+     * @param array|null $where list of information that will be
      *                          placed after the expression WHERE
      * @param string     $type  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
      *
      * @return array|object|null array of results, if single will be as an object,
      *                    null if error.
      */
-    public static function get(array $data, $type) {
+    public static function get(array $where, $type) {
         $db = new Db();
-        $query = self::fetchSql($data, "SELECT");
+        $query = self::fetchSql($where, "SELECT");
         $res = $db->getResults($query, $type);
 
         // if we have only one result we will take out the first element of the
@@ -207,16 +208,17 @@ class DbModel {
     }
 
     /**
-     * Delete the rows that match with the information tha we
+     * Delete the rows that match with the id tha it's
      * passed throw param.
      *
-     * @param array $data
+     * @param int $id of the table
      *
      * @return bool value (to be tested)
      */
-    public static function delete(array $data) {
+    public static function delete($id) {
         $db = new Db();
-        $sql = self::fetchSql($data, 'DELETE');
+        $where = array("id" => $id);
+        $sql = self::fetchSql($where, 'DELETE');
         return $db->query($sql) ? true : false;
     }
 

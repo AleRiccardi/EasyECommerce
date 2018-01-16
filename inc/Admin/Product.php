@@ -115,7 +115,8 @@ class Product extends BaseController {
                                      src="<?php echo $image; ?>">
                                 <label class="admin-btn-upload fileContainer">
                                     <label>Upload image</label>
-                                    <input id="uploadImgCat" name="image" type="file" name="uploadIcon"/>
+                                    <input id="uploadImgCat" name="image" type="file" accept=".jpg, .jpeg, .png"/>
+                                    <?php echo $image ? '<input class="admin-hide" name="image-exist" id="image-exist"/>' : ""; ?>
                                 </label>
                                 <label id="removeImgCat"
                                        class="admin-btn-remove <?php echo !$image ? "admin-hide" : "" ?>">Remove</label>
@@ -198,7 +199,7 @@ class Product extends BaseController {
                                 <img id="previewCat" class="img-cat admin-hide" src="<?php echo $image; ?>">
                                 <label class="admin-btn-upload fileContainer">
                                     <label>Upload image</label>
-                                    <input id="uploadImgCat" name="image" type="file"/>
+                                    <input id="uploadImgCat" name="image" type="file" accept=".jpg, .jpeg, .png"/>
                                 </label>
                                 <label id="removeImgCat" class="admin-btn-remove admin-hide">Remove</label>
                             </div>
@@ -221,6 +222,7 @@ class Product extends BaseController {
      */
     public function getMain($name) {
         $products = DbProduct::getAll("object");
+
         ?>
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
             <h1 class="admin-title"><?php echo $name; ?></h1>
@@ -241,14 +243,25 @@ class Product extends BaseController {
                     <tbody>
                     <?php
                     if ($products) {
-                        foreach ($products as $product) { ?>
+                        foreach ($products as $product) {
+                            $category = DbCategory::get(['id' => $product->idCategory], 'object');
+                            $max_length = 40;
+                            $desc = $product->description;
+
+                            if (strlen($desc) > $max_length)
+                            {
+                                $offset = ($max_length - 3) - strlen($desc);
+                                $desc = substr($desc, 0, strrpos($desc, ' ', $offset)) . '...';
+                            }
+                            ?>
+
                             <tr onclick="window.location='?name=admin-area&product&edit&id=<?php echo $product->id; ?>';">
                                 <td><?php echo $product->id; ?></td>
                                 <td><?php echo $product->title; ?></td>
                                 <td><?php echo $product->price; ?></td>
                                 <td><?php echo $product->available ? 1 : 0; ?></td>
-                                <td><?php echo $product->idCategory; ?></td>
-                                <td><?php echo $product->description; ?></td>
+                                <td><a href="?name=admin-area&category&edit&id=<?php echo $category->id; ?>"><?php echo $category->title; ?></a></td>
+                                <td><?php echo $desc; ?></td>
 
                                 <td><?php echo $product->dateLastUpdate; ?></td>
                             </tr>

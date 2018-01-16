@@ -37,66 +37,44 @@ if (isset($_GET['category'])) {
                     </p>
                 </div>
 
-                <!-- Rice -->
-                <div class="row featurette middle-h-cont">
-                    <div class="col-md-7 middle-h-item">
-                        <h2 class="featurette-heading">Cake <span class="text-muted">Category</span></h2>
-                        <p class="lead">For over 2000 years, rice has been the most important food in Japanese cuisine.
-                            Despite changes in eating patterns over the last few decades and slowly decreasing rice
-                            consumption in recent years, rice remains one of the most important ingredients in Japan
-                            today.</p>
-                        <a class="btn btn-primary btn-sm" href="#" role="button">See the chocolate</a>
+                <?php
+                $i = 0;
+                $categories = \Inc\Database\DbCategory::getAll('object');
+                foreach ($categories as $category) {
+                    $image = \Inc\Database\DbImage::get(["id" => $category->idImage], 'object');
+                    $imagePath = $image ? $image->path : "/assets/img/no-image.jpg";
+                    ?>
+                    <!-- Rice -->
+                    <div class="row featurette middle-h-cont">
+                        <div class="col-md-7 <?php echo $i % 2 ? "order-md-2" : ""; ?> " middle-h-item">
+                            <h2 class="featurette-heading"><?php echo $category->title; ?> <!--<span class="text-muted">Category</span>--></h2>
+                            <p class="lead"><?php echo $category->description; ?></p>
+                            <a class="btn btn-primary btn-sm" href="shop/category.php?slug=<?php echo $category->slug; ?>" role="button">See the chocolate</a>
 
+                        </div>
+                        <div class="col-md-5 <?php echo $i % 2 ? "order-md-1 " : ""; ?> middle-h-item cont-featurette-image">
+                            <img class="featurette-image img-fluid mx-auto" alt="500x500"
+                                 src="<?php echo $baseController->website_url . $imagePath;?>">
+                        </div>
                     </div>
-                    <div class="col-md-5 middle-h-item cont-featurette-image">
-                        <img class="featurette-image img-fluid mx-auto" alt="500x500"
-                             src="<?php echo $baseController->website_url ?>/assets/img/cat-cake.jpg">
-                    </div>
-                </div>
 
-                <hr class="featurette-divider">
+                <?php
 
-                <!-- Seafood -->
-                <div class="row featurette middle-h-cont">
-                    <div class="col-md-7 order-md-2 middle-h-item">
-                        <h2 class="featurette-heading">Cookies <span class="text-muted">Category</span></h2>
-                        <p class="lead">Hundreds of different fish, shellfish and other seafood from the oceans, seas,
-                            lakes and rivers are used in the Japanese cuisine. They are prepared and eaten in many
-                            different ways, such as raw, dried, boiled, grilled, deep fried or steamed.</p>
-                        <a class="btn btn-primary btn-sm" href="#" role="button">See the chocolate</a>
+                if(($i+1 < count($categories))){
+                    echo "<hr class='featurette-divider'>";
+                }
+                    $i++;
+                }
+                ?>
 
-                    </div>
-                    <div class="col-md-5 order-md-1 middle-h-item cont-featurette-image">
-                        <img class="featurette-image img-fluid mx-auto" alt="500x500"
-                             src="<?php echo $baseController->website_url ?>/assets/img/chocolate-chip.jpg">
-                    </div>
-                </div>
-
-                <hr class="featurette-divider">
-
-                <!-- Rice -->
-                <div class="row featurette middle-h-cont">
-                    <div class="col-md-7 middle-h-item">
-                        <h2 class="featurette-heading">Sweets <span class="text-muted">Category</span></h2>
-                        <p class="lead">For over 2000 years, rice has been the most important food in Japanese cuisine.
-                            Despite changes in eating patterns over the last few decades and slowly decreasing rice
-                            consumption in recent years, rice remains one of the most important ingredients in Japan
-                            today.</p>
-                        <a class="btn btn-primary btn-sm" href="#" role="button">See the chocolate</a>
-
-                    </div>
-                    <div class="col-md-5 middle-h-item cont-featurette-image">
-                        <img class="featurette-image img-fluid mx-auto" alt="500x500"
-                             src="<?php echo $baseController->website_url ?>/assets/img/pastry.jpg">
-                    </div>
-                </div>
             </div><!--/span-->
 
             <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
                 <div class="list-group">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=shop"
                        class="list-group-item active">Shop</a>
-                    <a href="<?php echo $baseController->website_url ?>/page.php?name=shop&category=rice" class="list-group-item">Cake</a>
+                    <a href="<?php echo $baseController->website_url ?>/page.php?name=shop&category=rice"
+                       class="list-group-item">Cake</a>
                     <a href="#" class="list-group-item">Cookies</a>
                     <a href="#" class="list-group-item">Sweets</a>
                 </div>
