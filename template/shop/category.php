@@ -1,5 +1,25 @@
 <?php
 
+use \Inc\Database\DbCategory;
+use \Inc\Database\DbProduct;
+use \Inc\Database\DbImage;
+
+$currentCategory = null;
+if (!isset($_GET["category"]) && empty($_GET["category"])) {
+    header("Location: page.php?name=home");
+}
+
+// current category
+$currentCategory = DbCategory::get(["slug" => $_GET["category"]], 'object');
+$imageCat = DbImage::get(["id" => $currentCategory->idImage], 'object');
+
+// current product
+$products = DbProduct::get(["idCategory" => $currentCategory->id], 'object');
+
+//all categories
+$categories = DbCategory::getAll('object');
+
+
 require_once($baseController->website_path . "/template/_header.php");
 
 
@@ -15,91 +35,43 @@ require_once($baseController->website_path . "/template/_header.php");
 
                 <div class="jumbotron j-shop"
                      style="background-image:
-                         linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.30)),
-                         linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0.8) 100%),
-                         url('<?php echo $baseController->website_url ?>/assets/img/cat-cake.jpg');">
-                    <h1>Rice</h1>
-                    <p>For over 2000 years, rice has been the most important food in Japanese cuisine.
-                        Despite changes in eating patterns over the last few decades and slowly decreasing rice
-                        consumption in recent years, rice remains one of the most important ingredients in Japan
-                        today.
+                             linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.30)),
+                             linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0.8) 100%),
+                             url('<?php echo $baseController->website_url . $imageCat->path ?>');">
+                    <h1><?php echo $currentCategory->title; ?></h1>
+                    <p><?php echo $currentCategory->description; ?>
                     </p>
                 </div>
-                <div class="card-columns">
 
-                    <div class="card">
-                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/uploads/image/ricebowl.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title that wraps to a new line</h5>
-                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in
-                                to additional content. This content is a little bit longer.</p>
+                <div class="container-fluid">
+                    <!-- add extra container element for Masonry -->
+                    <div class="grid row">
+                        <div class="grid-sizer col-xs-6 col-sm-4 col-md-4">
+
                         </div>
-                    </div>
-                    <div class="card">
-                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/uploads/image/sushi.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <p class="card-text">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img class="card-img" src="<?php echo $baseController->website_url ?>/assets/uploads/image/fried-ric.jpg" alt="Card image">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <p class="card-text">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/uploads/image/sushi.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <p class="card-text">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img class="card-img" src="<?php echo $baseController->website_url ?>/assets/uploads/image/fried-ric.jpg" alt="Card image">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <p class="card-text">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img class="card-img-top" src="<?php echo $baseController->website_url ?>/assets/uploads/image/sushi.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <p class="card-text">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img class="card-img" src="<?php echo $baseController->website_url ?>/assets/uploads/image/fried-ric.jpg" alt="Card image">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <p class="card-text">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </p>
-                        </div>
+                        <?php
+                        $i = 0;
+                        foreach ($products as $product) {
+                            $image = DbImage::get(["id" => $product->idImage], 'object');
+                            $imagePath = $image ? $image->path : "/assets/img/no-image.jpg";
+                            ?>
+                            <div class="grid-item col-xs-6 col-sm-4 col-md-4">
+                                <div class="card">
+                                    <img class="card-img-top"
+                                         src="<?php echo $baseController->website_url . $imagePath ?>"
+                                         alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $product->title ?></h5>
+                                        <p class="card-text"><?php echo $product->description ?></p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <span>€<?php echo $product->price ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div><!--/span-->
@@ -108,15 +80,17 @@ require_once($baseController->website_path . "/template/_header.php");
                 <div class="list-group">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=shop"
                        class="list-group-item">Shop</a>
-                    <a href="<?php echo $baseController->website_url ?>/page.php?name=shop&category=rice" class="list-group-item active">Cake</a>
-                    <a href="#" class="list-group-item">Cookies</a>
-                    <a href="#" class="list-group-item">Sweets</a>
+                    <?php
+                    $i = 0;
+                    foreach ($categories as $category) { ?>
+                        <a href="<?php echo $baseController->website_url . "/page.php?name=category&category=" . $category->slug; ?>"
+                           class=" list-group-item <?php echo $category->slug == $currentCategory->slug ? "active" : "" ?>">
+                            <?php echo $category->title; ?>
+                        </a>
+                    <?php } ?>
                 </div>
             </div><!--/span-->
         </div><!--/row-->
-
-        <hr>
-
     </main>
 
 <?php

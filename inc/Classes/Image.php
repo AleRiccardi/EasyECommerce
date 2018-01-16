@@ -10,6 +10,7 @@ namespace Inc\Classes;
 
 
 use Inc\Base\BaseController;
+use Inc\Base\DirController;
 use Inc\Database\Db;
 use Inc\Database\DbImage;
 
@@ -24,12 +25,12 @@ class Image {
      * @return bool|int|null
      */
     public static function uploadProfile($userName, $file) {
-        $baseController = new BaseController();
+        $baseC = new BaseController();
+        $dirC = new DirController();
 
-        $target_dir = "/assets/uploads/user-avatar/";
         $imageFileType = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $relativePath = $target_dir . strtolower($userName) . "-avatar.$imageFileType";
-        $target_file = $baseController->website_path . $relativePath;
+        $relativePath = $dirC->avatarPath . strtolower($userName) . "-avatar.$imageFileType";
+        $target_file = $baseC->website_path . $relativePath;
 
         $uploadOk = 1;
         // Check if image file is a actual image or fake image

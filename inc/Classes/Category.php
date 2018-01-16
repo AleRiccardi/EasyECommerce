@@ -10,6 +10,7 @@ namespace Inc\Classes;
 
 
 use Inc\Base\BaseController;
+use Inc\Base\DirController;
 use Inc\Database\DbCategory;
 
 class Category extends BaseController {
@@ -29,6 +30,9 @@ class Category extends BaseController {
      * a page. Here were always attending that a form submit a form.
      */
     public function register() {
+        $dirC = new DirController();
+
+
         if (isset($_POST['addCategory'])) {
             if ($id = $this->catchAdd()) {
                 header("Location: $this->website_url/page.php?name=admin-area&category&edit&id=$id");

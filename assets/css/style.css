@@ -443,6 +443,15 @@ p.lead-home {
 }
 
 /* ====================
+    CATEGORY page
+   ==================== */
+
+.card {
+    margin-bottom: 15px;
+}
+
+
+/* ====================
     EDIT LOGIN page
    ==================== */
 
@@ -578,7 +587,3 @@ p.lead-home {
         width: 50% !important; /* 6 columns */
     }
 }
-
-
-
-

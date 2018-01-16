@@ -2,15 +2,11 @@
 
 $currentPage = null;
 
-if (isset($_GET['category'])) {
-    $currentPage = $_GET['category'];
+$categories = \Inc\Database\DbCategory::getAll('object');
 
-    require_once($baseController->website_path . "/template/shop/category.php");
+require_once($baseController->website_path . "/template/_header.php");
 
-} else {
-    require_once($baseController->website_path . "/template/_header.php");
-
-    ?>
+?>
 
     <main role="main" class="page container">
 
@@ -39,30 +35,31 @@ if (isset($_GET['category'])) {
 
                 <?php
                 $i = 0;
-                $categories = \Inc\Database\DbCategory::getAll('object');
                 foreach ($categories as $category) {
                     $image = \Inc\Database\DbImage::get(["id" => $category->idImage], 'object');
                     $imagePath = $image ? $image->path : "/assets/img/no-image.jpg";
                     ?>
-                    <!-- Rice -->
+                    <!-- Category -->
                     <div class="row featurette middle-h-cont">
-                        <div class="col-md-7 <?php echo $i % 2 ? "order-md-2" : ""; ?> " middle-h-item">
-                            <h2 class="featurette-heading"><?php echo $category->title; ?> <!--<span class="text-muted">Category</span>--></h2>
+                        <div class="col-md-7 <?php echo $i % 2 ? "order-md-2" : ""; ?> middle-h-item">
+                            <h2 class="featurette-heading"><?php echo $category->title; ?>
+                                <!--<span class="text-muted">Category</span>--></h2>
                             <p class="lead"><?php echo $category->description; ?></p>
-                            <a class="btn btn-primary btn-sm" href="shop/category.php?slug=<?php echo $category->slug; ?>" role="button">See the chocolate</a>
-
+                            <a class="btn btn-primary btn-sm"
+                               href="?name=category&category=<?php echo $category->slug; ?>" role="button">See the
+                                chocolate</a>
                         </div>
                         <div class="col-md-5 <?php echo $i % 2 ? "order-md-1 " : ""; ?> middle-h-item cont-featurette-image">
                             <img class="featurette-image img-fluid mx-auto" alt="500x500"
-                                 src="<?php echo $baseController->website_url . $imagePath;?>">
+                                 src="<?php echo $baseController->website_url . $imagePath; ?>">
                         </div>
                     </div>
 
-                <?php
+                    <?php
 
-                if(($i+1 < count($categories))){
-                    echo "<hr class='featurette-divider'>";
-                }
+                    if (($i + 1 < count($categories))) {
+                        echo "<hr class='featurette-divider'>";
+                    }
                     $i++;
                 }
                 ?>
@@ -73,18 +70,19 @@ if (isset($_GET['category'])) {
                 <div class="list-group">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=shop"
                        class="list-group-item active">Shop</a>
-                    <a href="<?php echo $baseController->website_url ?>/page.php?name=shop&category=rice"
-                       class="list-group-item">Cake</a>
-                    <a href="#" class="list-group-item">Cookies</a>
-                    <a href="#" class="list-group-item">Sweets</a>
+                    <?php
+                    $i = 0;
+                    foreach ($categories as $category) { ?>
+                        <a href="<?php echo $baseController->website_url . "/page.php?name=category&category=" . $category->slug; ?>"
+                           class=" list-group-item"><?php echo $category->title; ?></a>
+                    <?php } ?>
                 </div>
             </div><!--/span-->
         </div><!--/row-->
 
     </main>
 
-    <?php
+<?php
 
-    require_once($baseController->website_path . "/template/_footer.php");
+require_once($baseController->website_path . "/template/_footer.php");
 
-}
