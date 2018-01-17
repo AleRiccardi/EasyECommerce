@@ -26,7 +26,7 @@ class DbImage extends DbModel {
         );
 
         // Check if exist
-        if(!($image = self::get($data, "OBJECT"))) {
+        if(!($image = self::getSingle($data, "OBJECT"))) {
             $data = array(
                 "path" => $url,
                 "dateCreation" => self::now()
@@ -36,7 +36,7 @@ class DbImage extends DbModel {
                 $data = array(
                     "path" => $url,
                 );
-                $image = self::get($data, "OBJECT");
+                $image = self::getSingle($data, "OBJECT");
                 return $image->id;
             } else {
                 return null;

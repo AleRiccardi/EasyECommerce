@@ -36,7 +36,7 @@ require_once($baseController->website_path . "/template/_header.php");
                 <?php
                 $i = 0;
                 foreach ($categories as $category) {
-                    $image = \Inc\Database\DbImage::get(["id" => $category->idImage], 'object');
+                    $image = \Inc\Database\DbImage::getSingle(["id" => $category->idImage], 'object');
                     $imagePath = $image ? $image->path : "/assets/img/no-image.jpg";
                     ?>
                     <!-- Category -->

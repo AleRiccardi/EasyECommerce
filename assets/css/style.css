@@ -14,7 +14,6 @@ main.page {
     padding-top: 1.5rem;
 }
 
-
 .title-center {
     text-align: center;
     margin-bottom: 50px;
@@ -155,20 +154,22 @@ ul.nav-menu {
 
 .mc-img {
     display: inline-block;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     overflow: hidden;
     margin-right: 5px;
 }
 
 .mc-img img {
+    width: 30px;
+    height: 30px;
     max-width: 100%;
 }
 
-.mc-number-item{
+.mc-number-item {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 4;
+    top: 4;
 }
 
 /* ## Menu User  --> .mu ## */
@@ -177,8 +178,9 @@ ul.nav-menu {
     cursor: pointer;
 }
 
-.dropdown-menu {
-    left: -33px !important;
+.dropdown-menu-right {
+    right: 0;
+    left: auto !important;
 }
 
 .mu-info {
@@ -220,6 +222,43 @@ ul.nav-menu {
 }
 
 .mu-dd-content a:hover {
+}
+
+/*
+ * Other
+ */
+
+.gb_qb {
+    border-color: transparent;
+    border-style: dashed dashed solid;
+    border-width: 0 8.5px 8.5px;
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: -9px;
+    z-index: 1001;
+    height: 0;
+    width: 0;
+    -webkit-animation: gb__a .2s;
+    animation: gb__a .2s;
+    border-bottom-color: #ccc;
+    border-bottom-color: rgba(0, 0, 0, .2);
+}
+
+.gb_pb {
+    border-color: transparent;
+    border-bottom-color: #fff;
+    border-style: dashed dashed solid;
+    border-width: 0 8.5px 8.5px;
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: -9px;
+    z-index: 1001;
+    height: 0;
+    width: 0;
+    -webkit-animation: gb__a .2s;
+    animation: gb__a .2s;
 }
 
 /* ====================
@@ -400,7 +439,6 @@ p.lead-home {
     /*margin-top: 20px;*/
 }
 
-
 .jumbotron.j-shop {
     color: white;
     background-size: cover;
@@ -408,7 +446,7 @@ p.lead-home {
     background-repeat: no-repeat !important;
 }
 
-.cont-featurette-image{
+.cont-featurette-image {
     text-align: center;
 }
 
@@ -431,7 +469,7 @@ p.lead-home {
     letter-spacing: -.05rem;
 }
 
-.featurette .text-muted{
+.featurette .text-muted {
     font-size: 25px;
 }
 
@@ -450,24 +488,23 @@ p.lead-home {
     margin-bottom: 15px;
 }
 
-
 /* ====================
     EDIT LOGIN page
    ==================== */
 
-.page-edit *{
+.page-edit * {
     text-align: left;
 }
 
-.page-edit .container{
+.page-edit .container {
     max-width: 650px;
 }
 
-.page-edit h1{
+.page-edit h1 {
     margin-bottom: 35px;
 }
 
-.page-edit .btn{
+.page-edit .btn {
     margin-top: 20px;
 }
 
@@ -477,7 +514,7 @@ p.lead-home {
     border-radius: 10px;
 }
 
-.cont-edit-form form.form-edit-login{
+.cont-edit-form form.form-edit-login {
     margin: 0;
 }
 
@@ -507,7 +544,6 @@ p.lead-home {
     margin-left: 20px;
 }
 
-
 /* ====================
     404 page
    ==================== */
@@ -536,8 +572,6 @@ p.lead-home {
     width: 100%;
     line-height: 60px;
 }
-
-
 
 /*
  * Off Canvas
@@ -586,4 +620,63 @@ p.lead-home {
         top: 0;
         width: 50% !important; /* 6 columns */
     }
+}
+
+* {
+
+}
+
+.cont-input-number {
+    display: inline-block;
+    border: 1px solid #ccc;
+    width: 100px;
+    height: 30px;
+    user-select: none;
+    border-radius: 4px;
+    box-sizing: border-box !important;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.input-number {
+    padding: 0 5px;
+    border: 0;
+    max-width: 45px;
+    -webkit-flex: 2;
+    flex: 2;
+}
+
+.input-number,
+.input-number-decrement,
+.input-number-increment {
+    display: inline-block;
+    height: 100%;
+    text-align: center;
+}
+
+.input-number-decrement,
+.input-number-increment {
+    background: #f1f1f1;
+    color: #444;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 27px;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.input-number-decrement:active,
+.input-number-increment:active {
+    background: #ddd;
+}
+
+.input-number-decrement {
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+}
+
+.input-number-increment {
+    border-left: none;
+    border-radius: 0 4px 4px 0;
 }

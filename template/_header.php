@@ -1,10 +1,11 @@
 <?php
 
 use Inc\Classes\User;
+use Inc\Base\BaseController;
+use Inc\Classes\Login;
 
-$baseController = new \Inc\Base\BaseController();
-$login = new \Inc\Classes\Login();
-
+$baseController = new BaseController();
+$login = new Login();
 ?>
 
 <html lang="it">
@@ -47,14 +48,31 @@ $login = new \Inc\Classes\Login();
 
             <?php if ($login->isUserLoggedIn()) { ?>
                 <div class="cont-menu-cart nav-item">
-                    <div class="mc-img">
+                    <div class="mc-img" id="dropdown01" data-toggle="dropdown"
+                         aria-haspopup="true" aria-expanded="true">
                         <img class="profile-image"
                              src="<?php echo $baseController->website_url ?>/assets/img/icon/cart-white.png"/>
+                        <div class="mc-number-item">
+                            <span class="badge badge-primary">2</span>
+                        </div>
                     </div>
-                    <div class="mc-number-item">
-                        <span class="badge badge-primary">2</span>
+
+                    <div class="dropdown-menu dropdown-menu-right mu-dd-content"
+                         aria-labelledby="navbarDropdownMenuLink">
+                        <div class="gb_qb"></div>
+                        <div class="gb_pb"></div>
+                        <a class="dropdown-item"
+                           href="<?php echo $baseController->website_url ?>/page.php?name=user">User</a>
+                        <?php if (User::isAdmin()) { ?>
+                            <a class="dropdown-item"
+                               href="<?php echo $baseController->website_url ?>/page.php?name=admin-area&overview">Admin
+                                area</a>
+                        <?php } ?>
+                        <a class="dropdown-item"
+                           href="<?php echo $baseController->website_url ?>/page.php?name=login&logout">Logout</a>
                     </div>
                 </div>
+
                 <div class="cont-menu-user nav-item dropdown">
                     <div class="mu-info" id="dropdown01" data-toggle="dropdown"
                          aria-haspopup="true" aria-expanded="true">
@@ -62,18 +80,22 @@ $login = new \Inc\Classes\Login();
                             <img class="profile-image"
                                  src="<?php echo User::getProfilePic($_SESSION['userName']); ?>"/>
                         </div>
-                        <span class="mu-dd-button"><?php echo $_SESSION['userName']; ?></span>
                     </div>
-                    <div class="dropdown-menu mu-dd-content " aria-labelledby="dropdown01">
+                    <div class="dropdown-menu dropdown-menu-right mu-dd-content"
+                         aria-labelledby="navbarDropdownMenuLink">
+                        <div class="gb_qb"></div>
+                        <div class="gb_pb"></div>
                         <a class="dropdown-item"
                            href="<?php echo $baseController->website_url ?>/page.php?name=user">User</a>
                         <?php if (User::isAdmin()) { ?>
-                        <a class="dropdown-item"
-                           href="<?php echo $baseController->website_url ?>/page.php?name=admin-area&overview">Admin area</a>
+                            <a class="dropdown-item"
+                               href="<?php echo $baseController->website_url ?>/page.php?name=admin-area&overview">Admin
+                                area</a>
                         <?php } ?>
                         <a class="dropdown-item"
                            href="<?php echo $baseController->website_url ?>/page.php?name=login&logout">Logout</a>
                     </div>
+
                 </div>
             <?php } ?>
         </div>

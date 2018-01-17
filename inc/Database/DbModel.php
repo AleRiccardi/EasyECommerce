@@ -86,11 +86,29 @@ class DbModel {
         $query = self::fetchSql($where, "SELECT");
         $res = $db->getResults($query, $type);
 
-        // if we have only one result we will take out the first element of the
-        // array inside a variable, like --> array(value) --> value
-        if (count($res) == 1) {
-            $res = $res[0];
-        }
+        if(empty($res)) $res = array();
+
+        return $res;
+    }
+
+    /**
+     * Get information from table.
+     *
+     * @param array|null $where list of information that will be
+     *                          placed after the expression WHERE
+     * @param string     $type  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
+     *
+     * @return array|object|null array of results, if single will be as an object,
+     *                    null if error.
+     */
+    public static function getSingle(array $where, $type) {
+        $db = new Db();
+        $query = self::fetchSql($where, "SELECT");
+        $res = $db->getResults($query, $type);
+
+        // take out the first element of the array inside a
+        // variable, like --> array(value) --> value
+        $res = $res[0];
 
         return $res;
     }
@@ -208,10 +226,10 @@ class DbModel {
     }
 
     /**
-     * Delete the rows that match with the id tha it's
+     * Delete the rows that match with the id tha it'is
      * passed throw param.
      *
-     * @param int $id of the table
+     * @param int $id
      *
      * @return bool value (to be tested)
      */

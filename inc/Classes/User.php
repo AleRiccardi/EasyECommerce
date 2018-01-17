@@ -61,7 +61,6 @@ class User {
 
 
 
-
     /**
      * Get user from username or email address.
      *
@@ -72,14 +71,14 @@ class User {
      */
     public static function getBy($id, $type = "USERNAME") {
         if (!is_string($id)) return null;
-
+        $data = null;
         if ($type == "USERNAME") {
             $data = array("userName" => $id);
         } else if ($type == "USEREMAIL") {
             $data = array("userEmail" => $id);
         }
 
-        $ret = DbUser::get($data, "OBJECT");
+        $ret = DbUser::getSingle($data, "OBJECT");
         return $ret;
     }
 
@@ -94,9 +93,10 @@ class User {
         $imageFinalPath = null;
         $baseController = new BaseController();
         $user = self::getBy($userName, $type = "USERNAME");
+
         if ($user && $user->idImage) {
             // get row from Image table
-            $image = DbImage::get(array("id" => $user->idImage), "OBJECT");
+            $image = DbImage::getSingle(array("id" => $user->idImage), "OBJECT");
             if ($image) {
                 $imageFinalPath = $baseController->website_url . $image->path;
             } else {

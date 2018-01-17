@@ -36,12 +36,12 @@ class Category extends BaseController {
 
 
     public function showEdit($id) {
-        $category = DbCategory::get(["id" => $id], "OBJECT");
+        $category = DbCategory::getSingle(["id" => $id], "OBJECT");
         if(!$category){
             $this->getMain("Category");
             return;
         }
-        $image = DbImage::get(['id' => $category->idImage], "OBJECT");
+        $image = DbImage::getSingle(['id' => $category->idImage], "OBJECT");
 
         if($image){
             $image = $this->website_url . $image->path;

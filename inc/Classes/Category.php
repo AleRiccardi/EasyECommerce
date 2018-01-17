@@ -84,7 +84,7 @@ class Category extends BaseController {
                 }
             }
 
-            $existCategory = DbCategory::get(["slug" => $slug], "OBJECT"); // Get the address
+            $existCategory = DbCategory::getSingle(["slug" => $slug], "OBJECT"); // Get the address
             // if exist
             if (!$existCategory) {
                 $messages[] = "Category inserted";
@@ -135,8 +135,8 @@ class Category extends BaseController {
                 $data['idImage'] = null;
             }
 
-            $categoryToEdit = DbCategory::get(["id" => $id], "OBJECT"); // Get the category from ID
-            $categoryOfSlug = DbCategory::get(["slug" => $slug], "OBJECT"); // Get the category from SLUG
+            $categoryToEdit = DbCategory::getSingle(["id" => $id], "OBJECT"); // Get the category from ID
+            $categoryOfSlug = DbCategory::getSingle(["slug" => $slug], "OBJECT"); // Get the category from SLUG
 
             // if exist
             if ($categoryToEdit) {

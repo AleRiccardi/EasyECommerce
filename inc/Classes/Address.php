@@ -30,7 +30,7 @@ class Address {
      */
     public static function getAddress($userName){
         $user = User::getBy($userName,"USERNAME");
-        $res = DbAddress::get(["id" => $user->idAddress], "OBJECT");
+        $res = DbAddress::getSingle(["id" => $user->idAddress], "OBJECT");
         return $res;
     }
 
@@ -51,7 +51,7 @@ class Address {
                 "class" => $_POST['class'],
             );
 
-            $existAddress = DbAddress::get(["id" => $user->idAddress], "OBJECT"); // Get the address
+            $existAddress = DbAddress::getSingle(["id" => $user->idAddress], "OBJECT"); // Get the address
             // if exist
             if($existAddress){
                 $res = DbAddress::update($data, ["id" => $existAddress->id]);

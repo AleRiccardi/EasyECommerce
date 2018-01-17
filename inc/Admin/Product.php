@@ -34,12 +34,12 @@ class Product extends BaseController {
 
 
     public function showEdit($id) {
-        $product = DbProduct::get(["id" => $id], "OBJECT");
+        $product = DbProduct::getSingle(["id" => $id], "OBJECT");
         if (!$product) {
             $this->getMain("Category");
             return;
         }
-        $image = DbImage::get(['id' => $product->idImage], "OBJECT");
+        $image = DbImage::getSingle(['id' => $product->idImage], "OBJECT");
 
         if ($image) {
             $image = $this->website_url . $image->path;
@@ -244,7 +244,7 @@ class Product extends BaseController {
                     <?php
                     if ($products) {
                         foreach ($products as $product) {
-                            $category = DbCategory::get(['id' => $product->idCategory], 'object');
+                            $category = DbCategory::getSingle(['id' => $product->idCategory], 'object');
                             $max_length = 40;
                             $desc = $product->description;
 

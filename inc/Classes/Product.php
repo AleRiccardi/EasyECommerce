@@ -91,7 +91,7 @@ class Product extends BaseController {
                 }
             }
 
-            $existCategory = DbProduct::get(["slug" => $slug], "OBJECT"); // Get the address
+            $existCategory = DbProduct::getSingle(["slug" => $slug], "OBJECT"); // Get the address
             // if exist
             if (!$existCategory) {
                 return DbProduct::insert($data);
@@ -151,8 +151,8 @@ class Product extends BaseController {
                 $data['idImage'] = null;
             }
 
-            $productToEdit = DbProduct::get(["id" => $id], "OBJECT"); // Get the product from ID
-            $productOfSlug = DbProduct::get(["slug" => $slug], "OBJECT"); // Get the product from SLUG
+            $productToEdit = DbProduct::getSingle(["id" => $id], "OBJECT"); // Get the product from ID
+            $productOfSlug = DbProduct::getSingle(["slug" => $slug], "OBJECT"); // Get the product from SLUG
 
             // if exist
             if ($productToEdit) {

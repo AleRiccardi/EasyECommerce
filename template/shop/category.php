@@ -10,8 +10,8 @@ if (!isset($_GET["category"]) && empty($_GET["category"])) {
 }
 
 // current category
-$currentCategory = DbCategory::get(["slug" => $_GET["category"]], 'object');
-$imageCat = DbImage::get(["id" => $currentCategory->idImage], 'object');
+$currentCategory = DbCategory::getSingle(["slug" => $_GET["category"]], 'object');
+$imageCat = DbImage::getSingle(["id" => $currentCategory->idImage], 'object');
 
 // current product
 $products = DbProduct::get(["idCategory" => $currentCategory->id], 'object');
@@ -52,7 +52,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         <?php
                         $i = 0;
                         foreach ($products as $product) {
-                            $image = DbImage::get(["id" => $product->idImage], 'object');
+                            $image = DbImage::getSingle(["id" => $product->idImage], 'object');
                             $imagePath = $image ? $image->path : "/assets/img/no-image.jpg";
                             ?>
                             <div class="grid-item col-xs-6 col-sm-4 col-md-4">
@@ -66,6 +66,12 @@ require_once($baseController->website_path . "/template/_header.php");
                                     </div>
                                     <div class="card-footer">
                                         <span>€<?php echo $product->price ?></span>
+                                        <div class="cont-input-number">
+                                            <span class="input-number-decrement">–</span>
+                                            <input class="input-number" type="text" value="1" min="0" max="10">
+                                            <span class="input-number-increment">+</span>
+                                        </div>
+                                        <button type="button" class="btn btn-success btn-sm">Add</button>
                                     </div>
                                 </div>
                             </div>
