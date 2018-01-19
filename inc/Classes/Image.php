@@ -26,10 +26,9 @@ class Image {
      */
     public static function uploadProfile($userName, $file) {
         $baseC = new BaseController();
-        $dirC = new DirController();
 
         $imageFileType = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $relativePath = $dirC->avatarPath . strtolower($userName) . "-avatar.$imageFileType";
+        $relativePath = DirController::DIR_AVATAR . strtolower($userName) . "-avatar.$imageFileType";
         $target_file = $baseC->website_path . $relativePath;
 
         $uploadOk = 1;

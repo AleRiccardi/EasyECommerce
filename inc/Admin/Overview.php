@@ -8,6 +8,7 @@
 
 namespace Inc\Admin;
 
+use Inc\Classes\User;
 
 class Overview {
 
@@ -17,12 +18,18 @@ class Overview {
      * Overview constructor.
      */
     public function __construct() {
+
+        // Check if have privilege
+        if(!User::isAdmin()) {
+            return false;
+        }
     }
 
     /**
      * @return bool
      */
     public function register() {
+
 
         // in this case unless class
         if (!isset($_GET['overview'])) {
@@ -51,7 +58,7 @@ class Overview {
 
 
     private function getMain() { ?>
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h1 class="admin-title">Overview</h1>
 
             <h2>List categories</h2>
@@ -88,7 +95,7 @@ class Overview {
 
             <h2>List products</h2>
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped table-sm">
                     <thead>
                     <tr>
                         <th>#</th>

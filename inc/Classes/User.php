@@ -46,17 +46,24 @@ class User {
      * @return array|null
      */
     public static function getCurrentUser() {
-        return self::getBy($_SESSION['userName'], "USERNAME");
+        if(isset($_SESSION['userName'])) {
+            return self::getBy($_SESSION['userName'], "USERNAME");
+        } else {
+            return false;
+        }
     }
 
     /**
-     * Get the current user logged.
+     * Understand if the user is admin or not.
      *
-     * @return array|null
+     * @return bool true if is admin, false if not
      */
     public static function isAdmin() {
-        $user = self::getCurrentUser();
-        return $user->isAdmin ? true : false;
+        if($user = self::getCurrentUser()) {
+            return $user->isAdmin ? true : false;
+        } else {
+            return false;
+        }
     }
 
 

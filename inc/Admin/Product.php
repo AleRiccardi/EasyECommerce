@@ -13,9 +13,22 @@ use Inc\Base\BaseController;
 use Inc\Database\DbCategory;
 use Inc\Database\DbImage;
 use Inc\Database\DbProduct;
+use Inc\Classes\User;
 
 class Product extends BaseController {
 
+    /**
+     * Product constructor.
+     */
+    public function __construct() {
+        // BaseController
+        parent::__construct();
+
+        // Check if have privilege
+        if(!User::isAdmin()) {
+            return false;
+        }
+    }
 
     public function register() {
         // in this case unless class
@@ -48,7 +61,7 @@ class Product extends BaseController {
         }
         ?>
 
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h2 class="admin-title">Edit product</h2>
             <form class="form-add-new" method="post"
                   action="?name=admin-area&product&edit&id=<?php echo $product->id; ?>"
@@ -147,7 +160,7 @@ class Product extends BaseController {
         $desc = isset($_POST['description']) ? $_POST['description'] : "";
         $image = isset($_POST['image']) ? $_POST['image'] : "";
         ?>
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h2 class="admin-title">Add new</h2>
             <form class="form-add-new" method="post" action="?name=admin-area&product&add-new"
                   enctype="multipart/form-data"
@@ -224,11 +237,11 @@ class Product extends BaseController {
         $products = DbProduct::getAll("object");
 
         ?>
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h1 class="admin-title"><?php echo $name; ?></h1>
             <h4>List categories</h4>
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped table-sm">
                     <thead>
                     <tr>
                         <th>n°</th>

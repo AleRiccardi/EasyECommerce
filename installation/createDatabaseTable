@@ -4,7 +4,7 @@
 
 /* IMAGE */
 CREATE TABLE IF NOT EXISTS image (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   path varchar(255) NOT NULL,
   dateCreation datetime,
   PRIMARY KEY (id)
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS image (
 
 /* ADDRESS */
 CREATE TABLE IF NOT EXISTS address (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   department varchar(60) NOT NULL,
   class varchar(60) NOT NULL,
   PRIMARY KEY (id),
@@ -21,13 +21,13 @@ CREATE TABLE IF NOT EXISTS address (
 
 /* CATEGORY */
 CREATE TABLE IF NOT EXISTS category (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   slug varchar(60) NOT NULL,
   title varchar(60) NOT NULL,
   description longtext,
   dateCreation datetime,
   dateLastUpdate datetime,
-  idImage bigint(20),
+  idImage bigint(20) UNSIGNED,
   PRIMARY KEY (id),
   UNIQUE KEY (slug),
   FOREIGN KEY (idImage) REFERENCES image(id)
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS category (
 
 /* USER */
 CREATE TABLE IF NOT EXISTS users (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   userName varchar(60) NOT NULL,
   userEmail varchar(100) NOT NULL,
   passwordHash varchar(255) NOT NULL,
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS users (
   secondName varchar(64),
   isAdmin boolean,
   dateRegistration datetime,
-  idImage bigint(20),
-  idAddress bigint(20),
+  idImage bigint(20) UNSIGNED,
+  idAddress bigint(20) UNSIGNED,
   PRIMARY KEY (id),
   UNIQUE KEY (userName),
   UNIQUE KEY (userEmail),
@@ -54,17 +54,17 @@ CREATE TABLE IF NOT EXISTS users (
 
 /* CART */
 CREATE TABLE IF NOT EXISTS cart (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   dateCreation datetime,
   dateDeliver datetime,
-  idAddress bigint(20),
+  idAddress bigint(20) UNSIGNED,
   PRIMARY KEY (id),
   FOREIGN KEY (idAddress) REFERENCES address(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /* ITEM */
 CREATE TABLE IF NOT EXISTS item (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   slug varchar(60) NOT NULL,
   title varchar(60) NOT NULL,
   description longtext,
@@ -72,8 +72,8 @@ CREATE TABLE IF NOT EXISTS item (
   available boolean,
   dateCreation datetime,
   dateLastUpdate datetime,
-  idCategory bigint(20) NOT NULL,
-  idImage bigint(20),
+  idCategory bigint(20) UNSIGNED NOT NULL,
+  idImage bigint(20) UNSIGNED,
   PRIMARY KEY (id),
   UNIQUE KEY (itemName),
   FOREIGN KEY (idCategory) REFERENCES category(id),
@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS item (
 
 /* CART_ITEM */
 CREATE TABLE IF NOT EXISTS cart_item (
-  idCart bigint(20) NOT NULL,
-  idItem bigint(20) NOT NULL,
+  idCart bigint(20) UNSIGNED NOT NULL,
+  idItem bigint(20) UNSIGNED NOT NULL,
   quantity int(11) NOT NULL,
   UNIQUE KEY (idCart),
   UNIQUE KEY (idItem),

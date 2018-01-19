@@ -66,10 +66,12 @@ require_once($baseController->website_path . "/template/_header.php");
                                     </div>
                                     <div class="card-footer">
                                         <span>€<?php echo $product->price ?></span>
-                                        <div class="cont-input-number">
-                                            <span class="input-number-decrement">–</span>
-                                            <input class="input-number" type="text" value="1" min="0" max="10">
-                                            <span class="input-number-increment">+</span>
+                                        <div style="display: inline-block">
+                                            <div class="cont-input-number">
+                                                <span class="input-number-decrement">–</span>
+                                                <input class="input-number" type="text" value="1" min="0" max="10">
+                                                <span class="input-number-increment">+</span>
+                                            </div>
                                         </div>
                                         <button type="button" class="btn btn-success btn-sm">Add</button>
                                     </div>

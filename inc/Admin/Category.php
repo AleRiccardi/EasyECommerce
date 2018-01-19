@@ -10,13 +10,24 @@ namespace Inc\Admin;
 
 
 use Inc\Base\BaseController;
-use Inc\Classes\Image;
 use Inc\Classes\User;
 use Inc\Database\DbCategory;
 use Inc\Database\DbImage;
 
 class Category extends BaseController {
 
+    /**
+     * Category constructor.
+     */
+    public function __construct() {
+        // BaseController
+        parent::__construct();
+
+        // Check if have privilege
+        if(!User::isAdmin()) {
+            return false;
+        }
+    }
 
 
     public function register() {
@@ -50,7 +61,7 @@ class Category extends BaseController {
         }
         ?>
 
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h2 class="admin-title">Edit category</h2>
             <form class="form-add-new" method="post" action="?name=admin-area&category&edit&id=<?php echo $category->id; ?>"
                   enctype="multipart/form-data"
@@ -113,7 +124,7 @@ class Category extends BaseController {
         $desc = isset($_POST['description']) ? $_POST['description'] : "";
         $image = isset($_POST['image']) ? $_POST['image'] : "";
         ?>
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h2 class="admin-title">Add new</h2>
             <form class="form-add-new" method="post" action="?name=admin-area&category&add-new"
                   enctype="multipart/form-data"
@@ -160,11 +171,11 @@ class Category extends BaseController {
     public function getMain($name) {
         $categories = DbCategory::getAll("object");
         ?>
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h1 class="admin-title"><?php echo $name; ?></h1>
             <h4>List categories</h4>
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped table-sm">
                     <thead>
                     <tr>
                         <th scope="col">n°</th>
