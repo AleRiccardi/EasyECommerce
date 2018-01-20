@@ -9,7 +9,7 @@
 namespace Inc\Admin;
 
 
-use Inc\Classes\User;
+use Inc\Utils\User;
 
 class AdminEngine {
     const SLUG_OVERVIEW = "overview";

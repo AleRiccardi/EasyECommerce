@@ -3,7 +3,7 @@
  * @todo give the possibility to store more of one address.
  */
 
-use \Inc\Classes\Address;
+use \Inc\Utils\Address;
 
 require_once($baseController->website_path . "/template/_header.php");
 

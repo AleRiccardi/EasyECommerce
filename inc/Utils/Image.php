@@ -6,7 +6,7 @@
  * Time: 02:15
  */
 
-namespace Inc\Classes;
+namespace Inc\Utils;
 
 
 use Inc\Base\BaseController;

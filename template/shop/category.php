@@ -51,6 +51,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         </div>
                         <?php
                         $i = 0;
+                        $idUser = \Inc\Utils\User::getCurrentUser()->id;
                         foreach ($products as $product) {
                             $image = DbImage::getSingle(["id" => $product->idImage], 'object');
                             $imagePath = $image ? $image->path : "/assets/img/no-image.jpg";
@@ -61,19 +62,26 @@ require_once($baseController->website_path . "/template/_header.php");
                                          src="<?php echo $baseController->website_url . $imagePath ?>"
                                          alt="Card image cap">
                                     <div class="card-body">
-                                        <h5 class="card-title"><?php echo $product->title ?></h5>
+                                        <h5 class="card-title"><?php echo $product->title ?> &nbsp;
+                                            <span class="badge badge-secondary">€<?php echo $product->price ?></span>
+                                        </h5>
                                         <p class="card-text"><?php echo $product->description ?></p>
                                     </div>
                                     <div class="card-footer">
-                                        <span>€<?php echo $product->price ?></span>
-                                        <div style="display: inline-block">
+                                        <div style="float: left; display: inline-block">
                                             <div class="cont-input-number">
                                                 <span class="input-number-decrement">–</span>
-                                                <input class="input-number" type="text" value="1" min="0" max="10">
+                                                <input class="input-number" type="text" value="1" min="1" max="30"
+                                                       data-prod-id='<?php echo $product->id ?>'>
                                                 <span class="input-number-increment">+</span>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-success btn-sm">Add</button>
+                                        <div style="float: left; margin-left: 15px; display: inline-block">
+                                            <button type="button" class="btn btn-success btn-sm btn-add"
+                                                    data-user-id='<?php echo $idUser ?>' data-prod-id='<?php echo $product->id ?>'>
+                                                Add
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

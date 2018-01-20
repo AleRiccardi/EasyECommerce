@@ -31,12 +31,12 @@ final class Init {
     public static function getServices() {
         return array(
             Base\BaseController::class,
-            Classes\Login::class,
-            Classes\Registration::class,
-            Classes\User::class,
-            Classes\Address::class,
-            Classes\Category::class,
-            Classes\Product::class,
+            Utils\Login::class,
+            Utils\Registration::class,
+            Utils\User::class,
+            Utils\Address::class,
+            Utils\Category::class,
+            Utils\Product::class,
         );
     }
 

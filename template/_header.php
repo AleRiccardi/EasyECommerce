@@ -1,8 +1,8 @@
 <?php
 
-use Inc\Classes\User;
+use Inc\Utils\User;
 use Inc\Base\BaseController;
-use Inc\Classes\Login;
+use Inc\Utils\Login;
 
 $baseController = new BaseController();
 $login = new Login();

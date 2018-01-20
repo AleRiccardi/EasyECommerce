@@ -8,7 +8,7 @@
 
 namespace Inc\Admin;
 
-use Inc\Classes\User;
+use Inc\Utils\User;
 
 class Overview {
 

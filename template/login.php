@@ -1,6 +1,6 @@
 <?php
 
-$login = new \Inc\Classes\Login();
+$login = new \Inc\Utils\Login();
 
 if ($login->isUserLoggedIn() == true) {
     header("Location: $baseController->website_url/page.php?name=user");

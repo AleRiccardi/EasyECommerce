@@ -57,9 +57,9 @@ CREATE TABLE IF NOT EXISTS cart (
   id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   dateCreation datetime,
   dateDeliver datetime,
-  idAddress bigint(20) UNSIGNED,
+  idCart bigint(20) UNSIGNED,
   PRIMARY KEY (id),
-  FOREIGN KEY (idAddress) REFERENCES address(id)
+  FOREIGN KEY (idCart) REFERENCES addrcart_itemess(idCart)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /* ITEM */

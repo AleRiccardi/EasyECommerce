@@ -1,6 +1,6 @@
 <?php
 
-namespace Inc\Classes;
+namespace Inc\Utils;
 
 use Inc\Base\BaseController;
 use Inc\Database\DbImage;

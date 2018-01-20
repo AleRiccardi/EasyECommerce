@@ -14,7 +14,7 @@ $baseController = new \Inc\Base\BaseController();
 <link rel="stylesheet" href="<?php echo $baseController->website_url ?>/assets/css/admin-style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="<?php echo $baseController->website_url ?>/assets/js/script.js"></script>
 <script src="<?php echo $baseController->website_url ?>/assets/js/admin-script.js"></script>

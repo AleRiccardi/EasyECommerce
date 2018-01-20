@@ -10,7 +10,7 @@ namespace Inc\Admin;
 
 
 use Inc\Base\BaseController;
-use Inc\Classes\User;
+use Inc\Utils\User;
 use Inc\Database\DbCategory;
 use Inc\Database\DbImage;
 

@@ -6,14 +6,14 @@
  * Time: 19:03
  */
 
-namespace Inc\Classes;
+namespace Inc\Utils;
 
 
 use Inc\Base\BaseController;
-use Inc\Base\DirController;
 use Inc\Database\DbCategory;
+use Inc\Database\DbProduct;
 
-class Category extends BaseController {
+class Product extends BaseController {
 
 
     /**
@@ -26,38 +26,39 @@ class Category extends BaseController {
     public $messages = array();
 
     /**
-     * Init function run form the Init class every time that we load
-     * a page. Here were always attending that a form submit a form.
+     * Init function run form the Init class every
+     * time that we load a page.
      */
     public function register() {
-        $dirC = new DirController();
-
-
-        if (isset($_POST['addCategory'])) {
+        if (isset($_POST['addProduct'])) {
             if ($id = $this->catchAdd()) {
-                header("Location: $this->website_url/page.php?name=admin-area&category&edit&id=$id");
+                header("Location: $this->website_url/page.php?name=admin-area&product&edit&id=$id");
+            } else {
+                $this->errors[] = "Something's went wrong";
             }
             $this->showError();
-        } else if (isset($_POST['updateCategory'])) {
+        } else if (isset($_POST['updateProduct'])) {
             if ($id = $this->catchEdit()) {
-                header("Location: $this->website_url/page.php?name=admin-area&category&edit&id=$id");
+                header("Location: $this->website_url/page.php?name=admin-area&product&edit&id=$id");
+            } else {
+                $this->errors[] = "Something's went wrong";
             }
             $this->showError();
-        } else if (isset($_POST['deleteCategory'])) {
+        } else if (isset($_POST['deleteProduct'])) {
             if ($id = $this->catchDelete()) {
-                header("Location: $this->website_url/page.php?name=admin-area&category");
+                header("Location: $this->website_url/page.php?name=admin-area&product");
             }
-            $this->showError();
         }
 
     }
 
+
     /**
-     * Catch all the information submitted from the form
-     * that create (add) the category.
+     * When clicked the button editAddress in edit-address.php
+     * page the form send $_POST information and that function
+     * permit to catch them.
      *
-     * @return false|int the number of the category updated,
-     *                   false if errors.
+     * @return bool
      */
     public function catchAdd() {
         $title = $_POST['title'];
@@ -65,16 +66,22 @@ class Category extends BaseController {
             (str_replace(' ', '-', strtolower($title))) :
             (str_replace(' ', '-', strtolower($_POST['slug'])));
         $desc = $_POST['description'];
+        $price = $_POST['price'];
+        $available = $_POST['available'];
+        $category = $_POST['category'];
         $image = $_FILES["image"];
 
-        if (!(empty($title))) {
+        if (!(empty($title)) && $available) {
 
             $data = array(
+                "slug" => $slug,
                 "title" => $title,
                 "description" => $desc,
-                "slug" => $slug,
-                "dateCreation" => DbCategory::now(),
-                "dateLastUpdate" => DbCategory::now(),
+                "price" => $price,
+                "available" => $available ? true : false,
+                "dateCreation" => DbProduct::now(),
+                "dateLastUpdate" => DbProduct::now(),
+                "idCategory" => $category,
             );
 
             // IMAGE
@@ -84,14 +91,13 @@ class Category extends BaseController {
                 }
             }
 
-            $existCategory = DbCategory::getSingle(["slug" => $slug], "OBJECT"); // Get the address
+            $existCategory = DbProduct::getSingle(["slug" => $slug], "OBJECT"); // Get the address
             // if exist
             if (!$existCategory) {
-                $messages[] = "Category inserted";
-                return DbCategory::insert($data);
+                return DbProduct::insert($data);
 
             } else {
-                $this->errors[] = "The category already exist, please change the slug";
+                $this->errors[] = "The Product already exist, please change the slug";
                 return false;
             }
         } else {
@@ -101,11 +107,11 @@ class Category extends BaseController {
     }
 
     /**
-     * Catch all the information submitted from the form
-     * that edit the category.
+     * When clicked the button editAddress in edit-address.php
+     * page the form send $_POST information and that function
+     * permit to catch them.
      *
-     * @return false|int the number of the category updated,
-     *                   false if errors.
+     * @return bool
      */
     public function catchEdit() {
         $id = $_GET['id'];
@@ -114,16 +120,26 @@ class Category extends BaseController {
             (str_replace(' ', '-', strtolower($title))) :
             (str_replace(' ', '-', strtolower($_POST['slug'])));
         $desc = $_POST['description'];
+        $price = $_POST['price'];
+        if (isset($_POST['available']) && $_POST['available'] == '1') {
+            $available = 1;
+        } else {
+            $available = 0;
+        }
+        $category = $_POST['category'];
         $image = $_FILES["image"];
         $valid = null;
 
         if (!(empty($title))) {
 
             $data = array(
+                "slug" => $slug,
                 "title" => $title,
                 "description" => $desc,
-                "slug" => $slug,
-                "dateLastUpdate" => DbCategory::now(),
+                "price" => $price,
+                "available" => $available,
+                "dateLastUpdate" => DbProduct::now(),
+                "idCategory" => $category,
             );
 
             // IMAGE
@@ -135,18 +151,18 @@ class Category extends BaseController {
                 $data['idImage'] = null;
             }
 
-            $categoryToEdit = DbCategory::getSingle(["id" => $id], "OBJECT"); // Get the category from ID
-            $categoryOfSlug = DbCategory::getSingle(["slug" => $slug], "OBJECT"); // Get the category from SLUG
+            $productToEdit = DbProduct::getSingle(["id" => $id], "OBJECT"); // Get the product from ID
+            $productOfSlug = DbProduct::getSingle(["slug" => $slug], "OBJECT"); // Get the product from SLUG
 
             // if exist
-            if ($categoryToEdit) {
+            if ($productToEdit) {
                 // check the slug
-                if (!$categoryOfSlug) {
+                if (!$productOfSlug) {
                     // no one have this slug
                     $valid = true;
                 } else {
                     // only if is the same slug we can update it
-                    if (($categoryOfSlug->id === $categoryToEdit->id)) {
+                    if (($productOfSlug->id === $productToEdit->id)) {
                         $valid = true;
                     } else {
                         $this->errors[] = "Slug not available";
@@ -155,8 +171,7 @@ class Category extends BaseController {
                 }
 
                 if ($valid) {
-                    $messages[] = "Category inserted";
-                    return DbCategory::update($data, ["id" => $id]) ? $id : false;
+                    return DbProduct::update($data, ["id" => $id]) ? $id : false;
                 } else {
                     return false;
                 }
@@ -167,42 +182,26 @@ class Category extends BaseController {
         }
     }
 
-    /**
-     * Catch when we want to delete a category.
-     *
-     * @return bool ture if success, false if errors.
-     */
     public function catchDelete() {
         $id = $_GET['id'];
-        $res = DbCategory::delete($id);
-        if ($res === null) {
-            // trying to delete default
-            $this->errors[] = "You're trying to delete the default category. It is not 
-                                possible if you don't remove before that category to all your products.";
-            return false;
-        } else if ($res === false) {
-            // errors
-            return false;
-        } else if ($res === true) {
-            // success
-            return true;
-        }
-
-        // default
-        return false;
+        return DbProduct::delete($id);
     }
 
+
     /**
-     * Simply return the error and success that we store in the
-     * two variable $errors and $messages.
+     * simply return the current state of the user's login
+     *
+     * @return boolean user's login status
      */
     public function showError() {
         if ($this->errors) { ?>
             <div class="admin-message message alert alert-danger alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <?php
+                $i = 0;
                 foreach ($this->errors as $error) {
-                    echo $error . " ";
+                    echo $error;
+                    echo count($this->errors) != ++$i ? " - " : "";
                 }
                 ?>
             </div>

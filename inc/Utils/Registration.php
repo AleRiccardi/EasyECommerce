@@ -1,6 +1,6 @@
 <?php
 
-namespace Inc\Classes;
+namespace Inc\Utils;
 
 use Inc\Database\Db;
 use Inc\Database\DbUser;

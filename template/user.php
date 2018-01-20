@@ -1,6 +1,6 @@
 <?php
 
-use Inc\Classes\User;
+use Inc\Utils\User;
 
 require_once($baseController->website_path . "/template/_header.php");
 

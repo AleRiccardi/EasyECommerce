@@ -13,7 +13,7 @@ use Inc\Base\BaseController;
 use Inc\Database\DbCategory;
 use Inc\Database\DbImage;
 use Inc\Database\DbProduct;
-use Inc\Classes\User;
+use Inc\Utils\User;
 
 class Product extends BaseController {
 

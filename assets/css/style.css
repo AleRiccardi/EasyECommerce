@@ -489,6 +489,57 @@ p.lead-home {
 }
 
 /* ====================
+    CART page
+   ==================== */
+
+#cart-right .totals {
+    box-shadow: 0 0 0px 1px #cacaca;
+    border-radius: 2px;
+    padding: 40px !important;
+}
+
+/*
+ * Sidebar
+ */
+
+ul.shipping-info-cart {
+    list-style-type: none;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 0.900em;
+}
+
+.shipping-info-cart li {
+    padding-left: 0px;
+}
+
+.list-group-item, .list-group-item {
+    z-index: 1;
+}
+
+.go-to-checkout {
+    text-align: center !important;
+    background-color: black !important;
+    color: white;
+}
+
+.go-to-checkout:hover {
+    background-color: #007aff !important;
+    color: white;
+}
+
+.go-to-checkout:focus {
+    background-color: #0092ff !important;
+    color: white;
+}
+
+
+
+.go-to-checkout span {
+    margin: auto;
+}
+
+/* ====================
     EDIT LOGIN page
    ==================== */
 
@@ -622,14 +673,10 @@ p.lead-home {
     }
 }
 
-* {
-
-}
-
 .cont-input-number {
     display: inline-block;
     border: 1px solid #ccc;
-    width: 100px;
+    width: 90px;
     height: 30px;
     user-select: none;
     border-radius: 4px;
@@ -641,7 +688,7 @@ p.lead-home {
 .input-number {
     padding: 0 5px;
     border: 0;
-    max-width: 45px;
+    max-width: 35px;
     -webkit-flex: 2;
     flex: 2;
 }

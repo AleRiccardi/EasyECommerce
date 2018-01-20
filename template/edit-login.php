@@ -1,7 +1,7 @@
 <?php
 
-use Inc\Classes\User;
-use \Inc\Classes\Image;
+use Inc\Utils\User;
+use \Inc\Utils\Image;
 
 require_once($baseController->website_path . "/template/_header.php");
 
