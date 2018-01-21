@@ -11,6 +11,6 @@ namespace Inc\Database;
 
 class DbCartItem extends DbModel {
     // database name
-    static $tableName = "cart_iem";
+    static $tableName = "cart_item";
 
 }

@@ -11,6 +11,10 @@ namespace Inc\Ajax;
 
 class AjaxEngine {
     public function __construct() {
+        // Require once the Composer Autoload
+        if (file_exists('../../vendor/autoload.php')) {
+            require_once '../../vendor/autoload.php';
+        }
         $this->init();
     }
 

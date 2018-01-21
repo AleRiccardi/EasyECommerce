@@ -9,7 +9,7 @@
 namespace Inc\Database;
 
 
-class DbCart {
+class DbCart extends DbModel {
     // database name
     static $tableName = "cart";
 

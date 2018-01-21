@@ -8,17 +8,25 @@
 
 namespace Inc\Ajax;
 
-include ("AjaxEngine.php");
+use Inc\Utils\Cart;
+
+include("AjaxEngine.php");
+
 class CartAjax extends AjaxEngine {
 
 
-    public function printValue () {
-
+    public function printValue() {
         if (!empty($idUser = $this->get('idUser')) &&
-            !empty($idProduct = $this->get('idProduct')) &&
+            !empty($idItem = $this->get('idProduct')) &&
             !empty($quantity = $this->get('quantity'))) {
+            echo Cart::addItem($idUser, $idItem, $quantity) ? "added" : "error";
+        }
+    }
 
-            echo "User: $idUser, Id product: $idProduct, quantity: $quantity";
+    public function getNumItemCart() {
+        if (!empty($idUser = $this->get('idUser'))) {
+            $cart = Cart::getCartUser($idUser);
+            echo count(Cart::getCartItems($cart->id));
         }
     }
 }

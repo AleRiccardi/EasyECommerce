@@ -45,8 +45,8 @@ main.page {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
+    /*-ms-flex-wrap: wrap;
+    flex-wrap: wrap;*/
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -149,7 +149,6 @@ ul.nav-menu {
     position: relative;
     padding: 10px;
     margin-right: 10px;
-    cursor: pointer;
 }
 
 .mc-img {
@@ -168,8 +167,52 @@ ul.nav-menu {
 
 .mc-number-item {
     position: absolute;
-    right: 4;
-    top: 4;
+    right: 4px;
+    top: 4px;
+}
+
+.di-btn-link {
+    color: #007aff !important;
+    cursor: pointer;
+
+}
+
+.di-btn-link:hover {
+    color: #0056b3 !important;
+}
+
+.di-btn-link:active {
+    color: white !important;
+}
+
+/* CART item */
+
+.card-item-cont {
+    cursor: default;
+}
+
+.card-item-cont:hover {
+    background-color: transparent !important;
+}
+
+.card-item-img-cont {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.card-item-img-cont .middle-h-cont{
+    height: 100%;
+}
+
+img.card-item-img {
+    width: 100%;
+}
+
+.card-item-title {
+    margin-right: 25px;
 }
 
 /* ## Menu User  --> .mu ## */
@@ -532,8 +575,6 @@ ul.shipping-info-cart {
     background-color: #0092ff !important;
     color: white;
 }
-
-
 
 .go-to-checkout span {
     margin: auto;

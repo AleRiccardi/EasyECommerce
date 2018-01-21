@@ -54,12 +54,14 @@ CREATE TABLE IF NOT EXISTS users (
 
 /* CART */
 CREATE TABLE IF NOT EXISTS cart (
-  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  id bigint(20) NOT NULL AUTO_INCREMENT,
   dateCreation datetime,
   dateDeliver datetime,
-  idCart bigint(20) UNSIGNED,
+  idUser bigint(20) UNSIGNED,
+  idAddress bigint(20) UNSIGNED,
   PRIMARY KEY (id),
-  FOREIGN KEY (idCart) REFERENCES addrcart_itemess(idCart)
+  FOREIGN KEY (idUser) REFERENCES users(id),
+  FOREIGN KEY (idAddress) REFERENCES address(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /* ITEM */
@@ -75,18 +77,19 @@ CREATE TABLE IF NOT EXISTS item (
   idCategory bigint(20) UNSIGNED NOT NULL,
   idImage bigint(20) UNSIGNED,
   PRIMARY KEY (id),
-  UNIQUE KEY (itemName),
+  UNIQUE KEY (title),
   FOREIGN KEY (idCategory) REFERENCES category(id),
   FOREIGN KEY (idImage) REFERENCES image(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /* CART_ITEM */
 CREATE TABLE IF NOT EXISTS cart_item (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   idCart bigint(20) UNSIGNED NOT NULL,
   idItem bigint(20) UNSIGNED NOT NULL,
   quantity int(11) NOT NULL,
-  UNIQUE KEY (idCart),
-  UNIQUE KEY (idItem),
+  PRIMARY KEY (id),
+  UNIQUE KEY (idCart,idItem),
   FOREIGN KEY (idCart) REFERENCES cart(id),
   FOREIGN KEY (idItem) REFERENCES item(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

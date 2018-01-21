@@ -1,14 +1,23 @@
 $(function () {
-    $('.grid').masonry({
-        itemSelector: '.grid-item', // use a separate class for itemSelector, other than .col-
-        columnWidth: '.grid-sizer',
-        percentPosition: true
-    });
 
+    /**+**+**+**+**+**+**+**+**+**+**+**+**+**+
+     * GENERAL
+     +**+**+**+**+**+**+**+**+**+**+**+**+**+*/
+
+    // #
+    // # Event
+    // #
+
+    /**
+     *
+     */
     $('[data-toggle="offcanvas"]').on('click', function () {
         $('.row-offcanvas').toggleClass('active')
     })
 
+    /**
+     *
+     */
     $('#uploadIcon').change(function (e) {
         var preview = document.getElementById('preview-icon');
         var file = e.target.files[0]; //sames as here
@@ -25,6 +34,83 @@ $(function () {
         }
     });
 
+
+
+
+    /**+**+**+**+**+**+**+**+**+**+**+**+**+**+
+     * section CART HEADER
+     +**+**+**+**+**+**+**+**+**+**+**+**+**+*/
+
+    // #
+    // # VARIABLE
+    // #
+    /**
+     *
+     * @type {jQuery}
+     */
+    var idUser = $('#id-user-page-cat').data("user-id");
+
+    // #
+    // # FUNCTION
+    // #
+
+    /**
+     *
+     * @param idUser
+     */
+    function printNumItemCart(idUser) {
+        /**
+         * update the number of the item in the cart icon
+         */
+        $.ajax({
+            method: "POST",
+            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
+            data: {
+                action: "getNumItemCart",
+                idUser: idUser,
+            }
+        })
+            .done(function (msg) {
+                if(msg != 0) {
+                    msg = "<span class='badge badge-primary' >" + msg + "</span>";
+                    $('.mc-number-item').html(msg);
+                }
+            });
+    }
+
+
+    // #
+    // # EVENT
+    // #
+
+    $('#dropdown-cart').on("click", function(e){
+
+    });
+
+
+    // #
+    // # SEQUENTIAL CODE
+    // #
+
+    // Update the number of item inside the cart
+    printNumItemCart(idUser);
+
+    /**+**+**+**+**+**+**+**+**+**+**+**+**+**+
+     * Page CATEGORY
+     +**+**+**+**+**+**+**+**+**+**+**+**+**+*/
+
+    /**
+     *
+     */
+    $('.grid').masonry({
+        itemSelector: '.grid-item', // use a separate class for itemSelector, other than .col-
+        columnWidth: '.grid-sizer',
+        percentPosition: true
+    });
+
+    // #
+    // # EVENT
+    // #
 
     /**
      * Increment or decrement the number of item to buy.
@@ -69,8 +155,6 @@ $(function () {
         }
     }
 
-    inputNumber($('.input-number'));
-
 
     /**
      * Category page, add product to cart.
@@ -78,7 +162,6 @@ $(function () {
     $(".btn-add").on("click", function () {
 
         var idProdButton = $(this).data("prod-id");
-        var idUser = $(this).data("user-id");
         var el = $('.input-number');
 
         /**
@@ -88,6 +171,7 @@ $(function () {
             var idProdInput = $(this).data("prod-id");
             // stop when the right input match with the button pressed
             if (idProdInput == idProdButton) {
+                var quantity = $(this).val();
                 // ajax call
                 $.ajax({
                     method: "POST",
@@ -96,17 +180,44 @@ $(function () {
                         action: "printValue",
                         idUser: idUser,
                         idProduct: idProdInput,
-                        quantity: $(this).val()
+                        quantity: quantity
                     }
                 })
                     .done(function (msg) {
-                        alert("Data Saved: " + msg);
+                        console.log(msg);
+                        $('.title-prod').each(function (e) {
+                            var idProdTitle = $(this).data("prod-id");
+                            if (idProdTitle == idProdButton) {
+                                $('.modalTitleItem').text($(this).html());
+                                $('.modal-quantity-item').text(quantity);
+                                $('#modalItemAdded').modal('toggle');
+                                printNumItemCart(idUser);
+                            }
+                        });
+
                     });
 
             }
         });
 
+
     });
+
+    // #
+    // # SEQUENTIAL CODE
+    // #
+
+    // Initialize the input number for the quantity
+    // of the product
+    inputNumber($('.input-number'));
+
+
+
+
+
+    /**+**+**+**+**+**+**+**+**+**+**+**+**+**+
+     * Page
+     +**+**+**+**+**+**+**+**+**+**+**+**+**+*/
 
 });
 

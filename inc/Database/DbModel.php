@@ -78,15 +78,15 @@ class DbModel {
      *                          placed after the expression WHERE
      * @param string     $type  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
      *
-     * @return array|object|null array of results, if single will be as an object,
-     *                    null if error.
+     * @return array of information (the type of information depend
+     *               to the kind of param that you specify –$type-)
      */
     public static function get(array $where, $type) {
         $db = new Db();
         $query = self::fetchSql($where, "SELECT");
         $res = $db->getResults($query, $type);
 
-        if(empty($res)) $res = array();
+        if (empty($res)) $res = array();
 
         return $res;
     }
@@ -162,9 +162,13 @@ class DbModel {
         }
         $sql .= ")";
         $db = new Db();
-        if ($db->query($sql) === true) {
-            return $db->insertId;
+        $resultQ = $db->query($sql);
+        if ($db->insertId && $resultQ === true) {
+            return $db->insertId != null ? $db->insertId : true;
+        } else if ($db->query($sql) === true) {
+            return true;
         }
+
         return false;
     }
 
@@ -178,9 +182,11 @@ class DbModel {
      */
     public static function update(array $data, array $where) {
         // QUERY creation
-        $sql = "UPDATE " . self::getTableName() . " SET ";
+        $sql = "UPDATE " . self::getTableName();
         $listKeys = array_keys($data);
         $lastKey = end($listKeys);
+        // DATA
+        $sql .= " SET ";
         foreach ($data as $key => $value) {
             $sql .= "$key = ";
             if (is_string($value)) {
@@ -198,9 +204,8 @@ class DbModel {
             }
         }
 
-
+        // WHERE
         $sql .= " WHERE ";
-
         $listKeys = array_keys($where);
         $lastKey = end($listKeys);
         foreach ($where as $key => $value) {
@@ -217,10 +222,9 @@ class DbModel {
             }
 
             if (!($key == $lastKey)) {
-                $sql .= ", ";
+                $sql .= " AND ";
             }
         }
-
         $db = new Db();
         return $db->query($sql);
     }
