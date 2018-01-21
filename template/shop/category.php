@@ -1,7 +1,7 @@
 <?php
 
 use \Inc\Database\DbCategory;
-use \Inc\Database\DbProduct;
+use \Inc\Database\DbItem;
 use \Inc\Database\DbImage;
 use \Inc\Utils\User;
 
@@ -18,7 +18,7 @@ $currentCategory = DbCategory::getSingle(["slug" => $_GET["category"]], 'object'
 $imageCat = DbImage::getSingle(["id" => $currentCategory->idImage], 'object');
 
 // current product
-$products = DbProduct::get(["idCategory" => $currentCategory->id], 'object');
+$products = DbItem::get(["idCategory" => $currentCategory->id], 'object');
 
 //all categories
 $categories = DbCategory::getAll('object');

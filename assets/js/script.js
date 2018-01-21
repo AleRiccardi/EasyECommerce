@@ -35,8 +35,6 @@ $(function () {
     });
 
 
-
-
     /**+**+**+**+**+**+**+**+**+**+**+**+**+**+
      * section CART HEADER
      +**+**+**+**+**+**+**+**+**+**+**+**+**+*/
@@ -71,19 +69,93 @@ $(function () {
             }
         })
             .done(function (msg) {
-                if(msg != 0) {
+                if (msg != 0) {
                     msg = "<span class='badge badge-primary' >" + msg + "</span>";
                     $('.mc-number-item').html(msg);
                 }
             });
+
+
     }
+
+    function refreshCart(idUser){
+        $.ajax({
+            method: "POST",
+            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
+            data: {
+                action: "refreshCart",
+                idUser: idUser
+            }
+        }).done(function (msg) {
+            if(msg) {
+                $("#cart").html(refreshCart);
+            }
+        });
+
+    }
+
 
 
     // #
     // # EVENT
     // #
 
-    $('#dropdown-cart').on("click", function(e){
+    $('#btn-dropdown-cart').on("click", function (e) {
+        /**
+         * update the number of the item in the cart icon
+         */
+        $.ajax({
+            method: "POST",
+            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
+            data: {
+                action: "getCustomItemCart",
+                idUser: idUser,
+            }
+        })
+            .done(function (msg) {
+                if (msg != 0) {
+                    var cartItems = $.parseJSON(msg);
+                    $("#append-items-cart").html("");
+                    console.log(cartItems);
+                    for (var i = 0; i < cartItems.length; i++) {
+                        itemHtml = "<div class='dropdown-item card-item-cont'>" +
+                            "           <div class='middle-h-cont mhc-height-max'>" +
+                            "               <div class='card-item-img-cont middle-h-item'>" +
+                            "                   <div class='middle-h-cont'>" +
+                            "                       <img id='card-item-img' class='card-item-img middle-h-item'" +
+                            "                           src='"+ cartItems[i].imgUrl +"'" +
+                            "                           alt='Card image cap'>" +
+                            "                   </div>" +
+                            "               </div>" +
+                            "               <span class='middle-h-item card-item-title' id='card-item-title'>"+ cartItems[i].title +"</span>" +
+                            "               &nbsp;" +
+                            "               <span class='badge badge-secondary ml-auto middle-h-item' id='card-item-quantity'>"+ cartItems[i].quantity +" item</span>" +
+                            "          </div>" +
+                            "      </div>";
+                        $("#append-items-cart").append(itemHtml);
+                    }
+                    console.log();
+                }
+            });
+    });
+
+    $('.btn-trash').on("click", function (e) {
+        var idItem = $(this).data("item");
+        var idUser = $(this).data("user");
+
+        $.ajax({
+            method: "POST",
+            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
+            data: {
+                action: "trashCartItem",
+                idUser: idUser,
+                idItem: idItem
+            }
+        }).done(function (msg) {
+            if(msg) {
+                refreshCart(idUser);
+            }
+        });
 
     });
 
@@ -210,9 +282,6 @@ $(function () {
     // Initialize the input number for the quantity
     // of the product
     inputNumber($('.input-number'));
-
-
-
 
 
     /**+**+**+**+**+**+**+**+**+**+**+**+**+**+

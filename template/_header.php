@@ -65,7 +65,8 @@ $user = User::getCurrentUser();
                     <div class="mc-img" id="btn-dropdown-cart" data-toggle="dropdown" aria-haspopup="true"
                          aria-expanded="true">
                         <img class="profile-image"
-                             src="<?php echo $baseController->website_url ?>/assets/img/icon/cart-white.png"/>
+                             src="<?php echo $baseController->website_url ?>/assets/img/icon/cart-white.png"
+                        />
                         <div class="mc-number-item">
                         </div>
                     </div>
@@ -74,24 +75,12 @@ $user = User::getCurrentUser();
                         <div class="gb_pb"></div>
                         <div class="cont-dd">
                             <h6 class="dropdown-header">Cart</h6>
+                            <div id="append-items-cart">
 
-                            <div class="dropdown-item card-item-cont">
-                                <div class="middle-h-cont mhc-height-max">
-                                    <div class="card-item-img-cont middle-h-item">
-                                        <div class="middle-h-cont">
-                                            <img id="card-item-img" class="card-item-img middle-h-item"
-                                                 src="http://localhost:8888/willychock/assets/uploads/2018/Boston-Cream-Donut.jpg"
-                                                 alt="Card image cap">
-                                        </div>
-                                    </div>
-                                    <span class="middle-h-item card-item-title" id="card-item-title">KitKattttttttt</span>
-                                    &nbsp;
-                                    <span class="badge badge-secondary ml-auto middle-h-item" id="card-item-quantity">2</span>
-                                </div>
                             </div>
 
                             <div class="dropdown-divider"></div>
-                            <div class="dropdown-item di-btn-link" href="">See your cart</div>
+                            <a class="dropdown-item di-btn-link" href="page.php?name=cart">See your cart</a>
                         </div>
                     </div>
                 </div>

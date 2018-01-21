@@ -8,6 +8,10 @@
 
 namespace Inc\Ajax;
 
+use Inc\Base\BaseController;
+use Inc\Database\DbCartItem;
+use Inc\Database\DbImage;
+use Inc\Database\DbItem;
 use Inc\Utils\Cart;
 
 include("AjaxEngine.php");
@@ -27,6 +31,42 @@ class CartAjax extends AjaxEngine {
         if (!empty($idUser = $this->get('idUser'))) {
             $cart = Cart::getCartUser($idUser);
             echo count(Cart::getCartItems($cart->id));
+        }
+    }
+
+    public function getCustomItemCart() {
+        if (!empty($idUser = $this->get('idUser'))) {
+            $baseC = new BaseController();
+            $cart = Cart::getCartUser($idUser);
+            $cartItems = Cart::getCartItems($cart->id);
+            $return = array();
+            foreach ($cartItems as $cartItem) {
+                $item = DbItem::getSingle(["id" => $cartItem->idItem], 'object');
+                $where = ["id" => $item->idImage];
+                $image = DbImage::getSingle($where, 'object');
+                $imageUrl = $baseC->website_url . $image->path;
+                if ($item) {
+                    $return[] = ["imgUrl" => "$imageUrl", "title" => $item->title, "quantity" => $cartItem->quantity];
+                }
+            }
+
+            $json_string = json_encode($return, JSON_PRETTY_PRINT);
+            echo $json_string;
+        }
+    }
+
+    public function trashCartItem() {
+        if (!empty($idUser = $this->get('idUser')) && !empty($idItem = $this->get('idItem'))) {
+            $cart = Cart::getCartUser($idUser);
+            $itemCarts = Cart::getCartItems($cart->id, $idItem);
+            echo DbCartItem::delete($itemCarts[0]->id);
+        }
+    }
+
+
+    public function refreshCart() {
+        if (!empty($idUser = $this->get('idUser'))){
+            Cart::displayCart($idUser);
         }
     }
 }

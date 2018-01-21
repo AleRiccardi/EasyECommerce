@@ -11,9 +11,9 @@ namespace Inc\Utils;
 
 use Inc\Base\BaseController;
 use Inc\Database\DbCategory;
-use Inc\Database\DbProduct;
+use Inc\Database\DbItem;
 
-class Product extends BaseController {
+class Item extends BaseController {
 
 
     /**
@@ -79,8 +79,8 @@ class Product extends BaseController {
                 "description" => $desc,
                 "price" => $price,
                 "available" => $available ? true : false,
-                "dateCreation" => DbProduct::now(),
-                "dateLastUpdate" => DbProduct::now(),
+                "dateCreation" => DbItem::now(),
+                "dateLastUpdate" => DbItem::now(),
                 "idCategory" => $category,
             );
 
@@ -91,10 +91,10 @@ class Product extends BaseController {
                 }
             }
 
-            $existCategory = DbProduct::getSingle(["slug" => $slug], "OBJECT"); // Get the address
+            $existCategory = DbItem::getSingle(["slug" => $slug], "OBJECT"); // Get the address
             // if exist
             if (!$existCategory) {
-                return DbProduct::insert($data);
+                return DbItem::insert($data);
 
             } else {
                 $this->errors[] = "The Product already exist, please change the slug";
@@ -138,7 +138,7 @@ class Product extends BaseController {
                 "description" => $desc,
                 "price" => $price,
                 "available" => $available,
-                "dateLastUpdate" => DbProduct::now(),
+                "dateLastUpdate" => DbItem::now(),
                 "idCategory" => $category,
             );
 
@@ -151,8 +151,8 @@ class Product extends BaseController {
                 $data['idImage'] = null;
             }
 
-            $productToEdit = DbProduct::getSingle(["id" => $id], "OBJECT"); // Get the product from ID
-            $productOfSlug = DbProduct::getSingle(["slug" => $slug], "OBJECT"); // Get the product from SLUG
+            $productToEdit = DbItem::getSingle(["id" => $id], "OBJECT"); // Get the product from ID
+            $productOfSlug = DbItem::getSingle(["slug" => $slug], "OBJECT"); // Get the product from SLUG
 
             // if exist
             if ($productToEdit) {
@@ -171,7 +171,7 @@ class Product extends BaseController {
                 }
 
                 if ($valid) {
-                    return DbProduct::update($data, ["id" => $id]) ? $id : false;
+                    return DbItem::update($data, ["id" => $id]) ? $id : false;
                 } else {
                     return false;
                 }
@@ -184,7 +184,7 @@ class Product extends BaseController {
 
     public function catchDelete() {
         $id = $_GET['id'];
-        return DbProduct::delete($id);
+        return DbItem::delete($id);
     }
 
 

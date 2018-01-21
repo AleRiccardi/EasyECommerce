@@ -12,7 +12,7 @@ namespace Inc\Admin;
 use Inc\Base\BaseController;
 use Inc\Database\DbCategory;
 use Inc\Database\DbImage;
-use Inc\Database\DbProduct;
+use Inc\Database\DbItem;
 use Inc\Utils\User;
 
 class Product extends BaseController {
@@ -47,7 +47,7 @@ class Product extends BaseController {
 
 
     public function showEdit($id) {
-        $product = DbProduct::getSingle(["id" => $id], "OBJECT");
+        $product = DbItem::getSingle(["id" => $id], "OBJECT");
         if (!$product) {
             $this->getMain("Category");
             return;
@@ -234,7 +234,7 @@ class Product extends BaseController {
      * @param $name
      */
     public function getMain($name) {
-        $products = DbProduct::getAll("object");
+        $products = DbItem::getAll("object");
 
         ?>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">

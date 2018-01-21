@@ -9,8 +9,12 @@
 namespace Inc\Utils;
 
 
+use Inc\Base\BaseController;
+use Inc\Base\DirController;
 use Inc\Database\DbCart;
 use Inc\Database\DbCartItem;
+use Inc\Database\DbImage;
+use Inc\Database\DbItem;
 
 class Cart {
 
@@ -128,4 +132,126 @@ class Cart {
         }
     }
 
+
+    /**
+     * @param $idUser
+     */
+    public static function displayCart($idUser) {
+        $dirC = new DirController();
+        $baseC = new BaseController();
+        $cart = Cart::getCartUser($idUser);
+        $cartItems = Cart::getCartItems($cart->id);
+        ?>
+        <table class="table table-hover">
+            <tbody>
+
+            <?php
+
+            foreach ($cartItems as $cartItem) {
+                $item = DbItem::getSingle(["id" => $cartItem->idItem], 'object');
+                $where = ["id" => $item->idImage];
+                $image = DbImage::getSingle($where, 'object');
+                $imageUrl = $baseC->website_url . $image->path;
+
+                ?>
+
+                <tr>
+                    <td class="text-left">
+                        <div class='card-page-item-img-cont'>
+                            <div class='middle-h-cont'>
+                                <img id='card-item-img' class='card-item-img middle-h-item'
+                                     src="<?php echo $imageUrl; ?>"
+                                     alt='Card image cap'>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-left">
+                        <span class='card-item-title' id='card-item-title'>
+                            <?php echo $item->title; ?>
+                            </span>
+                    </td>
+                    <td class="text-right">
+                        <div class="middle-h-item ml-auto">
+                            Quantity <input value="<?php echo $cartItem->quantity; ?>" style="width: 50px">
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="td-cont">
+                            <span class='badge badge-secondary price-badge middle-h-item' id='card-item-quantity'>
+                                €<?php echo $cartItem->quantity * $item->price; ?>
+                            </span>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="middle-h-item btn-trash " data-item="<?php echo $item->id ?>" data-user="<?php echo $idUser ?>">
+                            <img src="<?php echo $dirC->iconUrl . "garbage.png" ?>">
+                        </div>
+                    </td>
+                </tr>
+                <?php
+            } ?>
+            </tbody>
+        </table>
+        <?php
+    }
+
+    public static function displayReport($idUser) {
+        $cart = Cart::getCartUser($idUser);
+        $cartItems = Cart::getCartItems($cart->id);
+        $price = 0;
+        $totPrice = 0;
+
+        $shipPayment = 5;
+
+        foreach ($cartItems as $cartItem) {
+            $item = DbItem::getSingle(["id" => $cartItem->idItem], 'object');
+            $price = ($price + ($item->price * $cartItem->quantity));
+        }
+
+        $totPrice = $price + $shipPayment;
+        ?>
+
+        <div>
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your report</span>
+            </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Subtotal</h6>
+
+                    </div>
+
+                    <span class="text-muted">€<?php echo $price; ?></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Shipping cost:</h6>
+                        <ul class="shipping-info-cart">
+                            <li>
+                                Department: Informatics
+                            </li>
+                            <li>
+                                Class: A1
+                            </li>
+                            <li>
+                                <small class="text-muted"><a href="#">Change destiation</a></small>
+                            </li>
+                        </ul>
+                    </div>
+                    <span class="text-muted">€<?php echo $shipPayment; ?></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <span>Total (EUR)</span>
+                    <strong>€<?php echo $totPrice; ?></strong>
+                </li>
+                <a href="#" class="list-group-item go-to-checkout">
+                    <span>Go to checkout</span>
+                </a>
+            </ul>
+
+
+        </div>
+        <?php
+    }
 }

@@ -36,7 +36,7 @@ final class Init {
             Utils\User::class,
             Utils\Address::class,
             Utils\Category::class,
-            Utils\Product::class,
+            Utils\Item::class,
         );
     }
 

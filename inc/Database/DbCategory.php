@@ -29,7 +29,7 @@ class DbCategory extends DbModel {
      */
     public static function delete($id) {
         $where = ["idCategory" => $id];
-        $products = DbProduct::getSingle($where, 'object');
+        $products = DbItem::getSingle($where, 'object');
 
         // check if there are product with that category
         if ($products) {
@@ -47,7 +47,7 @@ class DbCategory extends DbModel {
 
             // change the old id with the new
             foreach ($products as $product) {
-                if(!DbProduct::update(["idCategory" => $idDefault], ["id" => $product->id])) {
+                if(!DbItem::update(["idCategory" => $idDefault], ["id" => $product->id])) {
                     // if error
                     return false;
                 }
