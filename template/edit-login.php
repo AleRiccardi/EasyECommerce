@@ -17,7 +17,7 @@ $user = User::getBy($_SESSION['userName']);
                           name="edit-login-form">
                         <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
                         <input style="display: none;" class="form-control" name="firstName">
-                        <input style="display: none;" class="form-control" name="secondName">
+                        <input style="display: none;" class="form-control" name="lastName">
                         <input style="display: none;" type="password" class="form-control" placeholder="Password">
 
                         <div class="user-img-name middle-h-cont form-group row">
@@ -48,10 +48,10 @@ $user = User::getBy($_SESSION['userName']);
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="secondName" class="col-sm-3 col-form-label">Second Name</label>
+                            <label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
                             <div class="col-sm-9">
-                                <input name="secondName" class="form-control" id="secondName" placeholder="Second Name"
-                                       value="<?php echo $user->secondName; ?>">
+                                <input name="lastName" class="form-control" id="lastName" placeholder="Last Name"
+                                       value="<?php echo $user->lastName; ?>">
                             </div>
                         </div>
                         <div class="form-group row">

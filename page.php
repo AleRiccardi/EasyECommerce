@@ -23,6 +23,7 @@ $listTemplate = array(
     "template/admin-area.php",
     "template/shop/shop.php",
     "template/shop/category.php",
+    "template/checkout.php",
 
 );
 

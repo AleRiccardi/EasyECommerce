@@ -29,7 +29,7 @@ class Address {
      *                    null if error.
      */
     public static function getAddress($userName){
-        $user = User::getBy($userName,"USERNAME");
+        $user = User::getBy($userName,"username");
         $res = DbAddress::getSingle(["id" => $user->idAddress], "OBJECT");
         return $res;
     }

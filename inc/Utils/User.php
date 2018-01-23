@@ -46,8 +46,8 @@ class User {
      * @return array|null
      */
     public static function getCurrentUser() {
-        if(isset($_SESSION['userName'])) {
-            return self::getBy($_SESSION['userName'], "USERNAME");
+        if (isset($_SESSION['userName'])) {
+            return self::getBy($_SESSION['userName'], "username");
         } else {
             return false;
         }
@@ -59,7 +59,7 @@ class User {
      * @return bool true if is admin, false if not
      */
     public static function isAdmin() {
-        if($user = self::getCurrentUser()) {
+        if ($user = self::getCurrentUser()) {
             return $user->isAdmin ? true : false;
         } else {
             return false;
@@ -67,21 +67,23 @@ class User {
     }
 
 
-
     /**
      * Get user from username or email address.
      *
-     * @param        $id   the username or email
-     * @param string $type USERNAME | USEREMAIL
+     * @param mixed  $id   id | username | email
+     * @param string $type id | username | email
      *
      * @return array|object|null
      */
-    public static function getBy($id, $type = "USERNAME") {
+    public static function getBy($id, $type = "username") {
         if (!is_string($id)) return null;
         $data = null;
-        if ($type == "USERNAME") {
+
+        if($type == "id"){
+            $data = array("id" => $id);
+        } else if ($type == "username") {
             $data = array("userName" => $id);
-        } else if ($type == "USEREMAIL") {
+        } else if ($type == "email") {
             $data = array("userEmail" => $id);
         }
 
@@ -99,7 +101,7 @@ class User {
     public static function getProfilePic($userName) {
         $imageFinalPath = null;
         $baseController = new BaseController();
-        $user = self::getBy($userName, $type = "USERNAME");
+        $user = self::getBy($userName, $type = "username");
 
         if ($user && $user->idImage) {
             // get row from Image table
@@ -124,11 +126,11 @@ class User {
      *  Remove image of a specific user.
      *
      * @param string $id   the username or email
-     * @param string $type USERNAME | USEREMAIL
+     * @param string $type username | email
      *
      * @return bool true if success, false otherwise
      */
-    public static function removeImage($id, $type = "USERNAME") {
+    public static function removeImage($id, $type = "username") {
         if (!is_string($id)) return false;
         $data = array("idImage" => null);
 
@@ -158,7 +160,7 @@ class User {
 
             $data = array(
                 "firstName" => $_POST['firstName'],
-                "secondName" => $_POST['secondName'],
+                "lastName" => $_POST['lastName'],
             );
 
             // PASSWORD

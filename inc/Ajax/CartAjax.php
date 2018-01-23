@@ -19,11 +19,19 @@ include("AjaxEngine.php");
 class CartAjax extends AjaxEngine {
 
 
-    public function printValue() {
+    public function addItem() {
         if (!empty($idUser = $this->get('idUser')) &&
             !empty($idItem = $this->get('idProduct')) &&
             !empty($quantity = $this->get('quantity'))) {
-            echo Cart::addItem($idUser, $idItem, $quantity) ? "added" : "error";
+            echo Cart::addItem($idUser, $idItem, $quantity);
+        }
+    }
+
+    public function changeQuantity() {
+        if (!empty($idUser = $this->get('idUser')) &&
+            !empty($idItem = $this->get('idItem')) &&
+            !empty($quantity = $this->get('quantity'))) {
+            echo Cart::changeQuantity($idUser, $idItem, $quantity);
         }
     }
 
@@ -67,6 +75,12 @@ class CartAjax extends AjaxEngine {
     public function refreshCart() {
         if (!empty($idUser = $this->get('idUser'))){
             Cart::displayCart($idUser);
+        }
+    }
+
+    public function refreshReport() {
+        if (!empty($idUser = $this->get('idUser'))){
+            Cart::displayReport($idUser);
         }
     }
 }

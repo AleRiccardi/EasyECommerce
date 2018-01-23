@@ -66,6 +66,13 @@ main.page {
     background-repeat: no-repeat !important;
 }
 
+.btn-xsm {
+    margin-left: 5px;
+    padding: 3px 10px 4px 10px !important;
+    font-size: 10px !important;
+    border-radius: .2rem !important;
+}
+
 /* ====================
     Header
    ==================== */
@@ -210,6 +217,7 @@ ul.nav-menu {
 
 img.card-item-img {
     width: 100%;
+    border-radius: 8px;
 }
 
 .card-item-title {
@@ -536,6 +544,10 @@ p.lead-home {
     CART page
    ==================== */
 
+.small-jumbotron {
+    padding: 2rem 1rem !important;
+}
+
 #cart-right .totals {
     box-shadow: 0 0 0px 1px #cacaca;
     border-radius: 2px;
@@ -546,8 +558,35 @@ p.lead-home {
     font-size: 17px !important;
 }
 
-td {
+#cart .row {
+    padding-right: 50px;
+}
+
+#cart thead th {
+    border-top: none;
+    font-weight: 400;
+}
+
+
+#cart thead th h3 {
+    font-weight: 300;
+    margin: 0;
+}
+
+#cart td {
     vertical-align: middle !important;
+}
+
+#cart tr td {
+    padding-top: 20px;
+    border-top: 1px solid #e2e2e2;
+}
+
+#cart tr:first-child td {
+    border: none;
+}
+
+#cart td:first-child {
 }
 
 .table-hover tbody tr:hover {
@@ -567,19 +606,63 @@ td {
 
 .card-page-item-img-cont img {
     object-fit: contain;
+    max-height: 78px;
 }
 
-.card-item-title {
-    margin-right: 25px;
+/* Info product */
+
+.cart-page-info-product {
+    margin-left: 20px;
+}
+
+.card-page-item-title {
+    font-size: 22px;
+}
+
+.desc-cart {
+    display: block;
+    clear: both;
+    font-size: 14px;
+    color: #4a4a4a;
+}
+
+.price-cart {
+    display: block;
+    clear: both;
+    font-size: 12px;
+    color: gray;
 }
 
 .btn-trash {
     cursor: pointer;
     width: 20px;
+    display: inline-block;
 }
 
-.btn-trash img{
+.btn-trash img {
     width: 100%;
+}
+
+.quantity-cont {
+    display: inline-block;
+}
+
+.change-quantity {
+    max-width: 60px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    border-top: none;
+    border-bottom: 1px solid #DDD;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
+    outline: 0;
+    padding: 4px 4px;
+    text-align: center;
+}
+
+.cont-btn-change-quantity{
+    text-align: center;
+    margin-top: 4px;
+    clear: both;
 }
 
 /*
@@ -624,7 +707,7 @@ ul.shipping-info-cart {
 /* ## Report ## */
 
 .report-cart {
-    margin-top: 100px;
+    margin-top: 60px;
 }
 
 /* ====================
@@ -707,9 +790,8 @@ ul.shipping-info-cart {
 
 .footer {
     border-top: 1px solid #dee2e6;
-    padding: 30px 0;
     width: 100%;
-    line-height: 60px;
+    line-height: 30px;
 }
 
 /*

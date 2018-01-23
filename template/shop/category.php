@@ -132,7 +132,7 @@ require_once($baseController->website_path . "/template/_header.php");
                 <div class="modal-body">
                     <p>
                         You added <span class="badge badge-success modal-quantity-item">3</span> quantity of <span
-                                class="modalTitleItem"></span> to your <a href="#">cart</a>.
+                                class="modalTitleItem"></span> to your <a href='page.php?name=cart'>cart</a>.
                     </p>
                 </div>
                 <div class="modal-footer">

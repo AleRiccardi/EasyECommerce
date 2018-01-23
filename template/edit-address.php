@@ -22,7 +22,7 @@ $address = Address::getAddress($_SESSION['userName']);
                           name="edit-login-form">
                         <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
                         <input style="display: none;" class="form-control" name="firstName">
-                        <input style="display: none;" class="form-control" name="secondName">
+                        <input style="display: none;" class="form-control" name="lastName">
                         <input style="display: none;" type="password" class="form-control" placeholder="Password">
 
                         <div class="form-group row">
@@ -35,7 +35,7 @@ $address = Address::getAddress($_SESSION['userName']);
                         <div class="form-group row">
                             <label for="class" class="col-sm-3 col-form-label">Class</label>
                             <div class="col-sm-9">
-                                <input name="class" class="form-control" id="secondName" placeholder="Aula Magna / A1 / C ..."
+                                <input name="class" class="form-control" id="lastName" placeholder="Aula Magna / A1 / C ..."
                                        value="<?php echo $address ? $address->class : ""; ?>">
                             </div>
                         </div>

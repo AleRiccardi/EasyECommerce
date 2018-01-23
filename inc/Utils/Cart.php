@@ -11,6 +11,7 @@ namespace Inc\Utils;
 
 use Inc\Base\BaseController;
 use Inc\Base\DirController;
+use Inc\Database\DbAddress;
 use Inc\Database\DbCart;
 use Inc\Database\DbCartItem;
 use Inc\Database\DbImage;
@@ -38,6 +39,46 @@ class Cart {
         $idCart = $cart->id;
 
         return self::addItemToCart($idCart, $idItem, $quantity);
+    }
+
+    /**
+     *
+     *
+     * @param $idUser
+     * @param $idItem
+     * @param $quantity
+     *
+     * @return bool true on success, false otherwise.
+     */
+    public static function changeQuantity($idUser, $idItem, $quantity) {
+        # Check if the cart exist
+        if (!$cart = self::getCartUser($idUser)) {
+            return false;
+        }
+        $idCart = $cart->id;
+
+        # check if the item is already stored in cart (addiction the quantity)
+        $items = self::getCartItems($idCart, $idItem);
+        if (!empty($items)) {
+            # the item is already stored
+            foreach ($items as $item) {
+                if ($item->idItem == $idItem) {
+
+                    $newQuantity = $quantity;
+
+                    $data = [
+                        "quantity" => $newQuantity,
+                    ];
+
+                    $where = [
+                        "idCart" => $idCart,
+                        "idItem" => $idItem,
+                    ];
+
+                    return DbCartItem::update($data, $where) ? true : false;
+                }
+            }
+        }
     }
 
     /**
@@ -85,8 +126,8 @@ class Cart {
     }
 
     /**
-     * Add an item in the cart and addiction the quantity
-     * if already exist.
+     * Add an item in the cart and it can be used also for change
+     * quantity (positive or negative).
      *
      * @param $idCart
      * @param $idItem
@@ -141,80 +182,109 @@ class Cart {
         $baseC = new BaseController();
         $cart = Cart::getCartUser($idUser);
         $cartItems = Cart::getCartItems($cart->id);
-        ?>
-        <table class="table table-hover">
-            <tbody>
+        if (!empty($cartItems)) {
+            ?>
+            <div class="row">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="text-left"><h3>Item</h3></th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <th scope="col" class="text-center">Price</th>
+                        <th scope="col" class="text-center"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
+                    <?php
+
+                    foreach ($cartItems as $cartItem) {
+                        $item = DbItem::getSingle(["id" => $cartItem->idItem], 'object');
+                        $where = ["id" => $item->idImage];
+                        $image = DbImage::getSingle($where, 'object');
+                        $imageUrl = $baseC->website_url . $image->path;
+                        $empty = false;
+                        ?>
+
+                        <tr>
+                            <td class="text-left" scope="row">
+                                <div class="middle-h-cont ml-auto">
+                                    <div class='card-page-item-img-cont middle-h-item'>
+                                        <div class='middle-h-cont'>
+                                            <img id='card-item-img' class='card-item-img middle-h-item'
+                                                 src="<?php echo $imageUrl; ?>"
+                                                 alt='Card image cap'>
+                                        </div>
+                                    </div>
+                                    <div class="cart-page-info-product middle-h-item">
+                                        <span class='card-page-item-title' id='card-item-title'>
+                                            <?php echo $item->title; ?>
+                                        </span>
+                                        <span class="desc-cart text-truncate" style="max-width: 600px;">
+                                          <?php echo $item->description; ?>
+                                        </span>
+                                        <span class="price-cart">€<?php echo $item->price; ?></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="middle-h-cont ml-auto quantity-cont">
+                                    <input class="change-quantity middle-h-item"
+                                           value="<?php echo $cartItem->quantity; ?>"
+                                           type="number" data-item="<?php echo $item->id ?>"
+                                           data-user="<?php echo $idUser ?>">
+                                    <div class="cont-btn-change-quantity"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="td-cont text-center">
+                                    <span class='price-badge'
+                                          id='card-item-quantity'>
+                                        €<?php echo $cartItem->quantity * $item->price; ?>
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-trash" data-item="<?php echo $item->id ?>"
+                                     data-user="<?php echo $idUser ?>">
+                                    <img src="<?php echo $dirC->iconUrl . "garbage.png" ?>">
+                                </div>
+                            </td>
+                        </tr>
+                        <?php
+                    } ?>
+                    </tbody>
+                </table>
+            </div>
             <?php
+        } else {
+            echo "<p class='lead'>Your cart is empty, go to the <a href='page.php?name=shop'>shop</a>  section and when you see something that might
+                interest you, select the quantity and click on add.</p>";
+        }
 
-            foreach ($cartItems as $cartItem) {
-                $item = DbItem::getSingle(["id" => $cartItem->idItem], 'object');
-                $where = ["id" => $item->idImage];
-                $image = DbImage::getSingle($where, 'object');
-                $imageUrl = $baseC->website_url . $image->path;
-
-                ?>
-
-                <tr>
-                    <td class="text-left">
-                        <div class='card-page-item-img-cont'>
-                            <div class='middle-h-cont'>
-                                <img id='card-item-img' class='card-item-img middle-h-item'
-                                     src="<?php echo $imageUrl; ?>"
-                                     alt='Card image cap'>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="text-left">
-                        <span class='card-item-title' id='card-item-title'>
-                            <?php echo $item->title; ?>
-                            </span>
-                    </td>
-                    <td class="text-right">
-                        <div class="middle-h-item ml-auto">
-                            Quantity <input value="<?php echo $cartItem->quantity; ?>" style="width: 50px">
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="td-cont">
-                            <span class='badge badge-secondary price-badge middle-h-item' id='card-item-quantity'>
-                                €<?php echo $cartItem->quantity * $item->price; ?>
-                            </span>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="middle-h-item btn-trash " data-item="<?php echo $item->id ?>" data-user="<?php echo $idUser ?>">
-                            <img src="<?php echo $dirC->iconUrl . "garbage.png" ?>">
-                        </div>
-                    </td>
-                </tr>
-                <?php
-            } ?>
-            </tbody>
-        </table>
-        <?php
     }
 
     public static function displayReport($idUser) {
+        $user = User::getBy($idUser, "id");
         $cart = Cart::getCartUser($idUser);
         $cartItems = Cart::getCartItems($cart->id);
+        $address = Address::getAddress($user->userName);
         $price = 0;
         $totPrice = 0;
+        $shipPayment = 0;
 
-        $shipPayment = 5;
 
-        foreach ($cartItems as $cartItem) {
-            $item = DbItem::getSingle(["id" => $cartItem->idItem], 'object');
-            $price = ($price + ($item->price * $cartItem->quantity));
-        }
+        if (!empty($cartItems)) {
 
-        $totPrice = $price + $shipPayment;
-        ?>
+            foreach ($cartItems as $cartItem) {
+                $item = DbItem::getSingle(["id" => $cartItem->idItem], 'object');
+                $price = ($price + ($item->price * $cartItem->quantity));
+            }
 
-        <div>
-            <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Your report</span>
-            </h4>
+            $totPrice = $price + $shipPayment;
+            ?>
+
+
             <ul class="list-group mb-3">
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
@@ -229,13 +299,13 @@ class Cart {
                         <h6 class="my-0">Shipping cost:</h6>
                         <ul class="shipping-info-cart">
                             <li>
-                                Department: Informatics
+                                Department: <span><?php echo $address->department ?></span>
                             </li>
                             <li>
-                                Class: A1
+                                Class: <span><?php echo $address->class ?></span>
                             </li>
                             <li>
-                                <small class="text-muted"><a href="#">Change destiation</a></small>
+                                <small class="text-muted"><a href="page.php?name=edit-address">Change destiation</a></small>
                             </li>
                         </ul>
                     </div>
@@ -245,13 +315,15 @@ class Cart {
                     <span>Total (EUR)</span>
                     <strong>€<?php echo $totPrice; ?></strong>
                 </li>
-                <a href="#" class="list-group-item go-to-checkout">
+                <a href="page.php?name=checkout" class="list-group-item go-to-checkout">
                     <span>Go to checkout</span>
                 </a>
             </ul>
 
 
-        </div>
-        <?php
+            <?php
+        } else {
+            echo " ";
+        }
     }
 }

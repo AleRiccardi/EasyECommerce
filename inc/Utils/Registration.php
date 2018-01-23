@@ -102,7 +102,7 @@ class Registration {
                 $userPassword_hash = password_hash($userPassword, PASSWORD_DEFAULT);
 
                 // check if user or email address already exists
-                if (User::getBy($userName, "USERNAME") || User::getBy($userEmail, "USEREMAIL")) {
+                if (User::getBy($userName, "username") || User::getBy($userEmail, "email")) {
                     $this->errors[] = "Sorry, that username / email address is already taken.";
                 } else {
                     // write new user's data into database
