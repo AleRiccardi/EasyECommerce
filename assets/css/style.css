@@ -567,7 +567,6 @@ p.lead-home {
     font-weight: 400;
 }
 
-
 #cart thead th h3 {
     font-weight: 300;
     margin: 0;
@@ -659,10 +658,27 @@ p.lead-home {
     text-align: center;
 }
 
-.cont-btn-change-quantity{
+.cont-btn-change-quantity {
     text-align: center;
     margin-top: 4px;
     clear: both;
+}
+
+.container {
+    position: relative;
+}
+
+.content {
+    position: absolute;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.spacer {
+    height: 0;
+    overflow: hidden;
 }
 
 /*
@@ -766,6 +782,23 @@ ul.shipping-info-cart {
     margin-left: 20px;
 }
 
+/* =======================
+    CHECKOUT-SUCCESS page
+   ======================= */
+
+.success-title {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.order-detail-success {
+    border: gray;
+    padding: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 20px;
+    background-color: whitesmoke;
+}
+
 /* ====================
     404 page
    ==================== */
@@ -790,8 +823,15 @@ ul.shipping-info-cart {
 
 .footer {
     border-top: 1px solid #dee2e6;
+    background-color: whitesmoke;
     width: 100%;
-    line-height: 30px;
+    color: gray;
+    text-align: center;
+    padding: 30px;
+}
+
+.footer ul {
+    margin: 0;
 }
 
 /*

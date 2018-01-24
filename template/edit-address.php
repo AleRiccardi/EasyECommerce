@@ -6,8 +6,8 @@
 use \Inc\Utils\Address;
 
 require_once($baseController->website_path . "/template/_header.php");
-
-$address = Address::getAddress($_SESSION['userName']);
+$user = \Inc\Utils\User::getCurrentUser();
+$address = Address::getAddress($user->id);
 
 ?>
 

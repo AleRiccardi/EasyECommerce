@@ -8,12 +8,12 @@ require_once($baseController->website_path . "/template/_header.php");
 ?>
     <main role="main" class="fit-height-section">
         <div class="jumbotron jumbotron-fluid small-jumbotron">
-            <div class="container-fluid">
+            <div class="container">
                 <h1 class="display-4">Cart</h1>
                 <h4>Number of item: <span class="badge badge-primary cart-page-num-item">0</span></h4>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container">
             <div class="row justify-content-between">
 
                 <div class="col-md-9">

@@ -203,7 +203,6 @@ class Cart {
                         $where = ["id" => $item->idImage];
                         $image = DbImage::getSingle($where, 'object');
                         $imageUrl = $baseC->website_url . $image->path;
-                        $empty = false;
                         ?>
 
                         <tr>
@@ -220,10 +219,9 @@ class Cart {
                                         <span class='card-page-item-title' id='card-item-title'>
                                             <?php echo $item->title; ?>
                                         </span>
-                                        <span class="desc-cart text-truncate" style="max-width: 600px;">
-                                          <?php echo $item->description; ?>
+                                        <span class="price-cart">
+                                            Single: €<?php echo $item->price; ?>
                                         </span>
-                                        <span class="price-cart">€<?php echo $item->price; ?></span>
                                     </div>
                                 </div>
                             </td>
@@ -257,9 +255,14 @@ class Cart {
                 </table>
             </div>
             <?php
-        } else {
-            echo "<p class='lead'>Your cart is empty, go to the <a href='page.php?name=shop'>shop</a>  section and when you see something that might
-                interest you, select the quantity and click on add.</p>";
+        } else { ?>
+            <div class="row">
+                <p class='lead'>Your cart is empty, go to the shop section and when you
+                    see something that might
+                    interest you, select the quantity and click on add.</p>
+                <a class="btn btn-success" href='page.php?name=shop'>Go to shop</a>
+            </div>
+            <?php
         }
 
     }
@@ -268,10 +271,9 @@ class Cart {
         $user = User::getBy($idUser, "id");
         $cart = Cart::getCartUser($idUser);
         $cartItems = Cart::getCartItems($cart->id);
-        $address = Address::getAddress($user->userName);
+        $address = Address::getAddress($user->id);
         $price = 0;
         $totPrice = 0;
-        $shipPayment = 0;
 
 
         if (!empty($cartItems)) {
@@ -281,6 +283,7 @@ class Cart {
                 $price = ($price + ($item->price * $cartItem->quantity));
             }
 
+            $shipPayment = GeneralCost::getCartShippmentPayment($price);
             $totPrice = $price + $shipPayment;
             ?>
 
@@ -298,15 +301,23 @@ class Cart {
                     <div>
                         <h6 class="my-0">Shipping cost:</h6>
                         <ul class="shipping-info-cart">
-                            <li>
-                                Department: <span><?php echo $address->department ?></span>
-                            </li>
-                            <li>
-                                Class: <span><?php echo $address->class ?></span>
-                            </li>
-                            <li>
-                                <small class="text-muted"><a href="page.php?name=edit-address">Change destiation</a></small>
-                            </li>
+                            <?php if ($address && !empty($address->department) && !empty($address->class)) { ?>
+                                <li>
+                                    Department: <span><?php echo $address->department ?></span>
+                                </li>
+                                <li>
+                                    Class: <span><?php echo $address->class ?></span>
+                                </li>
+                                <li>
+                                    <small class="text-muted"><a href="page.php?name=edit-address">Change destiation</a>
+                                    </small>
+                                </li>
+                            <?php } else { ?>
+                                <li>
+                                    <small class="text-muted"><a href="page.php?name=edit-address">Set destiation</a>
+                                    </small>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </div>
                     <span class="text-muted">€<?php echo $shipPayment; ?></span>

@@ -27,10 +27,9 @@ require_once($baseController->website_path . "/template/_header.php");
 
 
 ?>
-    <main role="main" class="page container">
+    <main role="main" class="page container fit-height-section mb-5">
 
         <div class="row row-offcanvas row-offcanvas-right">
-
             <div class="col-12 col-md-9">
                 <p class="float-right d-md-none">
                     <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
@@ -49,6 +48,7 @@ require_once($baseController->website_path . "/template/_header.php");
                 <div class="container-fluid">
                     <!-- add extra container element for Masonry -->
                     <div class="grid row">
+
                         <div class="grid-sizer col-xs-6 col-sm-4 col-md-4">
 
                         </div>
@@ -96,6 +96,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         ?>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">

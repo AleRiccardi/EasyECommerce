@@ -10,8 +10,6 @@ $login = new Login();
 $user = User::getCurrentUser();
 
 $largeMenuPages = array(
-    "cart",
-    "order",
     "admin-area"
 );
 $smallMenu = true;

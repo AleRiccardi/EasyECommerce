@@ -23,13 +23,13 @@ class Address {
     /**
      * Permit to retrieve the address of a specific user.
      *
-     * @param $userName username of the user
+     * @param int $idUser id of the user
      *
      * @return array|null array of objects, if single will be an object,
      *                    null if error.
      */
-    public static function getAddress($userName){
-        $user = User::getBy($userName,"username");
+    public static function getAddress($idUser) {
+        $user = User::getBy($idUser, "id");
         $res = DbAddress::getSingle(["id" => $user->idAddress], "OBJECT");
         return $res;
     }
@@ -43,28 +43,34 @@ class Address {
      */
     public static function editAddress() {
         if (isset($_POST['editAddress'])) {
-            $user = User::getCurrentUser();
-
-            $address = null;
-            $data = array(
-                "department" => $_POST['department'],
-                "class" => $_POST['class'],
-            );
-
-            $existAddress = DbAddress::getSingle(["id" => $user->idAddress], "OBJECT"); // Get the address
-            // if exist
-            if($existAddress){
-                $res = DbAddress::update($data, ["id" => $existAddress->id]);
-                return $res ? true : false;
-            } else {
-                // if doesn't exist it will be create
-                $idAddress = DbAddress::insert($data); // return the id of the row that is added
-                $res = DbUser::update(["idAddress" => $idAddress], ["userName" => $user->userName]); // connect the address row with the user idAddress
-                return $res ? true : false;
-            }
+            $department = $_POST['department'];
+            $class = $_POST['class'];
+            self::insertAddress($department, $class);
         }
         // default
         return false;
+    }
+
+    public static function insertAddress($department, $class){
+        $user = User::getCurrentUser();
+
+        $address = null;
+        $data = array(
+            "department" => $department,
+            "class" => $class,
+        );
+
+        $existAddress = DbAddress::getSingle(["id" => $user->idAddress], "OBJECT"); // Get the address
+        // if exist
+        if ($existAddress) {
+            $res = DbAddress::update($data, ["id" => $existAddress->id]);
+            return $res ? true : false;
+        } else {
+            // if doesn't exist it will be create
+            $idAddress = DbAddress::insert($data); // return the id of the row that is added
+            $res = DbUser::update(["idAddress" => $idAddress], ["userName" => $user->userName]); // connect the address row with the user idAddress
+            return $res ? true : false;
+        }
     }
 
 }

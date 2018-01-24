@@ -24,7 +24,7 @@ $listTemplate = array(
     "template/shop/shop.php",
     "template/shop/category.php",
     "template/checkout.php",
-
+    "template/checkout-success.php",
 );
 
 $temp404 = "template/404.php";

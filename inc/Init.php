@@ -37,6 +37,7 @@ final class Init {
             Utils\Address::class,
             Utils\Category::class,
             Utils\Item::class,
+            Utils\Checkout::class,
         );
     }
 
