@@ -74,46 +74,27 @@ class Login {
             $errors[] = "Password field was empty.";
         } elseif (!empty($userName) && !empty($userPassword)) {
 
-            // create a database connection, using the constants from config/db.php (which we loaded in index.php)
-            $this->db_connection = new \mysqli(Db::HOST, Db::USER, Db::PASS, Db::NAME);
+            $userByName = User::getBy($userName, "username");
+            $userByEmail = User::getBy($userName, "email");
 
-            // change character set to utf8 and check it
-            if (!$this->db_connection->set_charset("utf8")) {
-                $this->errors[] = $this->db_connection->error;
-            }
+            // if this user exists
+            if ($userByName || $userByEmail) {
 
-            // if no connection errors (= working database connection)
-            if (!$this->db_connection->connect_errno) {
+                $user = $userByName ? $userByName : $userByEmail;
 
-                // escape the POST stuff
-                $userName = $this->db_connection->real_escape_string($_POST['userName']);
+                // using PHP 5.5's password_verify() function to check if the provided password fits
+                // the hash of that user's password
+                if (password_verify($userPassword, $user->passwordHash)) {
 
-                $userByName = User::getBy($userName, "username");
-                $userByEmail = User::getBy($userName, "email");
+                    // write user data into PHP SESSION (a file on your server)
+                    $_SESSION['userName'] = $user->userName;
+                    $_SESSION['userEmail'] = $user->userEmail;
+                    $_SESSION['userLoginStatus'] = 1;
 
-                // if this user exists
-                if ($userByName || $userByEmail) {
-
-                    $user = $userByName ? $userByName : $userByEmail;
-
-                    // using PHP 5.5's password_verify() function to check if the provided password fits
-                    // the hash of that user's password
-                    if (password_verify($userPassword, $user->passwordHash)) {
-
-                        // write user data into PHP SESSION (a file on your server)
-                        $_SESSION['userName'] = $user->userName;
-                        $_SESSION['userEmail'] = $user->userEmail;
-                        $_SESSION['userLoginStatus'] = 1;
-
-                        return true;
-                    } else {
-                        $this->errors[] = "Wrong password. Try again.";
-                    }
+                    return true;
                 } else {
-                    $this->errors[] = "This user does not exist.";
+                    $this->errors[] = "Wrong password. Try again.";
                 }
-            } else {
-                $this->errors[] = "Database connection problem.";
             }
         }
         // default
