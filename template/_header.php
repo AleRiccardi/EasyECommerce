@@ -13,19 +13,29 @@ $largeMenuPages = array(
     "admin-area"
 );
 $smallMenu = true;
-foreach($largeMenuPages as $largeMenuPage) {
-    if($_GET['name'] == $largeMenuPage){
-        $smallMenu = false;
+
+if (isset($_GET['name']) && $page = $_GET['name']) {
+    if (isset($_GET['category'])) $category = $_GET['category'];
+
+    foreach ($largeMenuPages as $largeMenuPage) {
+        if ($page == $largeMenuPage) {
+            $smallMenu = false;
+        }
     }
 }
-
 ?>
 
 <html lang="it">
 <head>
     <meta charset="utf-8" content="text/html" ;>
     </meta>
-    <title>Willychok</title>
+    <title>
+        Willychok
+        <?php
+        if (!empty($category)) echo " | " . str_replace('-', ' ', ucfirst($category));
+        else if (!empty($page)) echo " | " . str_replace('-', ' ', ucfirst($page));
+        ?>
+    </title>
     <?php require_once("_head.php"); ?>
 </head>
 <body>
@@ -33,7 +43,8 @@ foreach($largeMenuPages as $largeMenuPage) {
     <?php if ($smallMenu) echo "<div class='container'>"; ?>
     <div class="cont-logo">
         <a href="<?php echo $baseController->website_url ?>">
-            <img class="logo" src="<?php echo $baseController->website_url ?>/assets/img/logo-white.png" alt="logo">
+            <img class="logo" src="<?php echo $baseController->website_url ?>/assets/img/logo-white.png"
+                 alt="WillyChock">
         </a>
     </div>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
@@ -68,7 +79,12 @@ foreach($largeMenuPages as $largeMenuPage) {
             </ul>
         </div>
 
-        <?php if ($login->isUserLoggedIn()) { ?>
+        <?php
+        if ($login->isUserLoggedIn()) {
+
+            $cartItems = \Inc\Utils\Cart::getUserCartItem($user->id);
+
+            ?>
 
             <!-- CART -->
             <div class="cont-menu-cart nav-item">
@@ -77,8 +93,15 @@ foreach($largeMenuPages as $largeMenuPage) {
                      aria-expanded="true">
                     <img class="profile-image"
                          src="<?php echo $baseController->website_url ?>/assets/img/icon/cart-white.png"
+                         alt="Profile image"
                     />
                     <div class="mc-number-item">
+                        <?php
+                        if ($cartItems) {
+                            echo "<span class='badge badge-primary'>" . count($cartItems) . "</span>";
+                        }
+
+                        ?>
                     </div>
                 </div>
                 <div class="dropdown-menu dropdown-menu-right mu-dd-content" id="dropdown-cart">
@@ -87,7 +110,6 @@ foreach($largeMenuPages as $largeMenuPage) {
                     <div class="cont-dd">
                         <h6 class="dropdown-header">Cart</h6>
                         <div id="append-items-cart">
-
                         </div>
 
                         <div class="dropdown-divider"></div>
@@ -102,7 +124,7 @@ foreach($largeMenuPages as $largeMenuPage) {
                      aria-haspopup="true" aria-expanded="true">
                     <div class="mu-img menu-icon-circle">
                         <img class="profile-image"
-                             src="<?php echo User::getProfilePic($_SESSION['userName']); ?>"/>
+                             src="<?php echo User::getProfilePic($_SESSION['userName']); ?>" alt="Profile image"/>
                     </div>
                 </div>
                 <div class="dropdown-menu dropdown-menu-right mu-dd-content"
@@ -120,7 +142,9 @@ foreach($largeMenuPages as $largeMenuPage) {
                        href="<?php echo $baseController->website_url ?>/page.php?name=login&logout">Logout</a>
                 </div>
             </div>
-        <?php } ?>
+            <?php
+        }
+        ?>
     </div>
     <?php if ($smallMenu) echo "</div>"; ?>
 </header>

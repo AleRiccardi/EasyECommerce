@@ -85,7 +85,7 @@ class Cart {
      * Get current cart of a specific user, if doesn't
      * exist it will be created.
      *
-     * @param $idUser
+     * @param int $idUser
      *
      * @return false|object
      */
@@ -112,10 +112,10 @@ class Cart {
     }
 
     /**
-     * @param      $idCart
-     * @param null $idItem
+     * @param int $idCart
+     * @param int $idItem
      *
-     * @return array|bool
+     * @return array
      */
     public static function getCartItems($idCart, $idItem = null) {
         $where = ["idCart" => $idCart];
@@ -123,6 +123,17 @@ class Cart {
 
         $carts = DbCartItem::get($where, "object");
         return $carts;
+    }
+
+    /**
+     * @param $idUser
+     *
+     * @return array
+     */
+    public static function getUserCartItem($idUser) {
+        $cart = self::getCartUser($idUser);
+        $cartItems = self::getCartItems($cart->id);
+        return $cartItems;
     }
 
     /**
@@ -212,7 +223,7 @@ class Cart {
                                         <div class='middle-h-cont'>
                                             <img id='card-item-img' class='card-item-img middle-h-item'
                                                  src="<?php echo $imageUrl; ?>"
-                                                 alt='Card image cap'>
+                                                 alt="<?php echo $item->title; ?>">
                                         </div>
                                     </div>
                                     <div class="cart-page-info-product middle-h-item">
@@ -245,7 +256,7 @@ class Cart {
                             <td class="text-center">
                                 <div class="btn-trash" data-item="<?php echo $item->id ?>"
                                      data-user="<?php echo $idUser ?>">
-                                    <img src="<?php echo $dirC->iconUrl . "garbage.png" ?>">
+                                    <img src="<?php echo $dirC->iconUrl . "garbage.png" ?>" alt="Garbage">
                                 </div>
                             </td>
                         </tr>

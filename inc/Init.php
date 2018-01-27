@@ -38,6 +38,8 @@ final class Init {
             Utils\Category::class,
             Utils\Item::class,
             Utils\Checkout::class,
+            Base\Redirect::class,
+
         );
     }
 

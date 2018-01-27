@@ -62,12 +62,15 @@ require_once($baseController->website_path . "/template/_header.php");
                                 <div class="card">
                                     <img class="card-img-top"
                                          src="<?php echo $baseController->website_url . $imagePath ?>"
-                                         alt="Card image cap">
+                                         alt="<?php echo $product->title ?>">
                                     <div class="card-body">
                                         <h5 class="card-title">
-                                            <span class="title-prod"<?php echo $product->title ?>
-                                                  data-prod-id='<?php echo $product->id ?>'><?php echo $product->title ?> </span>
-                                            <span class="badge badge-secondary">€<?php echo $product->price ?></span>
+                                            <span class="title-prod" data-prod-id='<?php echo $product->id ?>'>
+                                                <?php echo $product->title ?>
+                                            </span>
+                                            <span class="badge badge-secondary">€
+                                                <?php echo $product->price ?>
+                                            </span>
                                         </h5>
                                         <p class="card-text"><?php echo $product->description ?></p>
                                     </div>

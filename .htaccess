@@ -1,6 +1,0 @@
-Options +FollowSymLinks
-RewriteEngine On
-
-# rewrite /portfolio/project/25 to /portfolio/project.php?id=25
-RewriteCond %{DOCUMENT_ROOT}/$1\.php -f
-RewriteRule ^([\w-]+)/([\w-]+)/?$ $1.php?name=$2 [L,QSA,NC]

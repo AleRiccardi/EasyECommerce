@@ -46,11 +46,11 @@ require_once($baseController->website_path . "/template/_header.php");
                                 <!--<span class="text-muted">Category</span>--></h2>
                             <p class="lead"><?php echo $category->description; ?></p>
                             <a class="btn btn-primary btn-sm"
-                               href="?name=category&category=<?php echo $category->slug; ?>" role="button">See the
+                               href="page.php?name=category&category=<?php echo $category->slug; ?>" role="button">See the
                                 chocolate</a>
                         </div>
                         <div class="col-md-5 <?php echo $i % 2 ? "order-md-1 " : ""; ?> middle-h-item cont-featurette-image">
-                            <img class="featurette-image img-fluid mx-auto" alt="500x500"
+                            <img class="featurette-image img-fluid mx-auto" alt="<?php echo $category->title; ?>"
                                  src="<?php echo $baseController->website_url . $imagePath; ?>">
                         </div>
                     </div>

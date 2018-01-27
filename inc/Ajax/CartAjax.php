@@ -35,10 +35,9 @@ class CartAjax extends AjaxEngine {
         }
     }
 
-    public function getNumItemCart() {
+    public function getNumItemsCart() {
         if (!empty($idUser = $this->get('idUser'))) {
-            $cart = Cart::getCartUser($idUser);
-            echo count(Cart::getCartItems($cart->id));
+            echo count(Cart::getUserCartItem($idUser));
         }
     }
 

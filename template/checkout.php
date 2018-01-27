@@ -6,15 +6,18 @@ use Inc\Utils\Address;
 use Inc\Database\DbItem;
 use \Inc\Utils\GeneralCost;
 
-$user = User::getCurrentUser();
+if (!$user = User::getCurrentUser()) {
+    die();
+}
+
 $cart = Cart::getCartUser($user->id);
 
-if(!$cart)
+if (!$cart)
     header("Location: $baseController->website_url/page.php?name=user");
 
 $cartItems = Cart::getCartItems($cart->id);
 
-if(!$cartItems)
+if (!$cartItems)
     header("Location: $baseController->website_url/page.php?name=user");
 
 $address = Address::getAddress($user->id);
@@ -37,11 +40,33 @@ require_once($baseController->website_path . "/template/_header.php");
 
 
 ?>
+    <!-- breadcrumb -->
+    <section class="brc-cont">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="?name=user">User</a></li>
+                    <li class="breadcrumb-item active">Order</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
     <main role="main" class="fit-height-section">
         <div class="jumbotron jumbotron-fluid small-jumbotron">
             <div class="container">
                 <h1 class="display-4">Checkout</h1>
             </div>
+            <section class="brc-cont">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="?name=user">User</a></li>
+                            <li class="breadcrumb-item"><a href="?name=cart">Cart</a></li>
+                            <li class="breadcrumb-item active" aria-current="">Checkout</li>
+                        </ol>
+                    </nav>
+                </div>
+            </section>
         </div>
         <div class="container">
             <div class="row">
@@ -99,7 +124,7 @@ require_once($baseController->website_path . "/template/_header.php");
                             <div class="col-md-6 mb-3">
                                 <label for="lastName">Last name</label>
                                 <input type="text" class="form-control" id="lastName" name="lastName" placeholder=""
-                                       value="<?php echo $user->lastName; ?>"required>
+                                       value="<?php echo $user->lastName; ?>" required>
                                 <div class="invalid-feedback">
                                     Valid last name is required.
                                 </div>
@@ -117,12 +142,12 @@ require_once($baseController->website_path . "/template/_header.php");
                             <div class="col-md-3 mb-3">
                                 <label for="zip">Department</label>
                                 <input type="text" class="form-control" id="department" name="department"
-                                       placeholder="Department" value="<?php echo $address->department; ?>" required>
+                                       placeholder="Department" value="<?php echo $address ? $address->department : ""; ?>" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="zip">Class</label>
                                 <input type="text" class="form-control" id="class" name="class"
-                                       placeholder="Class" value="<?php echo $address->class; ?>" required>
+                                       placeholder="Class" value="<?php echo $address ? $address->class : ""; ?>" required>
                             </div>
                         </div>
                         <hr class="mb-4">

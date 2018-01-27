@@ -24,7 +24,7 @@ class Category extends BaseController {
         parent::__construct();
 
         // Check if have privilege
-        if(!User::isAdmin()) {
+        if (!User::isAdmin()) {
             return false;
         }
     }
@@ -36,7 +36,7 @@ class Category extends BaseController {
 
             if (isset($_GET['add-new'])) {
                 $this->showAddNew();
-            } else if(isset($_GET['edit']) && isset($_GET['id'])) {
+            } else if (isset($_GET['edit']) && isset($_GET['id'])) {
                 $this->showEdit($_GET['id']);
             } else {
                 $this->getMain("Category");
@@ -48,13 +48,13 @@ class Category extends BaseController {
 
     public function showEdit($id) {
         $category = DbCategory::getSingle(["id" => $id], "OBJECT");
-        if(!$category){
+        if (!$category) {
             $this->getMain("Category");
             return;
         }
         $image = DbImage::getSingle(['id' => $category->idImage], "OBJECT");
 
-        if($image){
+        if ($image) {
             $image = $this->website_url . $image->path;
         } else {
             $image = false;
@@ -63,7 +63,8 @@ class Category extends BaseController {
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h2 class="admin-title">Edit category</h2>
-            <form class="form-add-new" method="post" action="?name=admin-area&category&edit&id=<?php echo $category->id; ?>"
+            <form class="form-add-new" method="post"
+                  action="?name=admin-area&category&edit&id=<?php echo $category->id; ?>"
                   enctype="multipart/form-data"
                   name="edit-login-form">
                 <div class="row row-offcanvas row-offcanvas-right">
@@ -76,10 +77,12 @@ class Category extends BaseController {
                         <br>
                         <p>
                             <small>Date creation:
-                                <em><?php echo date("d M Y @ h:i:sa", strtotime($category->dateCreation)); ?></em></small>
+                                <em><?php echo date("d M Y @ h:i:sa", strtotime($category->dateCreation)); ?></em>
+                            </small>
                             <br>
                             <small>Last update:
-                                <em><?php echo date("d M Y @ h:i:sa", strtotime($category->dateLastUpdate)); ?></em></small>
+                                <em><?php echo date("d M Y @ h:i:sa", strtotime($category->dateLastUpdate)); ?></em>
+                            </small>
                         </p>
                     </div>
 
@@ -89,13 +92,16 @@ class Category extends BaseController {
                                    value="<?php echo $category->slug; ?>">
                             <br>
                             <div class="col-sm-12 admin-preview-img">
-                                <img id="previewCat" class="img-cat <?php echo !$image ? "admin-hide" : "" ?>" src="<?php echo $image; ?>">
+                                <img id="previewCat" class="img-cat <?php echo !$image ? "admin-hide" : "" ?>"
+                                     src="<?php echo $image; ?>" alt="<?php echo $category->title; ?>">
                                 <label class="admin-btn-upload fileContainer">
                                     <label>Upload image</label>
-                                    <input id="uploadImgCat" name="image" type="file" value="12" accept=".jpg, .jpeg, .png"/>
+                                    <input id="uploadImgCat" name="image" type="file" value="12"
+                                           accept=".jpg, .jpeg, .png"/>
                                     <?php echo $image ? '<input class="admin-hide" name="image-exist" id="image-exist"/>' : ""; ?>
                                 </label>
-                                <label id="removeImgCat" class="admin-btn-remove <?php echo !$image ? "admin-hide" : "" ?>">Remove</label>
+                                <label id="removeImgCat"
+                                       class="admin-btn-remove <?php echo !$image ? "admin-hide" : "" ?>">Remove</label>
                             </div>
                             <br>
                             <br>
@@ -144,7 +150,8 @@ class Category extends BaseController {
                                    value="<?php echo $slug; ?>">
                             <br>
                             <div class="col-sm-12 admin-preview-img">
-                                <img id="previewCat" class="img-cat admin-hide" src="<?php echo $image; ?>">
+                                <img id="previewCat" class="img-cat admin-hide" src="<?php echo $image; ?>"
+                                     alt="<?php echo $title; ?>">
                                 <label class="admin-btn-upload fileContainer">
                                     <label>Upload image</label>
                                     <input id="uploadImgCat" name="image" type="file" accept=".jpg, .jpeg, .png"/>
@@ -191,8 +198,7 @@ class Category extends BaseController {
                             $max_length = 80;
                             $desc = $category->description;
 
-                            if (strlen($desc) > $max_length)
-                            {
+                            if (strlen($desc) > $max_length) {
                                 $offset = ($max_length - 3) - strlen($desc);
                                 $desc = substr($desc, 0, strrpos($desc, ' ', $offset)) . '...';
                             }
@@ -200,7 +206,9 @@ class Category extends BaseController {
                             <tr onclick="window.location='?name=admin-area&category&edit&id=<?php echo $category->id; ?>';">
                                 <th scope="row"><?php echo $category->id; ?></th>
                                 <td><?php echo $category->title; ?></td>
-                                <td><div class=""><?php echo $desc; ?></div> </td>
+                                <td>
+                                    <div class=""><?php echo $desc; ?></div>
+                                </td>
                                 <td><?php echo $category->dateLastUpdate; ?></td>
                             </tr>
                             <?php

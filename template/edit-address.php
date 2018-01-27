@@ -3,17 +3,25 @@
  * @todo give the possibility to store more of one address.
  */
 
-use \Inc\Utils\Address;
+use Inc\Utils\Address;
 
 require_once($baseController->website_path . "/template/_header.php");
 $user = \Inc\Utils\User::getCurrentUser();
 $address = Address::getAddress($user->id);
-
 ?>
-
+    <section class="brc-cont">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="?name=user">User</a></li>
+                    <li class="breadcrumb-item active">Edit Address</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
     <main class="page-edit">
-        <section class="flex-container-center fit-height-section">
-            <div class="container flex-item-center">
+        <section class="flex-container-center brc fit-height-section">
+            <div class="container pe-cont flex-item-center">
                 <div class="col-12 cont-edit-form">
                     <h1 class="display-4">Edit Address</h1>
                     <p>Write the address that permit to our delivery man to arrive to your class.</p>

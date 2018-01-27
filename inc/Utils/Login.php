@@ -13,10 +13,6 @@ use Inc\Database\Db;
 class Login {
 
     /**
-     * @var object The database connection
-     */
-    private $db_connection = null;
-    /**
      * @var array Collection of error messages
      */
     public $errors = array();
@@ -50,10 +46,10 @@ class Login {
             $this->doLogout();
         } // login via post data (if user just submitted a login form)
         else if (isset($_POST["login"])) {
+
             $username = isset($_POST['userName']) ? $_POST['userName'] : "";
             $password = isset($_POST['userPassword']) ? $_POST['userPassword'] : "";
             $this->doLogin($username, $password);
-            //$this->doStaticLogin($username, $password);
         }
         $this->showError();
     }

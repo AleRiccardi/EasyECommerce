@@ -67,7 +67,7 @@ class Item extends BaseController {
             (str_replace(' ', '-', strtolower($_POST['slug'])));
         $desc = $_POST['description'];
         $price = $_POST['price'];
-        $available = $_POST['available'];
+        $available = 1;
         $category = $_POST['category'];
         $image = $_FILES["image"];
 
@@ -78,7 +78,7 @@ class Item extends BaseController {
                 "title" => $title,
                 "description" => $desc,
                 "price" => $price,
-                "available" => $available ? true : false,
+                "available" => 1,
                 "dateCreation" => DbItem::now(),
                 "dateLastUpdate" => DbItem::now(),
                 "idCategory" => $category,
@@ -121,11 +121,7 @@ class Item extends BaseController {
             (str_replace(' ', '-', strtolower($_POST['slug'])));
         $desc = $_POST['description'];
         $price = $_POST['price'];
-        if (isset($_POST['available']) && $_POST['available'] == '1') {
-            $available = 1;
-        } else {
-            $available = 0;
-        }
+        $available = 1;
         $category = $_POST['category'];
         $image = $_FILES["image"];
         $valid = null;
@@ -184,7 +180,7 @@ class Item extends BaseController {
 
     public function catchDelete() {
         $id = $_GET['id'];
-        return DbItem::delete($id);
+        return DbItem::update(["available" => 0], ["id" => $id]);
     }
 
 

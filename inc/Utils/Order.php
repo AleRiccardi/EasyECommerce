@@ -10,7 +10,6 @@ namespace Inc\Utils;
 
 
 use Inc\Database\DbCart;
-use Inc\Database\DbModel;
 
 class Order {
 
@@ -22,30 +21,37 @@ class Order {
     public static function getLastPayment($idUser) {
         $returnCart = null; #the cart that will be returned
 
-        while (true) {
-            # try to find one already existing
-            $recentIdCart = null;
-            $recentDateCart = null;
-            $where = ["idUser" => $idUser];
-            $carts = DbCart::get($where, "object");
-            foreach ($carts as $cart) {
-                if (strtotime($cart->dateDeliver) > strtotime($recentDateCart)) {
-                    $recentDateCart = $cart->dateDeliver;
-                    $recentIdCart = $cart->id;
-                }
-            }
+        $recentCart = null;
+        $recentDateCart = null;
+        $carts = DbCart::get(["idUser" => $idUser], "object");
 
-            $recentOrder = DbCart::getSingle(["id" => $recentIdCart], "object");
-            if($recentOrder) {
-                $nowLess10 = date('Y-m-d H:i:s', strtotime('-50 minutes'));
-
-                if (strtotime($recentOrder->dateDeliver) > strtotime($nowLess10)) {
-                    return $recentOrder;
-                } else {
-                    return null;
+        foreach ($carts as $cart) {
+            if ($recentCart) {
+                if (strtotime($cart->dateDeliver) > strtotime($recentCart->dateDeliver)) {
+                    $recentCart = $cart;
                 }
+            } else {
+                $recentCart = $cart;
             }
         }
+
+        $recentOrder = DbCart::getSingle(["id" => $recentCart->id], "object");
+        if ($recentOrder) {
+            $nowLess10 = date('Y-m-d H:i:s', strtotime('-50 minutes'));
+
+            if (strtotime($recentOrder->dateDeliver) > strtotime($nowLess10)) {
+                return $recentOrder;
+            }
+        }
+        # default
+        return null;
+
+    }
+
+    public static function getAllOrders($idUser) {
+        $sql = "SELECT * FROM " . DbCart::getTableName() . " WHERE idUser = $idUser AND dateDeliver IS NOT NULL ORDER BY dateDeliver DESC";
+        $res = DbCart::getResult($sql, "object");
+        return $res;
     }
 
 

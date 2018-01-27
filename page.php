@@ -12,19 +12,22 @@ if (isset($_GET['name'])) {
 }
 
 $listTemplate = array(
+    // Free
     "template/home.php",
-    "template/user.php",
     "template/login.php",
     "template/registration.php",
-    "template/edit-login.php",
-    "template/cart.php",
-    "template/order.php",
-    "template/edit-address.php",
-    "template/admin-area.php",
     "template/shop/shop.php",
     "template/shop/category.php",
+    // User
+    "template/user.php",
+    "template/edit-login.php",
+    "template/edit-address.php",
+    "template/order.php",
+    "template/cart.php",
     "template/checkout.php",
     "template/checkout-success.php",
+    // Admin
+    "template/admin-area.php",
 );
 
 $temp404 = "template/404.php";

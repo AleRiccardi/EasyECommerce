@@ -73,14 +73,17 @@ class Product extends BaseController {
                                placeholder="Insert title here" value="<?php echo $product->title; ?>">
                         <br>
                         <div class="form-row">
-                            <div class="form-group col-md-5">
-                                <input name="price" class="form-control form-control-sm" type="number" step="any"
+                            <div class="col-md-6 input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input name="price" class="form-control " type="number" step="any"
                                        min="0.1"
                                        placeholder="Price" value="<?php echo $product->price; ?>" required>
                             </div>
-                            <div class="form-group col-md-5">
-                                <select name="category" class="form-control form-control-sm" required>
-                                    <option value="">Category...</option>
+                            <div class="col-md-6 input-group">
+                                <select name="category" class="custom-select " required>
+                                    <option value="">...</option>
                                     <?php
                                     $categories = DbCategory::getAll('object');
                                     foreach ($categories as $category) {
@@ -92,14 +95,8 @@ class Product extends BaseController {
                                     }
                                     ?>
                                 </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <div class="form-check">
-                                    <input name="available" class="form-check-input" type="checkbox"
-                                           value="1" <?php echo $product->available ? "checked" : "" ?>>
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        Available
-                                    </label>
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="inputGroupSelect02">Category</label>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +122,7 @@ class Product extends BaseController {
                             <br>
                             <div class="col-sm-12 admin-preview-img">
                                 <img id="previewCat" class="img-cat <?php echo !$image ? "admin-hide" : "" ?>"
-                                     src="<?php echo $image; ?>">
+                                     src="<?php echo $image; ?>" alt="<?php echo $product->title; ?>">
                                 <label class="admin-btn-upload fileContainer">
                                     <label>Upload image</label>
                                     <input id="uploadImgCat" name="image" type="file" accept=".jpg, .jpeg, .png"/>
@@ -171,14 +168,17 @@ class Product extends BaseController {
                                placeholder="Insert title here" value="<?php echo $title; ?>" required>
                         <br>
                         <div class="form-row">
-                            <div class="form-group col-md-5">
-                                <input name="price" class="form-control form-control-sm" type="number" step="any"
+                            <div class="col-md-6 input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input name="price" class="form-control " type="number" step="any"
                                        min="0.1"
                                        placeholder="Price" value="<?php echo $price; ?>" required>
                             </div>
-                            <div class="form-group col-md-5">
-                                <select name="category" class="form-control form-control-sm" required>
-                                    <option value="">Category...</option>
+                            <div class="col-md-6 input-group">
+                                <select name="category" class="custom-select " required>
+                                    <option value="">...</option>
                                     <?php
                                     $categories = DbCategory::getAll('object');
                                     foreach ($categories as $category) {
@@ -186,13 +186,8 @@ class Product extends BaseController {
                                     }
                                     ?>
                                 </select>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <div class="form-check">
-                                    <input name="available" class="form-check-input" type="checkbox" value="1" checked>
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        Available
-                                    </label>
+                                <div class="input-group-append">
+                                    <label class="input-group-text" for="inputGroupSelect02">Category</label>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +204,8 @@ class Product extends BaseController {
                                    value="<?php echo $slug; ?>">
                             <br>
                             <div class="col-sm-12 admin-preview-img">
-                                <img id="previewCat" class="img-cat admin-hide" src="<?php echo $image; ?>">
+                                <img id="previewCat" class="img-cat admin-hide" src="<?php echo $image; ?>"
+                                     alt="<?php echo $title; ?>">
                                 <label class="admin-btn-upload fileContainer">
                                     <label>Upload image</label>
                                     <input id="uploadImgCat" name="image" type="file" accept=".jpg, .jpeg, .png"/>
@@ -247,7 +243,6 @@ class Product extends BaseController {
                         <th>n°</th>
                         <th>Title</th>
                         <th>Price</th>
-                        <th>Available</th>
                         <th>Category</th>
                         <th>Description</th>
                         <th>Last update</th>
@@ -272,7 +267,6 @@ class Product extends BaseController {
                                 <td><?php echo $product->id; ?></td>
                                 <td><?php echo $product->title; ?></td>
                                 <td><?php echo $product->price; ?></td>
-                                <td><?php echo $product->available ? 1 : 0; ?></td>
                                 <td><a href="?name=admin-area&category&edit&id=<?php echo $category->id; ?>"><?php echo $category->title; ?></a></td>
                                 <td><?php echo $desc; ?></td>
 

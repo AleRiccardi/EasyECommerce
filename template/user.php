@@ -14,7 +14,7 @@ $user = User::getBy($_SESSION['userName'], "username");
             <div class="user-img-name middle-h-cont">
                 <div class="pu-img">
                     <img id="preview-icon" class="profile-image"
-                         src="<?php echo User::getProfilePic($_SESSION['userName']); ?>"/>
+                         src="<?php echo User::getProfilePic($_SESSION['userName']); ?>" alt="Profile image" />
                 </div>
                 <div class="middle-h-item user-name">
                     <h1 class=""><?php echo $user->userName; ?></h1>
@@ -30,7 +30,7 @@ $user = User::getBy($_SESSION['userName'], "username");
                 <div class="user-action flex-item col-md-3">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=cart">
                         <div class="icon-action">
-                            <img src="<?php echo $baseController->website_url ?>/assets/img/icon/cart.png" alt="logo">
+                            <img src="<?php echo $baseController->website_url ?>/assets/img/icon/cart.png" alt="Cart">
                         </div>
                         <h3>Cart</h3>
                         <p>Your current cart list</p>
@@ -39,25 +39,25 @@ $user = User::getBy($_SESSION['userName'], "username");
                 <div class="user-action flex-item col-md-3">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=order">
                         <div class="icon-action">
-                            <img src="<?php echo $baseController->website_url ?>/assets/img/icon/box.png" alt="logo">
+                            <img src="<?php echo $baseController->website_url ?>/assets/img/icon/box.png" alt="Order">
                         </div>
-                        <h3>Your Order</h3>
+                        <h3>Order</h3>
                         <p>List of all your order</p>
                     </a>
                 </div>
                 <div class="user-action flex-item col-md-3">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=edit-address">
                         <div class="icon-action">
-                            <img src="<?php echo $baseController->website_url ?>/assets/img/icon/truck.png" alt="logo">
+                            <img src="<?php echo $baseController->website_url ?>/assets/img/icon/truck.png" alt="Address">
                         </div>
-                        <h3>Your Address</h3>
+                        <h3>Address</h3>
                         <p>Edit addresses for orders</p>
                     </a>
                 </div>
                 <div class="user-action flex-item col-md-3">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=edit-login">
                         <div class="icon-action">
-                            <img src="<?php echo $baseController->website_url ?>/assets/img/icon/id-card.png" alt="logo">
+                            <img src="<?php echo $baseController->website_url ?>/assets/img/icon/id-card.png" alt="User">
                         </div>
                         <h3>Login</h3>
                         <p>Edit login, name, password </p>

@@ -23,7 +23,7 @@ class DbModel {
      *
      * @return string the name.
      */
-    protected static function getTableName() {
+    public static function getTableName() {
         $db = new Db();
         $tableName = static::$tableName;
         return $db->prefix . $tableName;
@@ -76,15 +76,15 @@ class DbModel {
      *
      * @param array|null $where list of information that will be
      *                          placed after the expression WHERE
-     * @param string     $type  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
+     * @param string     $output  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
      *
      * @return array of information (the type of information depend
      *               to the kind of param that you specify –$type-)
      */
-    public static function get(array $where, $type) {
+    public static function get(array $where, $output) {
         $db = new Db();
         $query = self::fetchSql($where, "SELECT");
-        $res = $db->getResults($query, $type);
+        $res = $db->getResults($query, $output);
 
         if (empty($res)) $res = array();
 
@@ -96,15 +96,15 @@ class DbModel {
      *
      * @param array|null $where list of information that will be
      *                          placed after the expression WHERE
-     * @param string     $type  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
+     * @param string     $output  OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
      *
      * @return array|object|null array of results, if single will be as an object,
      *                    null if error.
      */
-    public static function getSingle(array $where, $type) {
+    public static function getSingle(array $where, $output) {
         $db = new Db();
         $query = self::fetchSql($where, "SELECT");
-        $res = $db->getResults($query, $type);
+        $res = $db->getResults($query, $output);
 
         // take out the first element of the array inside a
         // variable, like --> array(value) --> value
@@ -116,16 +116,24 @@ class DbModel {
     /**
      * Get all the information from table.
      *
+     * @param array|null $where
      * @param string $type OBJECT / OBJECT_K / ARRAY_A / ARRAY_N
      *
      * @return array|object|null array of results, if single will be as an object,
      *                    null if error.
      */
-    public static function getAll($type) {
+    public static function getAll($type, array $where = null) {
         $db = new Db();
-        $query = self::fetchSql(null, "SELECT");
+        $query = self::fetchSql($where, "SELECT");
         $res = $db->getResults($query, $type);
 
+        return $res;
+    }
+
+
+    public static function getResult($query, $output = OBJECT){
+        $db = new Db();
+        $res = $db->getResults($query, $output);
         return $res;
     }
 
@@ -239,8 +247,8 @@ class DbModel {
      */
     public static function delete($id) {
         $db = new Db();
-        $where = array("id" => $id);
-        $sql = self::fetchSql($where, 'DELETE');
+        $sql = self::fetchSql(["id" => $id], 'DELETE');
+        echo $sql;
         return $db->query($sql) ? true : false;
     }
 

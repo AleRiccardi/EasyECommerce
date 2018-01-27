@@ -33,13 +33,13 @@ $(function () {
      */
     function printNumItemCart(idUser) {
         /**
-         * update the number of the item in the cart icon
+         * update the number of the item in the cart icon of the menu
          */
         $.ajax({
             method: "POST",
             url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
             data: {
-                action: "getNumItemCart",
+                action: "getNumItemsCart",
                 idUser: idUser,
             }
         })
@@ -87,7 +87,7 @@ $(function () {
                         "                   <div class='middle-h-cont'>" +
                         "                       <img id='card-item-img' class='card-item-img middle-h-item'" +
                         "                           src='" + cartItems[i].imgUrl + "'" +
-                        "                           alt='Card image cap'>" +
+                        "                           alt='" + cartItems[i].title + "'>" +
                         "                   </div>" +
                         "               </div>" +
                         "               <span class='middle-h-item card-item-title' id='card-item-title'>" + cartItems[i].title + "</span>" +

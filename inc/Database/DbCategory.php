@@ -18,6 +18,20 @@ class DbCategory extends DbModel {
         "slug" => "default",
     );
 
+    public static function get(array $where, $output) {
+        if (!isset($where["available"])) $where["available"] = 1;
+        return parent::get($where, $output);
+    }
+
+    public static function getSingle(array $where, $output) {
+        if (!isset($where["available"])) $where["available"] = 1;
+        return parent::getSingle($where, $output);
+    }
+
+    public static function getAll($type, array $where = null) {
+        if (!isset($where["available"])) $where["available"] = 1;
+        return parent::getAll($type, $where);
+    }
 
     /**
      * Delete a category.
@@ -29,7 +43,7 @@ class DbCategory extends DbModel {
      */
     public static function delete($id) {
         $where = ["idCategory" => $id];
-        $products = DbItem::getSingle($where, 'object');
+        $products = DbItem::get($where, 'object');
 
         // check if there are product with that category
         if ($products) {
@@ -37,7 +51,7 @@ class DbCategory extends DbModel {
 
             // we need to create a default category to change the
             // products with the new default category
-            if(!$defaultCat) {
+            if (!$defaultCat) {
                 $idDefault = DbCategory::insert(self::DEFAULT_CAT);
             } else if ($defaultCat->id != $id) {
                 $idDefault = $defaultCat->id;
@@ -47,14 +61,14 @@ class DbCategory extends DbModel {
 
             // change the old id with the new
             foreach ($products as $product) {
-                if(!DbItem::update(["idCategory" => $idDefault], ["id" => $product->id])) {
+                if (!DbItem::update(["idCategory" => $idDefault], ["id" => $product->id])) {
                     // if error
                     return false;
                 }
             }
         }
 
-        return parent::delete($id);
+        return parent::update(["available" => 0], ["id" => $id]);
     }
 
 }

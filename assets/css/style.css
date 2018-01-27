@@ -26,9 +26,19 @@ main.page {
     margin: 0 !important;
 }
 
-/* ====================
-    Util
-   ==================== */
+.brc-cont {
+    width: 100%;
+    background-color: #e9ecef;
+}
+
+.brc-cont .breadcrumb {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+    /* ====================
+        Util
+       ==================== */
 .flex-container {
     display: -webkit-flex;
     display: flex;
@@ -64,6 +74,10 @@ main.page {
     min-height: 100%;
     background-size: 100% !important;
     background-repeat: no-repeat !important;
+}
+
+.fit-height-section.brc {
+    min-height: calc(100% - 48px);
 }
 
 .btn-xsm {
@@ -327,6 +341,7 @@ img.card-item-img {
     margin: auto;
 }
 
+
 .logo-container {
     max-width: 60%;
     height: auto;
@@ -456,7 +471,7 @@ p.lead-home {
     border-radius: 10px;
     border: 2px solid lightgrey;
     display: block;
-    padding: 20px;
+    padding: 5px 20px;
     flex: 1;
 
 }
@@ -545,7 +560,7 @@ p.lead-home {
    ==================== */
 
 .small-jumbotron {
-    padding: 2rem 1rem !important;
+    padding: 1rem 1rem 2rem 1rem !important;
 }
 
 #cart-right .totals {
@@ -727,6 +742,28 @@ ul.shipping-info-cart {
 }
 
 /* ====================
+    ORDER page
+   ==================== */
+
+/* # Card Header ## */
+
+.card-header.ch-order {
+    cursor:pointer;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.card-header.ch-order:hover {
+    background-color: #eeeeee;
+}
+
+.order-title-text {
+    font-weight: 300;
+
+}
+
+
+/* ====================
     EDIT LOGIN page
    ==================== */
 
@@ -734,7 +771,7 @@ ul.shipping-info-cart {
     text-align: left;
 }
 
-.page-edit .container {
+.page-edit .pe-cont {
     max-width: 650px;
 }
 
@@ -747,7 +784,7 @@ ul.shipping-info-cart {
 }
 
 .cont-edit-form {
-    background-color: #ececec;
+    background-color: #e9ecef;
     padding: 20px 35px 20px 35px !important;
     border-radius: 10px;
 }

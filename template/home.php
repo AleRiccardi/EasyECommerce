@@ -7,7 +7,7 @@ require_once($baseController->website_path . "/template/_header.php");
          style="background: url('<?php echo $baseController->website_url ?>/assets/img/all-chocolate.jpg');">
     <div class="flex-item-center">
         <div class="logo-container">
-            <img src="<?php echo $baseController->website_url ?>/assets/img/logo-brown.png" alt="logo">
+            <img src="<?php echo $baseController->website_url ?>/assets/img/logo-brown.png" alt="Logo">
         </div>
         <div>
             <h1 class="home-title ">Experience <br> the taste of real chocolate</h1>
@@ -29,7 +29,7 @@ require_once($baseController->website_path . "/template/_header.php");
             <div class="col-4 flex-container-center">
                 <div class="flex-item-center">
                     <img width="100%" src="<?php echo $baseController->website_url ?>/assets/img/icon/chocolate.png"
-                         alt="Funny sushi">
+                         alt="Chocolate heart">
                 </div>
             </div>
             <div class="col-4 flex-container-center">

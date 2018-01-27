@@ -8,16 +8,23 @@ use \Inc\Utils\Order;
 use \Inc\Utils\Cart;
 use \Inc\Database\DbAddress;
 
+if (!$user = User::getCurrentUser()) {
+    die();
+}
+
+# wait for database after confirmation of order
 sleep(1);
-$user = User::getCurrentUser();
+
 $order = Order::getLastPayment($user->id);
 if (!$order)
     header("Location: $baseController->website_url/page.php?name=user");
 $itemsOrder = Cart::getCartItems($order->id);
 $address = DbAddress::getSingle(["id" => $order->idAddress], "object");
+
 require_once($baseController->website_path . "/template/_header.php");
 
 ?>
+
     <main role="main" class="fit-height-section mb-5">
         <div class="jumbotron jumbotron-fluid small-jumbotron bg-success text-white">
             <div class="container">
@@ -47,7 +54,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         <ul>
                             <li>Order code: <?php echo $order->id; ?></li>
                             <li>Date deliver order: <?php echo $order->dateDeliver; ?></li>
-                            <li>Price: €<?php echo $order->finalPrice; ?></li>
+                            <li>Total: €<?php echo $order->finalPrice; ?></li>
 
                             <li>
                                 <span class="text-primary">Customer:</span>
@@ -95,7 +102,7 @@ require_once($baseController->website_path . "/template/_header.php");
                                 <p>
                                     <?php
                                     $cost = GeneralCost::getCartShippmentPayment($order->id);
-                                    echo "Cost for the shipment: €" . $cost;
+                                    echo "Shipment cost: €" . $cost;
                                     ?>
                                 </p>
                             </div>

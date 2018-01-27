@@ -100,7 +100,7 @@ class Db {
      *
      * @return array|null
      */
-    public function getResults($query = null, $output = OBJECT) {
+    public function getResults($query, $output = OBJECT) {
         $this->query($query);
 
         $new_array = array();
