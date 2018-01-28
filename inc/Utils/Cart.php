@@ -197,6 +197,7 @@ class Cart {
             ?>
             <div class="row">
                 <table class="table table-hover">
+                    <caption>List of all the products in the cart</caption>
                     <thead>
                     <tr>
                         <th scope="col" class="text-left"><h3>Item</h3></th>

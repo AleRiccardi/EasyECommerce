@@ -24,7 +24,8 @@ $address = Address::getAddress($user->id);
             <div class="container pe-cont flex-item-center">
                 <div class="col-12 cont-edit-form">
                     <h1 class="display-4">Edit Address</h1>
-                    <p>Write the address that permit to our delivery man to arrive to your class.</p>
+                    <p>Write the information of your university, that consist in a department and a class to permit to
+                        receive the food in the best place for you.</p>
                     <form class="form-edit-login" method="post" action="page.php?name=edit-address"
                           enctype="multipart/form-data"
                           name="edit-login-form">
@@ -36,14 +37,16 @@ $address = Address::getAddress($user->id);
                         <div class="form-group row">
                             <label for="department" class="col-sm-3 col-form-label">Department</label>
                             <div class="col-sm-9">
-                                <input name="department" class="form-control" id="firstName" placeholder="Ing. Informatica / Civile / Chimica ... "
+                                <input name="department" class="form-control" id="firstName"
+                                       placeholder="Ing. Informatica / Civile / Chimica ... "
                                        value="<?php echo $address ? $address->department : ""; ?>">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="class" class="col-sm-3 col-form-label">Class</label>
                             <div class="col-sm-9">
-                                <input name="class" class="form-control" id="lastName" placeholder="Aula Magna / A1 / C ..."
+                                <input name="class" class="form-control" id="lastName"
+                                       placeholder="Aula Magna / A1 / C ..."
                                        value="<?php echo $address ? $address->class : ""; ?>">
                             </div>
                         </div>
@@ -54,7 +57,6 @@ $address = Address::getAddress($user->id);
             </div>
         </section>
     </main>
-
 
 
 <?php

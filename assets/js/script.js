@@ -9,7 +9,6 @@ $(function () {
     // #
 
 
-
     /**+**+**+**+**+**+**+**+**+**+**+**+**+**+
      * section CART HEADER
      +**+**+**+**+**+**+**+**+**+**+**+**+**+*/
@@ -82,17 +81,17 @@ $(function () {
                     console.log(cartItems);
                     for (var i = 0; i < cartItems.length; i++) {
                         itemHtml = "<div class='dropdown-item card-item-cont'>" +
-                        "           <div class='middle-h-cont mhc-height-max'>" +
-                        "               <div class='card-item-img-cont middle-h-item'>" +
-                        "                   <div class='middle-h-cont'>" +
-                        "                       <img id='card-item-img' class='card-item-img middle-h-item'" +
-                        "                           src='" + cartItems[i].imgUrl + "'" +
-                        "                           alt='" + cartItems[i].title + "'>" +
-                        "                   </div>" +
-                        "               </div>" +
-                        "               <span class='middle-h-item card-item-title' id='card-item-title'>" + cartItems[i].title + "</span>" +
-                        "               &nbsp;" +
-                        "               <span class='badge badge-secondary ml-auto middle-h-item' id='card-item-quantity'>" + cartItems[i].quantity + " item</span>" +
+                            "           <div class='middle-h-cont mhc-height-max'>" +
+                            "               <div class='card-item-img-cont middle-h-item'>" +
+                            "                   <div class='middle-h-cont'>" +
+                            "                       <img id='card-item-img' class='card-item-img middle-h-item'" +
+                            "                           src='" + cartItems[i].imgUrl + "'" +
+                            "                           alt='" + cartItems[i].title + "'>" +
+                            "                   </div>" +
+                            "               </div>" +
+                            "               <span class='middle-h-item card-item-title' id='card-item-title'>" + cartItems[i].title + "</span>" +
+                            "               &nbsp;" +
+                            "               <span class='badge badge-secondary ml-auto middle-h-item' id='card-item-quantity'>" + cartItems[i].quantity + " item</span>" +
                             "          </div>" +
                             "      </div>";
                         $("#append-items-cart").append(itemHtml);
@@ -199,19 +198,32 @@ $(function () {
                     }
                 })
                     .done(function (response) {
-                        console.log(response);
-                        $('.title-prod').each(function (e) {
-                            var idProdTitle = $(this).data("prod-id");
-                            if (idProdTitle == idProdButton) {
-                                $('.modalTitleItem').text($(this).html());
-                                $('.modal-quantity-item').text(quantity);
-                                $('#modalItemAdded').modal('toggle');
-                                printNumItemCart(idUser);
-                            }
-                        });
-
+                        if (response == 1) {
+                            $('.title-prod').each(function (e) {
+                                var idProdTitle = $(this).data("prod-id");
+                                if (idProdTitle == idProdButton) {
+                                    $('.modalTitleItem').text($(this).html());
+                                    $('#modal-text').html(
+                                        "You added <span class='badge badge-success modal-quantity-item'>" + quantity + "</span> quantity of" +
+                                        "<span>" + $(this).html() + "</span> to your <a href='page.php?name=cart'>cart</a>."
+                                    );
+                                    $('#modalItemAdded').modal('toggle');
+                                    printNumItemCart(idUser);
+                                }
+                            });
+                        } else if(response == -1) {
+                            $('.modalTitleItem').text("Error");
+                            $('#modal-text').html("An error occurred, please reload the page or otherwise contact customer service.");
+                            $('#modalItemAdded').modal('toggle');
+                        } else {
+                            $('.modalTitleItem').text("You need to access");
+                            $('#modal-text').html("If you already have an account please do a <a class='btn btn-primary btn-sm' " +
+                                "href='page.php?name=login'>Login</a> <br> Otherwise a " +
+                                "<a class='btn btn-success btn-sm' href='page.php?name=registration'>Registration</a>");
+                            $('#modalItemAdded').modal('toggle');
+                            printNumItemCart(idUser);
+                        }
                     });
-
             }
         });
 

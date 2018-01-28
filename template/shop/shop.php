@@ -14,7 +14,7 @@ require_once($baseController->website_path . "/template/_header.php");
 
             <div class="col-12 col-md-9">
                 <p class="float-right d-md-none">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">All category</button>
                 </p>
                 <div class="jumbotron j-shop"
                      style="background-image:

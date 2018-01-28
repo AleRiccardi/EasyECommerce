@@ -61,7 +61,7 @@ class Overview {
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h1 class="admin-title">Overview</h1>
 
-            <h2>List categories</h2>
+            <h2>List recent categories</h2>
             <section class="row text-center placeholders">
                 <div class="col-6 col-sm-3 placeholder">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs="
@@ -93,9 +93,10 @@ class Overview {
                 </div>
             </section>
 
-            <h2>List products</h2>
+            <h2>List recent products</h2>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
+                    <caption>List of the recent products</caption>
                     <thead>
                     <tr>
                         <th>#</th>

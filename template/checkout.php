@@ -46,7 +46,8 @@ require_once($baseController->website_path . "/template/_header.php");
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="?name=user">User</a></li>
-                    <li class="breadcrumb-item active">Order</li>
+                    <li class="breadcrumb-item"><a href="?name=cart">Cart</a></li>
+                    <li class="breadcrumb-item active" aria-current="">Checkout</li>
                 </ol>
             </nav>
         </div>
@@ -56,17 +57,6 @@ require_once($baseController->website_path . "/template/_header.php");
             <div class="container">
                 <h1 class="display-4">Checkout</h1>
             </div>
-            <section class="brc-cont">
-                <div class="container">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="?name=user">User</a></li>
-                            <li class="breadcrumb-item"><a href="?name=cart">Cart</a></li>
-                            <li class="breadcrumb-item active" aria-current="">Checkout</li>
-                        </ol>
-                    </nav>
-                </div>
-            </section>
         </div>
         <div class="container">
             <div class="row">
@@ -138,16 +128,21 @@ require_once($baseController->website_path . "/template/_header.php");
                         </div>
                         <br>
                         <h4 class="mb-3">Billing address</h4>
+                        <p>Write the information of your university, that consist in a department and a class to permit
+                            to receive the food in the best place for you.</p>
+
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="zip">Department</label>
                                 <input type="text" class="form-control" id="department" name="department"
-                                       placeholder="Department" value="<?php echo $address ? $address->department : ""; ?>" required>
+                                       placeholder="Department"
+                                       value="<?php echo $address ? $address->department : ""; ?>" required>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="zip">Class</label>
                                 <input type="text" class="form-control" id="class" name="class"
-                                       placeholder="Class" value="<?php echo $address ? $address->class : ""; ?>" required>
+                                       placeholder="Class" value="<?php echo $address ? $address->class : ""; ?>"
+                                       required>
                             </div>
                         </div>
                         <hr class="mb-4">

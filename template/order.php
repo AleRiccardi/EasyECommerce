@@ -46,22 +46,22 @@ require_once($baseController->website_path . "/template/_header.php");
                                  data-target="#collapse<?php echo $order->id; ?>"
                                  aria-expanded="true" aria-controls="collapse<?php echo $order->id; ?>">
                                 <div class="row">
-                                    <div class="col-2">
+                                    <div class="col-6 col-sm-3 col-md-3 col-lg-2">
                                     <span>
                                         Order made: <br><strong><?php echo date("d M Y", strtotime($order->dateDeliver)); ?></strong>
                                     </span>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-6 col-sm-2 col-md-2 col-lg-1">
                                     <span>
                                         Total: <br><strong>€<?php echo $order->finalPrice; ?></strong>
                                     </span>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-6 col-sm-4 col-md-4 col-lg-3">
                                     <span>
                                         Delivered to: <br><strong><?php echo $address->department . " - " . $address->class; ?></strong>
                                     </span>
                                     </div>
-                                    <div class="ml-auto col-2 text-center">
+                                    <div class="ml-auto col-6 col-sm-3 col-md-3 col-lg-2 text-md-center">
                                     <span>
                                         <small class="text-muted">Order: # <strong><?php echo $order->id; ?></strong></small>
                                     </span>

@@ -46,7 +46,6 @@ class Login {
             $this->doLogout();
         } // login via post data (if user just submitted a login form)
         else if (isset($_POST["login"])) {
-
             $username = isset($_POST['userName']) ? $_POST['userName'] : "";
             $password = isset($_POST['userPassword']) ? $_POST['userPassword'] : "";
             $this->doLogin($username, $password);
@@ -89,8 +88,10 @@ class Login {
 
                     return true;
                 } else {
-                    $this->errors[] = "Wrong password. Try again.";
+                    $this->errors[] = "Wrong username or password. Try again.";
                 }
+            } else {
+                $this->errors[] = "Wrong username or password. Try again.";
             }
         }
         // default

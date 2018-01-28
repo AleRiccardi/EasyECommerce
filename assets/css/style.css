@@ -7,19 +7,17 @@ html, body {
 }
 
 body {
-    padding-top: 68px;
+    padding-top: 65px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 57px;
+    }
 }
 
 main.page {
     padding-top: 1.5rem;
-}
-
-.title-center {
-    text-align: center;
-    margin-bottom: 50px;
-    font-size: 50px;
-    font-weight: 300;
-    letter-spacing: 1.6px;
 }
 
 .message {
@@ -36,9 +34,9 @@ main.page {
     margin-bottom: 0;
 }
 
-    /* ====================
-        Util
-       ==================== */
+/* ====================
+    Util
+   ==================== */
 .flex-container {
     display: -webkit-flex;
     display: flex;
@@ -72,8 +70,8 @@ main.page {
 .fit-height-section {
     width: 100%;
     min-height: 100%;
-    background-size: 100% !important;
-    background-repeat: no-repeat !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .fit-height-section.brc {
@@ -85,6 +83,10 @@ main.page {
     padding: 3px 10px 4px 10px !important;
     font-size: 10px !important;
     border-radius: .2rem !important;
+}
+
+.hide {
+    display: none;
 }
 
 /* ====================
@@ -115,7 +117,8 @@ header nav {
 }
 
 .fixed-top {
-    height: 68px;
+    min-height: 57px;
+
 }
 
 .wrap-menus {
@@ -125,6 +128,18 @@ header nav {
     display: flex;
     -webkit-justify-content: flex-end;
     justify-content: flex-end;
+    width: 100%;
+}
+
+@media (max-width: 767.98px) {
+    .wrap-menus {
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .wrap-menus > div {
+        margin-right: 30px;
+    }
 }
 
 .wrap-menus .single-menu {
@@ -328,7 +343,7 @@ img.card-item-img {
 }
 
 /* ====================
-    HOME
+    HOME page
    ==================== */
 
 .flex-container-center {
@@ -341,6 +356,12 @@ img.card-item-img {
     margin: auto;
 }
 
+.home-section {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat !important;
+    background-color: white;
+}
 
 .logo-container {
     max-width: 60%;
@@ -359,12 +380,40 @@ h1.home-title {
     letter-spacing: 3px;
     text-transform: uppercase;
     color: white;
-    font-weight: 700;
+    font-weight: 500;
 }
 
+@media (max-width: 575.98px) {
+    .logo-container {
+        max-width: 80%;
+    }
+
+    h1.home-title {
+        font-size: 25px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    h1.home-title {
+        font-size: 30px;
+    }
+}
+
+/*
+ * Second section
+ */
+
 .hs-second {
-    padding: 150px;
+    padding: 120px 0;
     background-color: #e2e2e2;
+}
+
+.hs-second .title {
+    text-align: center;
+    margin-bottom: 80px;
+    font-size: 50px;
+    font-weight: 300;
+    letter-spacing: 1.6px;
 }
 
 .hs-second p {
@@ -373,12 +422,52 @@ h1.home-title {
     letter-spacing: 1.6px;
 }
 
+.hs-second-img {
+    margin: 50px 0;
+}
+
 .hs-third .flex-item-center {
     background: black;
     position: relative;
     padding: 20px 15px 20px 15px;
     max-width: 800px;
     border-radius: 5px;
+}
+
+@media (max-width: 575.98px) {
+    .hs-second {
+        padding: 50px 0;
+    }
+
+    .hs-second .title {
+        margin-bottom: 50px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .hs-second {
+        padding: 60px 0;
+    }
+
+    .hs-second .title {
+        margin-bottom: 70px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .hs-second {
+        padding: 90px 0;
+    }
+
+    .hs-second .title {
+        margin-bottom: 70px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .hs-second {
+        padding: 100px 0;
+    }
 }
 
 p.lead-home {
@@ -540,8 +629,38 @@ p.lead-home {
     font-size: 25px;
 }
 
-@media (min-width: 40em) {
+@media (max-width: 575.98px) {
+    .featurette-image {
+        margin: 0.5rem 0;
+    }
 
+    .featurette-heading {
+        font-size: 40px;
+    }
+
+    .featurette-divider {
+        margin: 3em 0;
+    }
+
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .featurette-image {
+        margin: 1rem 0;
+    }
+
+    .featurette-divider {
+        margin: 3em 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .featurette-divider {
+        margin: 2em 0;
+    }
+}
+
+@media (min-width: 40em) {
     .featurette-heading {
         font-size: 40px;
     }
@@ -560,7 +679,7 @@ p.lead-home {
    ==================== */
 
 .small-jumbotron {
-    padding: 1rem 1rem 2rem 1rem !important;
+    padding: 1rem 1rem 1rem 1rem !important;
 }
 
 #cart-right .totals {
@@ -748,7 +867,7 @@ ul.shipping-info-cart {
 /* # Card Header ## */
 
 .card-header.ch-order {
-    cursor:pointer;
+    cursor: pointer;
     font-size: 15px;
     font-weight: 300;
 }
@@ -761,7 +880,6 @@ ul.shipping-info-cart {
     font-weight: 300;
 
 }
-
 
 /* ====================
     EDIT LOGIN page
@@ -784,6 +902,7 @@ ul.shipping-info-cart {
 }
 
 .cont-edit-form {
+    margin: 15px auto;
     background-color: #e9ecef;
     padding: 20px 35px 20px 35px !important;
     border-radius: 10px;

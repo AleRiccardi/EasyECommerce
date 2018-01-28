@@ -183,6 +183,7 @@ class Category extends BaseController {
             <h4>List categories</h4>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
+                    <caption>List of the all categories</caption>
                     <thead>
                     <tr>
                         <th scope="col">n°</th>

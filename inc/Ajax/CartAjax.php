@@ -13,6 +13,7 @@ use Inc\Database\DbCartItem;
 use Inc\Database\DbImage;
 use Inc\Database\DbItem;
 use Inc\Utils\Cart;
+use Inc\Utils\User;
 
 include("AjaxEngine.php");
 
@@ -23,7 +24,9 @@ class CartAjax extends AjaxEngine {
         if (!empty($idUser = $this->get('idUser')) &&
             !empty($idItem = $this->get('idProduct')) &&
             !empty($quantity = $this->get('quantity'))) {
-            echo Cart::addItem($idUser, $idItem, $quantity);
+            echo Cart::addItem($idUser, $idItem, $quantity) ? true : -1;
+        } else {
+            echo false;
         }
     }
 
@@ -72,13 +75,13 @@ class CartAjax extends AjaxEngine {
 
 
     public function refreshCart() {
-        if (!empty($idUser = $this->get('idUser'))){
+        if (!empty($idUser = $this->get('idUser'))) {
             Cart::displayCart($idUser);
         }
     }
 
     public function refreshReport() {
-        if (!empty($idUser = $this->get('idUser'))){
+        if (!empty($idUser = $this->get('idUser'))) {
             Cart::displayReport($idUser);
         }
     }
