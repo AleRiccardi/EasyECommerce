@@ -4,7 +4,7 @@ use Inc\Utils\Cart;
 use Inc\Utils\User;
 use Inc\Utils\Address;
 use Inc\Database\DbItem;
-use \Inc\Utils\GeneralCost;
+use \Inc\Utils\GeneralPrice;
 
 if (!$user = User::getCurrentUser()) {
     die();
@@ -81,12 +81,12 @@ require_once($baseController->website_path . "/template/_header.php");
                             </li>
 
                         <?php }
-                        $shipPayment = GeneralCost::getCartShippmentPayment($price);
+                        $shipPayment = GeneralPrice::getCartShippmentPayment($price);
                         $finalPrice = $price + $shipPayment;
                         ?>
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div class="text-muted">
-                                <h6 class="my-0">Shipping cost:</h6>
+                                <h6 class="my-0">Shipping price:</h6>
                                 <small class="text-muted">Free shipping</small>
                             </div>
                             <span class="text-muted">€<?php echo $shipPayment ?></span>

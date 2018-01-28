@@ -3,7 +3,7 @@
 use Inc\Utils\User;
 use Inc\Utils\Order;
 use Inc\Utils\Cart;
-use Inc\Utils\GeneralCost;
+use Inc\Utils\GeneralPrice;
 use Inc\Database\DbAddress;
 use Inc\Database\DbItem;
 use Inc\Database\DbCategory;
@@ -107,8 +107,8 @@ require_once($baseController->website_path . "/template/_header.php");
                                             </ul>
                                             <p>
                                                 <?php
-                                                $cost = GeneralCost::getCartShippmentPayment($order->id);
-                                                echo "Shipment cost: €" . $cost;
+                                                $price = GeneralPrice::getCartShippmentPayment($order->id);
+                                                echo "Shipment price: €" . $price;
                                                 ?>
                                             </p>
                                         </div>

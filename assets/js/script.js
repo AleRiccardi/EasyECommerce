@@ -171,7 +171,7 @@ $(function () {
 
 
     /**
-     * Category page, add product to cart.
+     * Category page, ADD product to cart.
      */
     $(".btn-add").on("click", function () {
 
@@ -211,7 +211,7 @@ $(function () {
                                     printNumItemCart(idUser);
                                 }
                             });
-                        } else if(response == -1) {
+                        } else if (response == -1) {
                             $('.modalTitleItem').text("Error");
                             $('#modal-text').html("An error occurred, please reload the page or otherwise contact customer service.");
                             $('#modalItemAdded').modal('toggle');
@@ -226,7 +226,44 @@ $(function () {
                     });
             }
         });
+    });
 
+
+    /**
+     * @description Submit event of the Search tools.
+     *
+     * @param {array} event of the click.
+     *
+     * @return void
+     */
+    var formSearchTools = "#form-search-tools";
+    $(document).on("submit", formSearchTools, function (event) {
+        event.preventDefault();
+        var idCategory = $("main").data("id-cat");
+        var filterDate = $("#filter-date option:checked").val();
+        var filterPrice = $("#filter-price option:checked").val();
+        var filterTitle = $("#filter-title option:checked").val();
+
+        $.ajax({
+            method: "POST",
+            url: 'http://localhost:8888/willychock/inc/Ajax/CategoryAjax.php',
+            data: {
+                action: "getFilteredItems",
+                idCategory: idCategory,
+                filterDate: filterDate,
+                filterPrice: filterPrice,
+                filterTitle: filterTitle,
+            }
+        })
+            .done(function (response) {
+                //console.log(response);
+                $("#list-item").html(response);
+                $('.grid').masonry({
+                    itemSelector: '.grid-item', // use a separate class for itemSelector, other than .col-
+                    columnWidth: '.grid-sizer',
+                    percentPosition: true
+                });
+            });
 
     });
 

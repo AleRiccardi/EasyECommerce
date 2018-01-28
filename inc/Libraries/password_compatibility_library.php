@@ -37,11 +37,11 @@ if (!defined('PASSWORD_DEFAULT')) {
         switch ($algo) {
             case PASSWORD_BCRYPT:
                 // Note that this is a C constant, but not exposed to PHP, so we don't define it here.
-                $cost = 10;
-                if (isset($options['cost'])) {
-                    $cost = $options['cost'];
-                    if ($cost < 4 || $cost > 31) {
-                        trigger_error(sprintf("password_hash(): Invalid bcrypt cost parameter specified: %d", $cost), E_USER_WARNING);
+                $price = 10;
+                if (isset($options['price'])) {
+                    $price = $options['price'];
+                    if ($price < 4 || $price > 31) {
+                        trigger_error(sprintf("password_hash(): Invalid bcrypt price parameter specified: %d", $price), E_USER_WARNING);
                         return null;
                     }
                 }
@@ -49,7 +49,7 @@ if (!defined('PASSWORD_DEFAULT')) {
                 $raw_salt_len = 16;
                 // The length required in the final serialization
                 $required_salt_len = 22;
-                $hash_format = sprintf("$2y$%02d$", $cost);
+                $hash_format = sprintf("$2y$%02d$", $price);
                 break;
             default:
                 trigger_error(sprintf("password_hash(): Unknown password hashing algorithm: %s", $algo), E_USER_WARNING);
@@ -141,7 +141,7 @@ if (!defined('PASSWORD_DEFAULT')) {
      *    'algo' => 1,
      *    'algoName' => 'bcrypt',
      *    'options' => array(
-     *        'cost' => 10,
+     *        'price' => 10,
      *    ),
      * )
      *
@@ -158,8 +158,8 @@ if (!defined('PASSWORD_DEFAULT')) {
         if (substr($hash, 0, 4) == '$2y$' && strlen($hash) == 60) {
             $return['algo'] = PASSWORD_BCRYPT;
             $return['algoName'] = 'bcrypt';
-            list($cost) = sscanf($hash, "$2y$%d$");
-            $return['options']['cost'] = $cost;
+            list($price) = sscanf($hash, "$2y$%d$");
+            $return['options']['price'] = $price;
         }
         return $return;
     }
@@ -182,8 +182,8 @@ if (!defined('PASSWORD_DEFAULT')) {
         }
         switch ($algo) {
             case PASSWORD_BCRYPT:
-                $cost = isset($options['cost']) ? $options['cost'] : 10;
-                if ($cost != $info['options']['cost']) {
+                $price = isset($options['price']) ? $options['price'] : 10;
+                if ($price != $info['options']['price']) {
                     return true;
                 }
                 break;

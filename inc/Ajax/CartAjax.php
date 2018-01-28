@@ -19,7 +19,6 @@ include("AjaxEngine.php");
 
 class CartAjax extends AjaxEngine {
 
-
     public function addItem() {
         if (!empty($idUser = $this->get('idUser')) &&
             !empty($idItem = $this->get('idProduct')) &&

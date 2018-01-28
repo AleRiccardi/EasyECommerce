@@ -16,6 +16,11 @@ body {
     }
 }
 
+form {
+    margin: 0;
+    padding: 0;
+}
+
 main.page {
     padding-top: 1.5rem;
 }
@@ -669,6 +674,14 @@ p.lead-home {
 /* ====================
     CATEGORY page
    ==================== */
+
+.search-tools {
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 8px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
 
 .card {
     margin-bottom: 15px;

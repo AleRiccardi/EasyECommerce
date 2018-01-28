@@ -295,7 +295,7 @@ class Cart {
                 $price = ($price + ($item->price * $cartItem->quantity));
             }
 
-            $shipPayment = GeneralCost::getCartShippmentPayment($price);
+            $shipPayment = GeneralPrice::getCartShippmentPayment($price);
             $totPrice = $price + $shipPayment;
             ?>
 
@@ -311,7 +311,7 @@ class Cart {
                 </li>
                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                     <div>
-                        <h6 class="my-0">Shipping cost:</h6>
+                        <h6 class="my-0">Shipping price:</h6>
                         <ul class="shipping-info-cart">
                             <?php if ($address && !empty($address->department) && !empty($address->class)) { ?>
                                 <li>

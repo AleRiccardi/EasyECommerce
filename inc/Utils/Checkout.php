@@ -213,7 +213,7 @@ class Checkout {
                 $price = ($price + ($item->price * $cartItem->quantity));
             }
 
-            $shipPayment = GeneralCost::getCartShippmentPayment($price);
+            $shipPayment = GeneralPrice::getCartShippmentPayment($price);
             $finalPrice = $price + $shipPayment;
             $cartUpdate["finalPrice"] = $finalPrice;
 
