@@ -1,0 +1,98 @@
+/*
+  Create a database called "restaurant" and then inject the below sql.
+ */
+
+/* IMAGE */
+CREATE TABLE IF NOT EXISTS image (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  path varchar(255) NOT NULL,
+  dateCreation datetime,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* ADDRESS */
+CREATE TABLE IF NOT EXISTS address (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  department varchar(60) NOT NULL,
+  class varchar(60) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* CATEGORY */
+CREATE TABLE IF NOT EXISTS category (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  slug varchar(60) NOT NULL,
+  title varchar(60) NOT NULL,
+  description longtext,
+  dateCreation datetime,
+  dateLastUpdate datetime,
+  available tinyint DEFAULT TRUE,
+  idImage bigint(20) UNSIGNED,
+  PRIMARY KEY (id),
+  UNIQUE KEY (slug),
+  FOREIGN KEY (idImage) REFERENCES image(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* USER */
+CREATE TABLE IF NOT EXISTS users (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  userName varchar(60) NOT NULL,
+  userEmail varchar(100) NOT NULL,
+  passwordHash varchar(255) NOT NULL,
+  firstName varchar(64),
+  lastName varchar(64),
+  isAdmin boolean,
+  dateRegistration datetime,
+  idImage bigint(20) UNSIGNED,
+  idAddress bigint(20) UNSIGNED,
+  PRIMARY KEY (id),
+  UNIQUE KEY (userName),
+  UNIQUE KEY (userEmail),
+  FOREIGN KEY (idAddress) REFERENCES address(id),
+  FOREIGN KEY (idImage) REFERENCES image(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* CART */
+CREATE TABLE IF NOT EXISTS cart (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  dateCreation datetime,
+  dateCheckout datetime,
+  dateDeliver datetime,
+  finalPrice int(20) NULL,
+  idUser bigint(20) UNSIGNED,
+  idAddress bigint(20) UNSIGNED,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idUser) REFERENCES users(id),
+  FOREIGN KEY (idAddress) REFERENCES address(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* ITEM */
+CREATE TABLE IF NOT EXISTS item (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  slug varchar(60) NOT NULL,
+  title varchar(60) NOT NULL,
+  description longtext,
+  price int(11) NOT NULL,
+  dateCreation datetime,
+  dateLastUpdate datetime,
+  available tinyint DEFAULT TRUE,
+  idCategory bigint(20) UNSIGNED NOT NULL,
+  idImage bigint(20) UNSIGNED,
+  PRIMARY KEY (id),
+  UNIQUE KEY (title),
+  FOREIGN KEY (idCategory) REFERENCES category(id),
+  FOREIGN KEY (idImage) REFERENCES image(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/* CART_ITEM */
+CREATE TABLE IF NOT EXISTS cart_item (
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  idCart bigint(20) UNSIGNED NOT NULL,
+  idItem bigint(20) UNSIGNED NOT NULL,
+  quantity int(11) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY (idCart,idItem),
+  FOREIGN KEY (idCart) REFERENCES cart(id),
+  FOREIGN KEY (idItem) REFERENCES item(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+

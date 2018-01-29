@@ -1,0 +1,240 @@
+/*
+ * Typography
+ */
+
+body {
+    font-size: .900rem;
+}
+
+.admin-title {
+    padding-bottom: 9px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+h1.admin-title {
+    font-size: 40px;
+}
+
+h2.admin-title {
+    font-weight: 300;
+}
+
+/*
+ * General
+ */
+
+.admin-hide {
+    display: none;
+}
+
+.admin-message {
+    z-index: 10000;
+    min-width: 24%;
+    float: right;
+    position: fixed !important;
+    top: 75px;
+    right: 10px;
+    box-shadow: 5px 4px 14px 0px #b9b9b9;
+}
+
+.form-check {
+    text-align: center;
+}
+
+.table {
+    font-size: .900rem;
+}
+
+/*
+ * Button
+ */
+
+.admin-btn-upload {
+    color: #4c4c4c;
+    padding: .0em 3px;
+    margin: 0;
+}
+
+.admin-btn-upload:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+.admin-btn-remove {
+    color: #861a1c;
+    padding: 0;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.admin-btn-remove:before {
+    content: "|";
+    color: gray;
+    padding-right: 10px;
+    cursor: default;
+
+}
+
+.admin-sub-menu {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.admin-sidebar-addnew {
+    padding: 20px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+.admin-preview-img {
+    display: inline-block;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 15px;
+}
+
+.admin-preview-img * {
+    margin-bottom: 0;
+}
+
+.admin-preview-img .img-cat {
+    width: 100%;
+    max-height: 300px;
+    padding-bottom: 10px;
+}
+
+.admin-preview-img p {
+    margin: 5px 0;
+}
+
+.form-add-new {
+}
+
+/*
+ * Dashboard
+ */
+
+/* Placeholders */
+.placeholders {
+    padding-bottom: 3rem;
+}
+
+.placeholder img {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.feather {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    font-size: .900rem;
+}
+
+.sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    height: calc(100vh - 68px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+}
+
+.sidebar .nav-link .feather {
+    margin-right: 4px;
+    color: #999;
+}
+
+.sidebar .nav-link.active {
+    color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+    color: inherit;
+}
+
+.sidebar-heading {
+    font-size: .75rem;
+    text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, .25);
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+    padding: .75rem 1rem;
+    border-width: 0;
+    border-radius: 0;
+}
+
+.form-control-dark {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+/*
+ * Utilities
+ */
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.table-admin tr {
+    cursor: pointer;
+}
+
+.img-category-admin {
+    margin: 20px auto;
+    display: block;
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat !important;
+}
+
+.category-overview {
+    cursor: pointer;
+}
