@@ -14,7 +14,7 @@ use Inc\Utils\User;
 use Inc\Database\DbCategory;
 use Inc\Database\DbImage;
 
-class Category extends BaseController {
+class CategoryAdmin extends BaseController {
 
     /**
      * Category constructor.

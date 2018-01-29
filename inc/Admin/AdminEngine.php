@@ -9,6 +9,7 @@
 namespace Inc\Admin;
 
 
+use Inc\Utils\Order;
 use Inc\Utils\User;
 
 class AdminEngine {
@@ -48,10 +49,11 @@ class AdminEngine {
             return false;
         } else {
 
-            $this->overviewTemp = new Overview();
-            $this->categoryTemp = new Category();
-            $this->productTemp = new Product();
-            $this->userTemp = new \Inc\Admin\User();
+            $this->overviewTemp = new OverviewAdmin();
+            $this->categoryTemp = new CategoryAdmin();
+            $this->productTemp = new ProductAdmin();
+            $this->userTemp = new UserAdmin();
+            $this->orderTemp = new OrderAdmin();
 
             $this->register();
         }
@@ -90,6 +92,7 @@ class AdminEngine {
             $this->nameOrder = !empty($_GET[self::SLUG_ORDER]) ?
                 $_GET[self::SLUG_ORDER] : null;
             $this->getSidebar();
+            $this->orderTemp->register();
 
         } else if (isset($_GET[self::SLUG_CATEGORY])) {
             // CATEGORY

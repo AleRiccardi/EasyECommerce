@@ -10,7 +10,7 @@ namespace Inc\Admin;
 
 use Inc\Utils\User;
 
-class Overview {
+class OverviewAdmin {
 
     public $gotValue = null;
 

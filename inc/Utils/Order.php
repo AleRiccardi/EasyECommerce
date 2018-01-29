@@ -48,8 +48,14 @@ class Order {
 
     }
 
-    public static function getAllOrders($idUser) {
+    public static function getUserOrders($idUser) {
         $sql = "SELECT * FROM " . DbCart::getTableName() . " WHERE idUser = $idUser AND dateDeliver IS NOT NULL ORDER BY dateDeliver DESC";
+        $res = DbCart::getResult($sql, "object");
+        return $res;
+    }
+
+    public static function getAllOrders() {
+        $sql = "SELECT * FROM " . DbCart::getTableName() . " WHERE dateDeliver IS NOT NULL ORDER BY dateDeliver DESC";
         $res = DbCart::getResult($sql, "object");
         return $res;
     }

@@ -11,7 +11,7 @@ use Inc\Database\DbCategory;
 if (!$user = User::getCurrentUser()) {
     die();
 }
-$orders = Order::getAllOrders($user->id);
+$orders = Order::getUserOrders($user->id);
 
 require_once($baseController->website_path . "/template/_header.php");
 ?>

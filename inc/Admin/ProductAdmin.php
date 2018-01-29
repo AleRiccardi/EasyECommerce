@@ -15,7 +15,7 @@ use Inc\Database\DbImage;
 use Inc\Database\DbItem;
 use Inc\Utils\User;
 
-class Product extends BaseController {
+class ProductAdmin extends BaseController {
 
     /**
      * Product constructor.

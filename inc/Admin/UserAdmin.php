@@ -12,7 +12,7 @@ namespace Inc\Admin;
 use Inc\Base\BaseController;
 use Inc\Database\DbUser;
 
-class User extends BaseController {
+class UserAdmin extends BaseController {
 
     /**
      * Product constructor.
