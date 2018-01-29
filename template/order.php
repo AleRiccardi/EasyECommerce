@@ -48,7 +48,7 @@ require_once($baseController->website_path . "/template/_header.php");
                                 <div class="row">
                                     <div class="col-6 col-sm-3 col-md-3 col-lg-2">
                                     <span>
-                                        Order made: <br><strong><?php echo date("d M Y", strtotime($order->dateDeliver)); ?></strong>
+                                        Order made: <br><strong><?php echo date("d M Y", strtotime($order->dateCheckout)); ?></strong>
                                     </span>
                                     </div>
                                     <div class="col-6 col-sm-2 col-md-2 col-lg-1">

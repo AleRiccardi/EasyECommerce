@@ -32,14 +32,10 @@ $userName = isset($_POST['userName']) ? $_POST['userName'] : "";
                     else echo $userName;
                     ?>">
                     <label for="login_input_password" class="sr-only">Password</label>
-                    <input type="password" id="login_input_password" class="form-control" placeholder="Password"
+                    <input type="password" id="login_input_password" class="form-control mb-3" placeholder="Password"
                            name="userPassword"
                            autocomplete="off" required="">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="remember-me"> Remember me
-                        </label>
-                    </div>
+
                     <button class="btn btn-lg btn-primary btn-block" name="login" type="submit">Sign in</button>
                 </form>
                 <a href="page.php?name=registration">Register new account</a>

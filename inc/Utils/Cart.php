@@ -97,7 +97,7 @@ class Cart {
             $where = ["idUser" => $idUser];
             $carts = DbCart::get($where, "object");
             foreach ($carts as $cart) {
-                if ($cart && !$cart->dateDeliver) {
+                if ($cart && !$cart->dateCheckout) {
                     return $cart;
                 }
             }
@@ -119,7 +119,7 @@ class Cart {
      */
     public static function getCartItems($idCart, $idItem = null) {
         $where = ["idCart" => $idCart];
-        if ($idItem) $where["idItem"] = $idItem;
+        if ($idItem != null) $where["idItem"] = $idItem;
 
         $carts = DbCartItem::get($where, "object");
         return $carts;
@@ -212,9 +212,13 @@ class Cart {
 
                     foreach ($cartItems as $cartItem) {
                         $item = DbItem::getSingle(["id" => $cartItem->idItem], 'object');
-                        $where = ["id" => $item->idImage];
-                        $image = DbImage::getSingle($where, 'object');
-                        $imageUrl = $baseC->website_url . $image->path;
+                        if($item->idImage) {
+                            $where = ["id" => $item->idImage];
+                            $image = DbImage::getSingle($where, 'object');
+                            $imageUrl = $baseC->website_url . $image->path;
+                        } else {
+                           $imageUrl = $baseC->website_url ."/assets/img/no-image.jpg";
+                        }
                         ?>
 
                         <tr>

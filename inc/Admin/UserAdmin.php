@@ -53,7 +53,7 @@ class UserAdmin extends BaseController {
             <h1 class="admin-title"><?php echo $name; ?></h1>
             <h4>List User</h4>
             <div class="table-responsive">
-                <table class="table table-striped table-sm">
+                <table class="table table-admin table-striped table-sm">
                     <caption>List of the all users</caption>
                     <thead>
                     <tr>

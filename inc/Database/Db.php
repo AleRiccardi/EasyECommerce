@@ -27,7 +27,7 @@ define('ARRAY_N', 'ARRAY_N');
  */
 class Db {
     const HOST = "localhost";
-    const NAME = "restaurant";
+    const NAME = "rest";
     const USER = "root";
     const PASS = "root";
 

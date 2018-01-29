@@ -56,9 +56,23 @@ class OrderAdmin extends BaseController {
         $address = DbAddress::getSingle(["id" => $order->idAddress], "object");
 
         ?>
-        <div class="container">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="row">
-                <div class="col-12 col-md-12">
+                <div class="col-12 col-md-10">
+                    <h1 class="admin-title">Order <?php if (!$order->dateDeliver) { ?><span
+                                class="badge badge-secondary">New</span> <?php } ?></h1>
+                    <p class="lead">
+                        <?php if (!$order->dateDeliver) { ?>
+                            Look to all the items to deliver and then when the order will arrived to the address click on
+                            <span class="text-primary">delivered</span>.
+                        <?php } else { ?>
+                                Order already delivered.
+                        <?php } ?>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12 mb-4">
                     <div class="order-detail-success">
                         <h5>Order detail</h5>
                         <p>
@@ -66,7 +80,7 @@ class OrderAdmin extends BaseController {
                         </p>
                         <ul>
                             <li>Order code: <?php echo $order->id; ?></li>
-                            <li>Date deliver order: <?php echo $order->dateDeliver; ?></li>
+                            <li>Date deliver order: <?php echo $order->dateCheckout; ?></li>
                             <li>Total: €<?php echo $order->finalPrice; ?></li>
 
                             <li>
@@ -121,9 +135,19 @@ class OrderAdmin extends BaseController {
                             </div>
                         </div>
                     </div>
+                    <?php if (!$order->dateDeliver) { ?>
+                        <form class="form-add-new" method="post"
+                              action="?name=admin-area&order&see-order=<?php echo $idOrder; ?>"
+                              enctype="multipart/form-data"
+                              name="orderDelivered">
+                            <button class="btn btn-primary btn-lg mt-3 ml-1" name="orderDelivered" type="submit">
+                                Delivered
+                            </button>
+                        </form>
+                    <?php } ?>
                 </div>
             </div>
-        </div>
+        </main>
 
         <?php
     }
@@ -139,12 +163,13 @@ class OrderAdmin extends BaseController {
             <h1 class="admin-title"><?php echo $name; ?></h1>
             <h4>List User</h4>
             <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                    <caption>List of the all users</caption>
+                <table class="table table-admin table-striped table-sm">
+                    <caption>List of the all orders</caption>
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Date deliver</th>
+                        <th>Date Checkout</th>
+                        <th>Date Deliver</th>
                         <th>Price</th>
                         <th>Username</th>
                         <th>First Name</th>
@@ -161,10 +186,12 @@ class OrderAdmin extends BaseController {
                             $address = DbAddress::getSingle(["id" => $order->idAddress], "object");
                             ?>
 
-                            <tr onclick="window.location='?name=admin-area&order&see-order=<?php echo $order->id; ?>';">
+                            <tr class="<?php echo $order->dateDeliver ? "text-muted" : ""; ?>" onclick="
+                                    window.location='?name=admin-area&order&see-order=<?php echo $order->id; ?>' ;">
                                 <td><?php echo $order->id; ?></td>
+                                <td><?php echo $order->dateCheckout; ?></td>
                                 <td><?php echo $order->dateDeliver; ?></td>
-                                <td><?php echo $order->finalPrice; ?></td>
+                                <td>€ <?php echo $order->finalPrice; ?></td>
                                 <td><?php echo $user->userName; ?></a></td>
                                 <td><?php echo $user->firstName; ?></a></td>
                                 <td><?php echo $user->lastName; ?></td>
@@ -176,6 +203,7 @@ class OrderAdmin extends BaseController {
                     } ?>
                     </tbody>
                 </table>
+            </div>
         </main>
         <?php
     }

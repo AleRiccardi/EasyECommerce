@@ -71,4 +71,26 @@ class DbCategory extends DbModel {
         return parent::update(["available" => 0], ["id" => $id]);
     }
 
+    public static function getFiltered(array $filter, $where, $output) {
+        if (!isset($where["available"])) $where["available"] = 1;
+
+        $sql = self::fetchSql($where, "SELECT");
+
+        if (!empty($filter)) {
+            $length = count($filter) - 1;
+            $sql .= " ORDER BY ";
+
+            foreach ($filter as $key => $value) {
+                $sql .= "$key $value";
+
+                //Add 'AND' only if is not the last field
+                if (array_search($key, array_keys($filter)) !== $length) {
+                    $sql .= ", ";
+                }
+            }
+        }
+        $res = self::getResult($sql, $output);
+        return $res;
+    }
+
 }

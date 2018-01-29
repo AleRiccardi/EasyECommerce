@@ -136,6 +136,7 @@ if (isset($_GET['name']) && $page = $_GET['name']) {
                          aria-labelledby="navbarDropdownMenuLink">
                         <div class="gb_qb"></div>
                         <div class="gb_pb"></div>
+                        <a class="dropdown-item-muted text-muted"><?php echo $user->userName; ?></a>
                         <a class="dropdown-item"
                            href="<?php echo $baseController->website_url ?>/page.php?name=user">User</a>
                         <?php if (User::isAdmin()) { ?>

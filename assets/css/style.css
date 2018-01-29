@@ -318,6 +318,19 @@ img.card-item-img {
 .mu-dd-content a:hover {
 }
 
+.dropdown-item-muted {
+    display: block;
+    width: 100%;
+    padding: .25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+
 /*
  * Other
  */
@@ -423,7 +436,7 @@ h1.home-title {
 
 .hs-second .title {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 0px;
     font-size: 50px;
     font-weight: 300;
     letter-spacing: 1.6px;

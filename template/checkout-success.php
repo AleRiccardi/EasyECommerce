@@ -16,8 +16,12 @@ if (!$user = User::getCurrentUser()) {
 sleep(1);
 
 $order = Order::getLastPayment($user->id);
-if (!$order)
+
+# Redirect to user page if there'a
+if (!$order) {
     header("Location: $baseController->website_url/page.php?name=user");
+}
+
 $itemsOrder = Cart::getCartItems($order->id);
 $address = DbAddress::getSingle(["id" => $order->idAddress], "object");
 
@@ -53,7 +57,7 @@ require_once($baseController->website_path . "/template/_header.php");
                         </p>
                         <ul>
                             <li>Order code: <?php echo $order->id; ?></li>
-                            <li>Date deliver order: <?php echo $order->dateDeliver; ?></li>
+                            <li>Date deliver order: <?php echo $order->dateCheckout; ?></li>
                             <li>Total: €<?php echo $order->finalPrice; ?></li>
 
                             <li>

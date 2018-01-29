@@ -61,7 +61,7 @@ require_once($baseController->website_path . "/template/_header.php");
         <div class="container">
             <div class="row">
                 <div class="col-md-4 order-md-2 mb-4">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="d-flex justify-content-between align-items-center">
                         <span class="text-muted">Your cart</span>
                         <span class="badge badge-secondary badge-pill"><?php echo count($cartItems); ?></span>
                     </h4>
@@ -98,7 +98,7 @@ require_once($baseController->website_path . "/template/_header.php");
                     </ul>
 
                 </div>
-                <div class="col-md-8 order-md-1">
+                <div class="col-md-8 order-md-1 mb-4">
                     <form class="form-checkout" method="post" action="page.php?name=checkout" name="checkoutForm">
                         <h4 class="mb-3">User information</h4>
 

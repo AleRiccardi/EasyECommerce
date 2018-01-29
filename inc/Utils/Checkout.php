@@ -197,8 +197,10 @@ class Checkout {
         if (!empty($cartItems)) {
             # Variable DB cart
             $price = 0;
-            $cartUpdate["idUser"] = $idUser;
-            $cartUpdate["dateDeliver"] = DbModel::now();
+            $cartUpdate = [
+                "idUser" => $idUser,
+                "dateCheckout" => DbCart::now()
+            ];
             $address = Address::getAddress($idUser);
             $newAddress = [
                 "department" => $address->department,

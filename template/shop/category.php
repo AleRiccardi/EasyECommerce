@@ -17,7 +17,7 @@ $user = User::getCurrentUser();
 $currentCategory = DbCategory::getSingle(["slug" => $_GET["category"]], 'object');
 $imageCat = DbImage::getSingle(["id" => $currentCategory->idImage], 'object');
 
-// current product
+// current products
 $products = DbItem::get(["idCategory" => $currentCategory->id], 'object');
 
 //all categories

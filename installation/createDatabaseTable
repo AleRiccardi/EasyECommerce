@@ -54,8 +54,9 @@ CREATE TABLE IF NOT EXISTS users (
 
 /* CART */
 CREATE TABLE IF NOT EXISTS cart (
-  id bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   dateCreation datetime,
+  dateCheckout datetime,
   dateDeliver datetime,
   finalPrice int(20) NULL,
   idUser bigint(20) UNSIGNED,

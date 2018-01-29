@@ -8,9 +8,15 @@
 
 namespace Inc\Admin;
 
+use Inc\Base\BaseController;
+use Inc\Database\DbAddress;
+use Inc\Database\DbCategory;
+use Inc\Database\DbImage;
+use Inc\Database\DbUser;
+use Inc\Utils\Order;
 use Inc\Utils\User;
 
-class OverviewAdmin {
+class OverviewAdmin extends BaseController {
 
     public $gotValue = null;
 
@@ -18,9 +24,11 @@ class OverviewAdmin {
      * Overview constructor.
      */
     public function __construct() {
+        // BaseController
+        parent::__construct();
 
         // Check if have privilege
-        if(!User::isAdmin()) {
+        if (!User::isAdmin()) {
             return false;
         }
     }
@@ -57,92 +65,88 @@ class OverviewAdmin {
     }
 
 
-    private function getMain() { ?>
+    private function getMain() {
+        # all categories
+        $filter = [
+            "dateCreation" => "ASC"
+        ];
+        $categories = DbCategory::getFiltered($filter, null, "object");
+        ?>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h1 class="admin-title">Overview</h1>
-
             <h2>List recent categories</h2>
             <section class="row text-center placeholders">
-                <div class="col-6 col-sm-3 placeholder">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs="
-                         width="200" height="200" class="img-fluid rounded-circle"
-                         alt="Generic placeholder thumbnail">
-                    <h4>Label</h4>
-                    <div class="text-muted">Something else</div>
-                </div>
-                <div class="col-6 col-sm-3 placeholder">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs="
-                         width="200" height="200" class="img-fluid rounded-circle"
-                         alt="Generic placeholder thumbnail">
-                    <h4>Label</h4>
-                    <span class="text-muted">Something else</span>
-                </div>
-                <div class="col-6 col-sm-3 placeholder">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs="
-                         width="200" height="200" class="img-fluid rounded-circle"
-                         alt="Generic placeholder thumbnail">
-                    <h4>Label</h4>
-                    <span class="text-muted">Something else</span>
-                </div>
-                <div class="col-6 col-sm-3 placeholder">
-                    <img src="data:image/gif;base64,R0lGODlhAQABAIABAADcgwAAACwAAAAAAQABAAACAkQBADs="
-                         width="200" height="200" class="img-fluid rounded-circle"
-                         alt="Generic placeholder thumbnail">
-                    <h4>Label</h4>
-                    <span class="text-muted">Something else</span>
-                </div>
-            </section>
-
-            <h2>List recent products</h2>
+                <?php
+                $i = 0;
+                if ($categories) {
+                    foreach ($categories as $category) {
+                        if ($i++ >= 4) break;
+                        # current category
+                        $imageCat = DbImage::getSingle(["id" => $category->idImage], 'object');
+                        ?>
+                        <div class="category-overview col-6 col-sm-3 placeholder">
+                            <a onclick="window.location='?name=admin-area&category&edit&id=<?php echo $category->id; ?>';">
+                                <div style=" background-image: url(' <?php echo $this->website_url . $imageCat->path; ?>');"
+                                     width="200" height="200" class="img-category-admin rounded-circle"
+                                     alt="Category <?php echo $category->title; ?> image">
+                                </div>
+                                <h4><?php echo $category->title; ?></h4>
+                            </a>
+                        </div>
+                        <?php
+                    }
+                } else {
+                    echo "<span class='pl-3'>No category.</span>";
+                }
+                ?>
+            </section>              <h2>List recent orders</h2>
             <div class="table-responsive">
-                <table class="table table-striped table-sm">
-                    <caption>List of the recent products</caption>
+                <table class="table table-admin table-striped table-sm">
+                    <caption>List of the all orders</caption>
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
+                        <th>ID</th>
+                        <th>Date Checkout</th>
+                        <th>Date Deliver</th>
+                        <th>Price</th>
+                        <th>Username</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Department</th>
+                        <th>Class</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1,001</td>
-                        <td>Lorem</td>
-                        <td>ipsum</td>
-                        <td>dolor</td>
-                        <td>sit</td>
-                    </tr>
-                    <tr>
-                        <td>1,002</td>
-                        <td>amet</td>
-                        <td>consectetur</td>
-                        <td>adipiscing</td>
-                        <td>elit</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>Integer</td>
-                        <td>nec</td>
-                        <td>odio</td>
-                        <td>Praesent</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>libero</td>
-                        <td>Sed</td>
-                        <td>cursus</td>
-                        <td>ante</td>
-                    </tr>
-                    <tr>
-                        <td>1,004</td>
-                        <td>dapibus</td>
-                        <td>diam</td>
-                        <td>Sed</td>
-                        <td>nisi</td>
-                    </tr>
+                    <?php
+                    $orders = Order::getAllOrders();
+                    if ($orders) {
+                        $i = 0;
+                        foreach ($orders as $order) {
+                            # Limit to 15 orders
+                            if ($i++ >= 15) break;
 
+                            $user = DbUser::getSingle(["id" => $order->idUser], "object");
+                            $address = DbAddress::getSingle(["id" => $order->idAddress], "object");
+                            ?>
+
+                            <tr class="<?php echo $order->dateDeliver ? "text-muted" : ""; ?>" onclick="
+                                    window.location='?name=admin-area&order&see-order=<?php echo $order->id; ?>' ;">
+                                <td><?php echo $order->id; ?></td>
+                                <td><?php echo $order->dateCheckout; ?></td>
+                                <td><?php echo $order->dateDeliver; ?></td>
+                                <td>€ <?php echo $order->finalPrice; ?></td>
+                                <td><?php echo $user->userName; ?></a></td>
+                                <td><?php echo $user->firstName; ?></a></td>
+                                <td><?php echo $user->lastName; ?></td>
+                                <td><?php echo $address->department ?></td>
+                                <td><?php echo $address->class; ?></td>
+                            </tr>
+                            <?php
+                        }
+                    } else {
+                        echo "No orders.";
+                    }
+                    ?>
                     </tbody>
                 </table>
             </div>

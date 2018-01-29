@@ -237,7 +237,7 @@ class ProductAdmin extends BaseController {
             <h1 class="admin-title"><?php echo $name; ?></h1>
             <h4>List Products</h4>
             <div class="table-responsive">
-                <table class="table table-striped table-sm">
+                <table class="table table-admin table-striped table-sm">
                     <caption>List of the all products</caption>
                     <thead>
                     <tr>

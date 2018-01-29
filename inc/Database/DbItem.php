@@ -45,7 +45,7 @@ class DbItem extends DbModel {
                 }
             }
         }
-        $res = self::getResult($sql, "object");
+        $res = self::getResult($sql, $output);
         return $res;
     }
 

@@ -51,9 +51,13 @@ class CartAjax extends AjaxEngine {
             $return = array();
             foreach ($cartItems as $cartItem) {
                 $item = DbItem::getSingle(["id" => $cartItem->idItem], 'object');
-                $where = ["id" => $item->idImage];
-                $image = DbImage::getSingle($where, 'object');
-                $imageUrl = $baseC->website_url . $image->path;
+                if($item->idImage) {
+                    $where = ["id" => $item->idImage];
+                    $image = DbImage::getSingle($where, 'object');
+                    $imageUrl = $baseC->website_url . $image->path;
+                } else {
+                    $imageUrl = $baseC->website_url ."/assets/img/no-image.jpg";
+                }
                 if ($item) {
                     $return[] = ["imgUrl" => "$imageUrl", "title" => $item->title, "quantity" => $cartItem->quantity];
                 }

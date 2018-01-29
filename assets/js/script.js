@@ -198,65 +198,66 @@ $(function () {
         }
     }
 
-
     /**
      * Category page, ADD product to cart.
      */
-    $(".btn-add").on("click", function () {
+    var abilityAddItemCart = function() {
+        $(".btn-add").on("click", function () {
 
-        var idProdButton = $(this).data("prod-id");
-        var el = $('.input-number');
+            var idProdButton = $(this).data("prod-id");
+            var el = $('.input-number');
 
-        /**
-         * loop for every input quantity
-         */
-        el.each(function (e) {
-            var idProdInput = $(this).data("prod-id");
-            // stop when the right input match with the button pressed
-            if (idProdInput == idProdButton) {
-                var quantity = $(this).val();
-                // ajax call
-                var nameClass = "CartAjax.php";
+            /**
+             * loop for every input quantity
+             */
+            el.each(function (e) {
+                var idProdInput = $(this).data("prod-id");
+                // stop when the right input match with the button pressed
+                if (idProdInput == idProdButton) {
+                    var quantity = $(this).val();
+                    // ajax call
+                    var nameClass = "CartAjax.php";
 
-                var data = {
-                    action: "addItem",
-                    idUser: idUser,
-                    idProduct: idProdInput,
-                    quantity: quantity
-                };
+                    var data = {
+                        action: "addItem",
+                        idUser: idUser,
+                        idProduct: idProdInput,
+                        quantity: quantity
+                    };
 
-                var func = function (response) {
-                    if (response == 1) {
-                        $('.title-prod').each(function (e) {
-                            var idProdTitle = $(this).data("prod-id");
-                            if (idProdTitle == idProdButton) {
-                                $('.modalTitleItem').text($(this).html());
-                                $('#modal-text').html(
-                                    "You added <span class='badge badge-success modal-quantity-item'>" + quantity + "</span> quantity of" +
-                                    "<span>" + $(this).html() + "</span> to your <a href='page.php?name=cart'>cart</a>."
-                                );
-                                $('#modalItemAdded').modal('toggle');
-                                printNumItemCart(idUser);
-                            }
-                        });
-                    } else if (response == -1) {
-                        $('.modalTitleItem').text("Error");
-                        $('#modal-text').html("An error occurred, please reload the page or otherwise contact customer service.");
-                        $('#modalItemAdded').modal('toggle');
-                    } else {
-                        $('.modalTitleItem').text("You need to access");
-                        $('#modal-text').html("If you already have an account please do a <a class='btn btn-primary btn-sm' " +
-                            "href='page.php?name=login'>Login</a> <br> Otherwise a " +
-                            "<a class='btn btn-success btn-sm' href='page.php?name=registration'>Registration</a>");
-                        $('#modalItemAdded').modal('toggle');
-                        printNumItemCart(idUser);
+                    var func = function (response) {
+                        if (response == 1) {
+                            $('.title-prod').each(function (e) {
+                                var idProdTitle = $(this).data("prod-id");
+                                if (idProdTitle == idProdButton) {
+                                    $('.modalTitleItem').text($(this).html());
+                                    $('#modal-text').html(
+                                        "You added <span class='badge badge-success modal-quantity-item'>" + quantity + "</span> quantity of" +
+                                        "<span>" + $(this).html() + "</span> to your <a href='page.php?name=cart'>cart</a>."
+                                    );
+                                    $('#modalItemAdded').modal('toggle');
+                                    printNumItemCart(idUser);
+                                }
+                            });
+                        } else if (response == -1) {
+                            $('.modalTitleItem').text("Error");
+                            $('#modal-text').html("An error occurred, please reload the page or otherwise contact customer service.");
+                            $('#modalItemAdded').modal('toggle');
+                        } else {
+                            $('.modalTitleItem').text("You need to access");
+                            $('#modal-text').html("If you already have an account please do a <a class='btn btn-primary btn-sm' " +
+                                "href='page.php?name=login'>Login</a> <br> Otherwise a " +
+                                "<a class='btn btn-success btn-sm' href='page.php?name=registration'>Registration</a>");
+                            $('#modalItemAdded').modal('toggle');
+                            printNumItemCart(idUser);
+                        }
                     }
-                }
 
-                ajaxCall(nameClass, data, func);
-            }
+                    ajaxCall(nameClass, data, func);
+                }
+            });
         });
-    });
+    }
 
 
     /**
@@ -291,6 +292,8 @@ $(function () {
                 columnWidth: '.grid-sizer',
                 percentPosition: true
             });
+            inputNumber($('.input-number'));
+            abilityAddItemCart();
         }
 
         ajaxCall(nameClass, data, func);
@@ -304,7 +307,7 @@ $(function () {
     // Initialize the input number for the quantity
     // of the product
     inputNumber($('.input-number'));
-
+    abilityAddItemCart();
 
     /**+**+**+**+**+**+**+**+**+**+**+**+**+**+
      * Page CART
