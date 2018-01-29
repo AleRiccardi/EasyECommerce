@@ -14,11 +14,22 @@ use Inc\Database\DbUser;
 class User {
 
     /**
+     * @var array Collection of error messages
+     */
+    public $errors = array();
+    /**
+     * @var array Collection of success / neutral messages
+     */
+    public $messages = array();
+
+
+    /**
      * Init function run form the Init class every
      * time that we load a page.
      */
     public function register() {
-        self::editUser();
+        $this->editUser();
+        $this->showError();
     }
 
     /**
@@ -155,7 +166,7 @@ class User {
      *
      * @return bool|false|int
      */
-    public static function editUser() {
+    public function editUser() {
         if (isset($_POST['editLogin'])) {
 
             $data = array(
@@ -164,8 +175,9 @@ class User {
             );
 
             // PASSWORD
-            $userPassword = isset($_POST['password']) && !empty($_POST['password']) ? $_POST['password'] : null;
+            $userPassword = !empty($_POST['password']) ? $_POST['password'] : null;
             if ($userPassword) {
+
                 $userPassword_hash = password_hash($userPassword, PASSWORD_DEFAULT);
                 $data['passwordHash'] = $userPassword_hash;
             }
@@ -176,13 +188,47 @@ class User {
                 $data['idImage'] = $idImage;
             }
 
+            $this->messages[] = "User information update.";
+
             return DbUser::update($data, ["userName" => $_SESSION['userName']]);
         } else if (isset($_POST["removeImage"])) {
+            $this->messages[] = "Picture removed.";
 
             return self::removeImage($_SESSION["userName"]);
         }
         // default
         return false;
+    }
+
+    /**
+     * simply return the current state of the user's login
+     *
+     * @return boolean user's login status
+     */
+    public function showError() {
+        if ($this->errors) { ?>
+            <div class="message alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php
+                foreach ($this->errors as $error) {
+                    echo $error;
+                }
+                ?>
+            </div>
+            <?php
+        }
+        if ($this->messages) { ?>
+            <div class="message alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?php
+                foreach ($this->messages as $message) {
+                    echo $message;
+                }
+                ?>
+            </div>
+            <?php
+        }
+
     }
 
 

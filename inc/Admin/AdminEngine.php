@@ -13,7 +13,7 @@ use Inc\Utils\User;
 
 class AdminEngine {
     const SLUG_OVERVIEW = "overview";
-    const SLUG_ORDERS = "order";
+    const SLUG_ORDER = "order";
     const SLUG_CATEGORY = "category";
     const SLUG_PRODUCT = "product";
     const SLUG_USER = "user";
@@ -39,6 +39,7 @@ class AdminEngine {
     private $overviewTemp = null;
     private $categoryTemp = null;
     private $productTemp = null;
+    private $userTemp = null;
 
 
     public function __construct() {
@@ -50,6 +51,7 @@ class AdminEngine {
             $this->overviewTemp = new Overview();
             $this->categoryTemp = new Category();
             $this->productTemp = new Product();
+            $this->userTemp = new \Inc\Admin\User();
 
             $this->register();
         }
@@ -82,11 +84,11 @@ class AdminEngine {
             $this->getSidebar();
             $this->overviewTemp->register();
 
-        } else if (isset($_GET[self::SLUG_ORDERS])) {
-            // OVERVIEW
+        } else if (isset($_GET[self::SLUG_ORDER])) {
+            // ORDER
             $this->isOrders = true;
-            $this->nameOrder = !empty($_GET[self::SLUG_ORDERS]) ?
-                $_GET[self::SLUG_ORDERS] : null;
+            $this->nameOrder = !empty($_GET[self::SLUG_ORDER]) ?
+                $_GET[self::SLUG_ORDER] : null;
             $this->getSidebar();
 
         } else if (isset($_GET[self::SLUG_CATEGORY])) {
@@ -107,12 +109,12 @@ class AdminEngine {
             $this->productTemp->register();
 
         } else if (isset($_GET[self::SLUG_USER])) {
-            // PRODUCT
+            // USER
             $this->isUsers = true;
             $this->nameUser = !empty($_GET[self::SLUG_USER]) ?
                 $_GET[self::SLUG_USER] : null;
             $this->getSidebar();
-
+            $this->userTemp->register();
         }
 
 

@@ -107,16 +107,19 @@ if (isset($_GET['name']) && $page = $_GET['name']) {
                         </div>
                     </div>
                     <div class="dropdown-menu dropdown-menu-right mu-dd-content" id="dropdown-cart">
-                        <div class="gb_qb"></div>
-                        <div class="gb_pb"></div>
-                        <div class="cont-dd">
-                            <h6 class="dropdown-header">Cart</h6>
-                            <div id="append-items-cart">
-                            </div>
+                        <a href="page.php?name=cart" style="text-decoration: none;">
 
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item di-btn-link" href="page.php?name=cart">See your cart</a>
-                        </div>
+                            <div class="gb_qb"></div>
+                            <div class="gb_pb"></div>
+                            <div class="cont-dd">
+                                <h6 class="dropdown-header">Cart</h6>
+                                <div id="append-items-cart">
+                                </div>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item di-btn-link" href="page.php?name=cart">See your cart</a>
+                            </div>
+                        </a>
                     </div>
                 </div>
 

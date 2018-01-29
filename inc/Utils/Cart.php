@@ -195,7 +195,7 @@ class Cart {
         $cartItems = Cart::getCartItems($cart->id);
         if (!empty($cartItems)) {
             ?>
-            <div class="row">
+            <div class="row scroll-hor">
                 <table class="table table-hover">
                     <caption>List of all the products in the cart</caption>
                     <thead>

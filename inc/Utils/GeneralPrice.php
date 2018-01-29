@@ -9,7 +9,7 @@
 namespace Inc\Utils;
 
 
-class GeneralCost {
+class GeneralPrice {
     const SHIPPING_COST = 5;
     const FREE_SHIPPING_TOT_PRICE = 20;
 

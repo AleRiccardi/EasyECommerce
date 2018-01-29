@@ -5,8 +5,37 @@ $(function () {
      +**+**+**+**+**+**+**+**+**+**+**+**+**+*/
 
     // #
+    // # Function
+    // #
+
+    /**
+     * @description Here's wrap the code that permit to simplify an ajax call.
+     *
+     * @param {array} data, that will send with the ajax call.
+     * @param {function} func, that will be execute after the success of the ajax call,
+     */
+    var ajaxCall = function (nameClass, data, func) {
+        var url = 'http://localhost:8888/willychock/inc/Ajax/' + nameClass;
+
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: data
+        })
+            .done(func);
+    }
+
+    // #
     // # Event
     // #
+
+    $('#form-edit-login').on('keyup keypress', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
 
 
     /**+**+**+**+**+**+**+**+**+**+**+**+**+**+
@@ -34,27 +63,26 @@ $(function () {
         /**
          * update the number of the item in the cart icon of the menu
          */
-        $.ajax({
-            method: "POST",
-            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
-            data: {
-                action: "getNumItemsCart",
-                idUser: idUser,
+        var nameClass = "CartAjax.php";
+
+        var data = {
+            action: "getNumItemsCart",
+            idUser: idUser,
+        };
+
+        var func = function (response) {
+            if (response != 0) {
+                var header = "<span class='badge badge-primary' >" + response + "</span>";
+                $('.mc-number-item').html(header);
+                $('.cart-page-num-item').html(response);
+            } else {
+                $('.mc-number-item').html("");
+                $('.cart-page-num-item').html("0");
+
             }
-        })
-            .done(function (response) {
-                if (response != 0) {
-                    var header = "<span class='badge badge-primary' >" + response + "</span>";
-                    $('.mc-number-item').html(header);
-                    $('.cart-page-num-item').html(response);
-                } else {
-                    $('.mc-number-item').html("");
-                    $('.cart-page-num-item').html("0");
+        }
 
-                }
-            });
-
-
+        ajaxCall(nameClass, data, func);
     }
 
 
@@ -66,39 +94,40 @@ $(function () {
         /**
          * update the number of the item in the cart icon
          */
-        $.ajax({
-            method: "POST",
-            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
-            data: {
-                action: "getCustomItemCart",
-                idUser: idUser,
-            }
-        })
-            .done(function (response) {
-                if (response != 0) {
-                    var cartItems = $.parseJSON(response);
-                    $("#append-items-cart").html("");
-                    console.log(cartItems);
-                    for (var i = 0; i < cartItems.length; i++) {
-                        itemHtml = "<div class='dropdown-item card-item-cont'>" +
-                            "           <div class='middle-h-cont mhc-height-max'>" +
-                            "               <div class='card-item-img-cont middle-h-item'>" +
-                            "                   <div class='middle-h-cont'>" +
-                            "                       <img id='card-item-img' class='card-item-img middle-h-item'" +
-                            "                           src='" + cartItems[i].imgUrl + "'" +
-                            "                           alt='" + cartItems[i].title + "'>" +
-                            "                   </div>" +
-                            "               </div>" +
-                            "               <span class='middle-h-item card-item-title' id='card-item-title'>" + cartItems[i].title + "</span>" +
-                            "               &nbsp;" +
-                            "               <span class='badge badge-secondary ml-auto middle-h-item' id='card-item-quantity'>" + cartItems[i].quantity + " item</span>" +
-                            "          </div>" +
-                            "      </div>";
-                        $("#append-items-cart").append(itemHtml);
-                    }
-                    console.log();
+        var nameClass = "CartAjax.php";
+
+        var data = {
+            action: "getCustomItemCart",
+            idUser: idUser,
+        };
+
+        var func = function (response) {
+            if (response != 0) {
+                var cartItems = $.parseJSON(response);
+                $("#append-items-cart").html("");
+                console.log(cartItems);
+                for (var i = 0; i < cartItems.length; i++) {
+                    itemHtml = "<div class='dropdown-item card-item-cont'>" +
+                        "           <div class='middle-h-cont mhc-height-max'>" +
+                        "               <div class='card-item-img-cont middle-h-item'>" +
+                        "                   <div class='middle-h-cont'>" +
+                        "                       <img id='card-item-img' class='card-item-img middle-h-item'" +
+                        "                           src='" + cartItems[i].imgUrl + "'" +
+                        "                           alt='" + cartItems[i].title + "'>" +
+                        "                   </div>" +
+                        "               </div>" +
+                        "               <span class='middle-h-item card-item-title' id='card-item-title'>" + cartItems[i].title + "</span>" +
+                        "               &nbsp;" +
+                        "               <span class='badge badge-secondary ml-auto middle-h-item' id='card-item-quantity'>" + cartItems[i].quantity + " item</span>" +
+                        "          </div>" +
+                        "      </div>";
+                    $("#append-items-cart").append(itemHtml);
                 }
-            });
+                console.log();
+            }
+        }
+
+        ajaxCall(nameClass, data, func);
     });
 
 
@@ -187,43 +216,44 @@ $(function () {
             if (idProdInput == idProdButton) {
                 var quantity = $(this).val();
                 // ajax call
-                $.ajax({
-                    method: "POST",
-                    url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
-                    data: {
-                        action: "addItem",
-                        idUser: idUser,
-                        idProduct: idProdInput,
-                        quantity: quantity
+                var nameClass = "CartAjax.php";
+
+                var data = {
+                    action: "addItem",
+                    idUser: idUser,
+                    idProduct: idProdInput,
+                    quantity: quantity
+                };
+
+                var func = function (response) {
+                    if (response == 1) {
+                        $('.title-prod').each(function (e) {
+                            var idProdTitle = $(this).data("prod-id");
+                            if (idProdTitle == idProdButton) {
+                                $('.modalTitleItem').text($(this).html());
+                                $('#modal-text').html(
+                                    "You added <span class='badge badge-success modal-quantity-item'>" + quantity + "</span> quantity of" +
+                                    "<span>" + $(this).html() + "</span> to your <a href='page.php?name=cart'>cart</a>."
+                                );
+                                $('#modalItemAdded').modal('toggle');
+                                printNumItemCart(idUser);
+                            }
+                        });
+                    } else if (response == -1) {
+                        $('.modalTitleItem').text("Error");
+                        $('#modal-text').html("An error occurred, please reload the page or otherwise contact customer service.");
+                        $('#modalItemAdded').modal('toggle');
+                    } else {
+                        $('.modalTitleItem').text("You need to access");
+                        $('#modal-text').html("If you already have an account please do a <a class='btn btn-primary btn-sm' " +
+                            "href='page.php?name=login'>Login</a> <br> Otherwise a " +
+                            "<a class='btn btn-success btn-sm' href='page.php?name=registration'>Registration</a>");
+                        $('#modalItemAdded').modal('toggle');
+                        printNumItemCart(idUser);
                     }
-                })
-                    .done(function (response) {
-                        if (response == 1) {
-                            $('.title-prod').each(function (e) {
-                                var idProdTitle = $(this).data("prod-id");
-                                if (idProdTitle == idProdButton) {
-                                    $('.modalTitleItem').text($(this).html());
-                                    $('#modal-text').html(
-                                        "You added <span class='badge badge-success modal-quantity-item'>" + quantity + "</span> quantity of" +
-                                        "<span>" + $(this).html() + "</span> to your <a href='page.php?name=cart'>cart</a>."
-                                    );
-                                    $('#modalItemAdded').modal('toggle');
-                                    printNumItemCart(idUser);
-                                }
-                            });
-                        } else if (response == -1) {
-                            $('.modalTitleItem').text("Error");
-                            $('#modal-text').html("An error occurred, please reload the page or otherwise contact customer service.");
-                            $('#modalItemAdded').modal('toggle');
-                        } else {
-                            $('.modalTitleItem').text("You need to access");
-                            $('#modal-text').html("If you already have an account please do a <a class='btn btn-primary btn-sm' " +
-                                "href='page.php?name=login'>Login</a> <br> Otherwise a " +
-                                "<a class='btn btn-success btn-sm' href='page.php?name=registration'>Registration</a>");
-                            $('#modalItemAdded').modal('toggle');
-                            printNumItemCart(idUser);
-                        }
-                    });
+                }
+
+                ajaxCall(nameClass, data, func);
             }
         });
     });
@@ -244,26 +274,26 @@ $(function () {
         var filterPrice = $("#filter-price option:checked").val();
         var filterTitle = $("#filter-title option:checked").val();
 
-        $.ajax({
-            method: "POST",
-            url: 'http://localhost:8888/willychock/inc/Ajax/CategoryAjax.php',
-            data: {
-                action: "getFilteredItems",
-                idCategory: idCategory,
-                filterDate: filterDate,
-                filterPrice: filterPrice,
-                filterTitle: filterTitle,
-            }
-        })
-            .done(function (response) {
-                //console.log(response);
-                $("#list-item").html(response);
-                $('.grid').masonry({
-                    itemSelector: '.grid-item', // use a separate class for itemSelector, other than .col-
-                    columnWidth: '.grid-sizer',
-                    percentPosition: true
-                });
+        var nameClass = "CategoryAjax.php";
+
+        var data = {
+            action: "getFilteredItems",
+            idCategory: idCategory,
+            filterDate: filterDate,
+            filterPrice: filterPrice,
+            filterTitle: filterTitle,
+        };
+
+        var func = function (response) {
+            $("#list-item").html(response);
+            $('.grid').masonry({
+                itemSelector: '.grid-item', // use a separate class for itemSelector, other than .col-
+                columnWidth: '.grid-sizer',
+                percentPosition: true
             });
+        }
+
+        ajaxCall(nameClass, data, func);
 
     });
 
@@ -286,23 +316,25 @@ $(function () {
     // #
 
     function updateQuantity(idUser, idItem, newQuantity) {
-        $.ajax({
-            method: "POST",
-            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
-            data: {
-                action: "changeQuantity",
-                idUser: idUser,
-                idItem: idItem,
-                quantity: newQuantity
-            }
-        }).done(function (response) {
-            console.log(response);
+        var nameClass = "CartAjax.php";
+
+        var data = {
+            action: "changeQuantity",
+            idUser: idUser,
+            idItem: idItem,
+            quantity: newQuantity
+        };
+
+        var func = function (response) {
             if (response) {
                 refreshCart(idUser);
                 refreshReport(idUser);
                 printNumItemCart(idUser);
             }
-        });
+        }
+
+        ajaxCall(nameClass, data, func);
+
     }
 
     function changeQuantityInputFocusOut() {
@@ -326,45 +358,45 @@ $(function () {
     function refreshCart(idUser) {
         $("#cart").fadeTo("fast", 0.33);
 
-        $.ajax({
-            method: "POST",
-            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
-            data: {
-                action: "refreshCart",
-                idUser: idUser
-            },
+        var nameClass = "CartAjax.php";
 
-        }).done(function (response) {
+        var data = {
+            action: "refreshCart",
+            idUser: idUser
+        };
+
+        var func = function (response) {
             if (response) {
                 $("#cart").html(response);
                 $("#cart").fadeTo("slow", 1);
                 changeQuantityInputFocusOut()
             }
-        }).fail(function () {
-            alert("error");
-        });
+        }
+
+        ajaxCall(nameClass, data, func);
+
 
     }
 
     function refreshReport(idUser) {
         $("#report").fadeTo("fast", 0.33);
 
-        $.ajax({
-            method: "POST",
-            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
-            data: {
-                action: "refreshReport",
-                idUser: idUser
-            },
+        var nameClass = "CartAjax.php";
 
-        }).done(function (response) {
+        var data = {
+            action: "refreshReport",
+            idUser: idUser
+        };
+
+        var func = function (response) {
             if (response) {
                 $("#report").html(response);
                 $("#report").fadeTo("slow", 1);
             }
-        }).fail(function () {
-            alert("error");
-        });
+        }
+
+        ajaxCall(nameClass, data, func);
+
     }
 
     function insertBtnUpdate(event) {
@@ -386,21 +418,23 @@ $(function () {
         var idItem = $(this).data("item");
         var idUser = $(this).data("user");
 
-        $.ajax({
-            method: "POST",
-            url: 'http://localhost:8888/willychock/inc/Ajax/CartAjax.php',
-            data: {
-                action: "trashCartItem",
-                idUser: idUser,
-                idItem: idItem
-            }
-        }).done(function (response) {
+        var nameClass = "CartAjax.php";
+
+        var data = {
+            action: "trashCartItem",
+            idUser: idUser,
+            idItem: idItem
+        };
+
+        var func = function (response) {
             if (response) {
                 refreshCart(idUser);
                 refreshReport(idUser);
                 printNumItemCart(idUser);
             }
-        });
+        }
+
+        ajaxCall(nameClass, data, func);
 
     });
 

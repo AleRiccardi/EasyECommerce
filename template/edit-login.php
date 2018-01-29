@@ -22,7 +22,7 @@ $user = User::getBy($_SESSION['userName']);
             <div class="container pe-cont flex-item-center">
                 <div class="col-12 cont-edit-form">
                     <h1 class="display-4">Edit Login</h1>
-                    <form class="form-edit-login" method="post" action="page.php?name=edit-login"
+                    <form class="form-edit-login" id="form-edit-login" method="post" action="page.php?name=edit-login"
                           enctype="multipart/form-data"
                           name="edit-login-form">
                         <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
@@ -42,7 +42,6 @@ $user = User::getBy($_SESSION['userName']);
                                     Upload
                                     <input id="uploadIcon" type="file" name="uploadIcon"/>
                                 </label>
-                                &nbsp;
                                 <input id="remove-icon" type="submit" name='removeImage'
                                        value="Remove it"
                                        class="btn btn-outline-danger btn-remove-file">

@@ -42,6 +42,7 @@ main.page {
 /* ====================
     Util
    ==================== */
+
 .flex-container {
     display: -webkit-flex;
     display: flex;
@@ -92,6 +93,10 @@ main.page {
 
 .hide {
     display: none;
+}
+
+.scroll-hor {
+    overflow-x: auto;
 }
 
 /* ====================
@@ -185,6 +190,9 @@ ul.nav-menu {
 }
 
 /* ## Menu Cart  --> .mc ## */
+#append-items-cart .dropdown-item:active {
+    background-color: #007bff !important;
+}
 
 .cont-menu-cart {
     position: relative;

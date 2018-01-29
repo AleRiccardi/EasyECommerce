@@ -26,8 +26,8 @@ $user = User::getBy($_SESSION['userName'], "username");
     <section class="user-body">
         <div class="container">
             <!-- Example row of columns -->
-            <div class="row flex-container">
-                <div class="user-action flex-item col-12 col-sm-6 col-md-3">
+            <div class="row flex-container justify-content-center">
+                <div class="user-action flex-item col-8 col-sm-6 col-md-3">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=cart">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/cart.png" alt="Cart">
@@ -36,7 +36,7 @@ $user = User::getBy($_SESSION['userName'], "username");
                         <p class="text-muted">Your current cart list</p>
                     </a>
                 </div>
-                <div class="user-action flex-item col-12 col-sm-6 col-md-3">
+                <div class="user-action flex-item col-8 col-sm-6 col-md-3">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=order">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/box.png" alt="Order">
@@ -45,7 +45,7 @@ $user = User::getBy($_SESSION['userName'], "username");
                         <p class="text-muted">List of all your order</p>
                     </a>
                 </div>
-                <div class="user-action flex-item col-12 col-sm-6 col-md-3">
+                <div class="user-action flex-item col-8 col-sm-6 col-md-3">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=edit-address">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/truck.png" alt="Address">
@@ -54,7 +54,7 @@ $user = User::getBy($_SESSION['userName'], "username");
                         <p class="text-muted">Edit addresses for orders</p>
                     </a>
                 </div>
-                <div class="user-action flex-item col-12 col-sm-6 col-md-3">
+                <div class="user-action flex-item col-8 col-sm-6 col-md-3">
                     <a href="<?php echo $baseController->website_url ?>/page.php?name=edit-login">
                         <div class="icon-action">
                             <img src="<?php echo $baseController->website_url ?>/assets/img/icon/id-card.png" alt="User">

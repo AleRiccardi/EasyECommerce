@@ -248,7 +248,6 @@ class DbModel {
     public static function delete($id) {
         $db = new Db();
         $sql = self::fetchSql(["id" => $id], 'DELETE');
-        echo $sql;
         return $db->query($sql) ? true : false;
     }
 
