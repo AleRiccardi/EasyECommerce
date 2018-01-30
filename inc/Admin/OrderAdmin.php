@@ -161,7 +161,7 @@ class OrderAdmin extends BaseController {
         ?>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <h1 class="admin-title"><?php echo $name; ?></h1>
-            <h4>List User</h4>
+            <h4>List Order</h4>
             <div class="table-responsive">
                 <table class="table table-admin table-striped table-sm">
                     <caption>List of the all orders</caption>
