@@ -25,7 +25,7 @@ require_once($baseController->website_path . "/template/_header.php");
                     <h1>Shop</h1>
                     <p>
                         That's the place were you can find and buy all the foods that you want. They are divided for
-                        category and when you click on one of them you can add it to your cart buy choosing the quantity
+                        category and when you click on one of them you can add it to your cart by choosing the quantity
                         and clicking buy.
                     </p>
                 </div>
