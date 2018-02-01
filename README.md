@@ -1,5 +1,5 @@
 
-# WillyChock
+# EasyECommerce
 
 Fast and easy template for restaurant.
 

@@ -8,14 +8,6 @@
       "name": "Alessandro Riccardi",
       "email": "alericcardi1996@gmail.com",
       "role": "Developer"
-    },
-    {
-      "name": "Alessio Barbanti",
-      "role": "Developer"
-    },
-    {
-      "name": "Silvia Zandoli",
-      "role": "Developer"
     }
   ],
   "minimum-stability": "dev",
