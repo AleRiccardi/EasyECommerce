@@ -15,7 +15,10 @@ $(function () {
      * @param {function} func, that will be execute after the success of the ajax call,
      */
     var ajaxCall = function (nameClass, data, func) {
-        var url = 'http://localhost:8888/willychock/inc/Ajax/' + nameClass;
+        var getUrl = window.location;
+        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
+        var url = baseUrl + '/inc/Ajax/' + nameClass;
 
         $.ajax({
             method: "POST",
@@ -29,7 +32,7 @@ $(function () {
     // # Event
     // #
 
-    $('#form-edit-login').on('keyup keypress', function(e) {
+    $('#form-edit-login').on('keyup keypress', function (e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) {
             e.preventDefault();
@@ -201,7 +204,7 @@ $(function () {
     /**
      * Category page, ADD product to cart.
      */
-    var abilityAddItemCart = function() {
+    var abilityAddItemCart = function () {
         $(".btn-add").on("click", function () {
 
             var idProdButton = $(this).data("prod-id");

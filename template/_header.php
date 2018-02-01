@@ -45,7 +45,7 @@ if (isset($_GET['name']) && $page = $_GET['name']) {
     <div class="cont-logo">
         <a href="<?php echo $baseController->website_url ?>">
             <img class="logo" src="<?php echo $baseController->website_url ?>/assets/img/logo-white.png"
-                 alt="WillyChock">
+                 alt="Logo company">
         </a>
     </div>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
