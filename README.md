@@ -1,11 +1,9 @@
 
 # EasyECommerce
 
-Fast and easy template for restaurant.
+Fast and easy e-commerce template for restaurant.
 
-### Installation
-
-The installation is composed in tre steps:
+## Installation
 
 1. Create a database called as you want.
 2. Open the file /installation/createDatabaseTable.sql and then inject the sql code in your database.
