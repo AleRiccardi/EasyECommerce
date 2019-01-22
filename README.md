@@ -14,12 +14,16 @@ This is a very basic e-commerce framework that may help someone to start to writ
 I want to report some preview of the website. You can also check by yourself by visiting this link 
 [http://alericcardi.altervista.org/EasyECommerce](http://alericcardi.altervista.org/EasyECommerce).
 ### Shop 
-![Shop preview](./assets/doc/shop.jpg =250x)
+<img src="./assets/doc/shop.jpg" width="700">
+
 ### Cart 
-![Shop preview](./assets/doc/cart.jpg =250x)
+<img src="./assets/doc/cart.jpg" width="700">
+
 ### Checkout 
-![Shop preview](./assets/doc/checkout.jpg =250x)
+<img src="./assets/doc/checkout.jpg" width="700">
+
 ### Dashboard 
-![Shop preview](./assets/doc/dashboard.jpg =250x)
+<img src="./assets/doc/dashboard.jpg" width="700">
+
 
 
